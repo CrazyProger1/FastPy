@@ -1,0 +1,11 @@
+a: str = "Hello!" # string var
+b: bool = true # bool var
+c: int = 10 # int var
+
+d = "Hello!" # auto type definition
+e = true
+f = 10
+
+g: str # value by default is ''
+h: bool # false
+i: int # 0
