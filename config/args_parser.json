@@ -1,0 +1,34 @@
+{
+  "description": "FastPy language translator.",
+  "arguments": [
+    {
+      "args": [
+        "-s",
+        "--source"
+      ],
+      "kwargs": {
+        "help": ".fpy main source file",
+        "required": true
+      }
+    },
+    {
+      "args": [
+        "-t",
+        "--translate"
+      ],
+      "kwargs": {
+        "help": "translate source files to C++",
+        "action": "store_true"
+      }
+    },
+    {
+      "args": [
+        "-o",
+        "--output"
+      ],
+      "kwargs": {
+        "help": "output file path"
+      }
+    }
+  ]
+}
