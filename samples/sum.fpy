@@ -1,0 +1,7 @@
+a: int = input('a >>')
+b: int = input('b >>')
+
+log('a + b =', a + b)
+
+
+

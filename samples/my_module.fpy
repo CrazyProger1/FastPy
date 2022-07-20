@@ -1,0 +1,6 @@
+fun hello():
+    log('Hello!')
+
+
+fun world() -> null:
+    log('World')

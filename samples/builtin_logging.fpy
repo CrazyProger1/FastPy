@@ -1,0 +1,4 @@
+log("Hello!") # white output
+log_error('Hello!') # red output
+log_warning('Hello!') # yellow output
+log_info('Hello!') # blue output

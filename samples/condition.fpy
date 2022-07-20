@@ -1,0 +1,9 @@
+error = True # auto type detection
+error: bool = True # same as above, but with the type specified
+
+if error == True:
+    log_error('Error!')
+
+# same as above
+# if error: 
+#	log_error('Error!')

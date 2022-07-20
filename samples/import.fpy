@@ -1,0 +1,9 @@
+import('print.fpy') # import built in module
+import('my_module.fpy') # import custom module - my_module.fpy
+import_parts('my_module.fpy', 'world') # import world from my.fpy
+
+
+print.print('Hello, World!') # will print: 'Hello, World!'
+
+my_module.hello() # will print: 'Hello!'
+world() # will print: 'World'

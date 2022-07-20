@@ -1,0 +1,4 @@
+@ENABLE_LOGGING = False
+
+log("Hello, World!") # nothing
+log_error("ERROR!") # nothing
