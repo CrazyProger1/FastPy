@@ -2,6 +2,10 @@
 
 {% endblock %}
 
+
+{{ additional_includes }}
+
+
 {% block builtin_types %}
 
 {% endblock %}
