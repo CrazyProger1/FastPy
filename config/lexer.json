@@ -1,5 +1,6 @@
 {
-  "class": "fastpy.lexer.Lexer",
+  "lexer_class": "fastpy.lexer.lexer.Lexer",
+  "token_class": "fastpy.lexer.token.Token",
   "regex": {
   },
   "comment_start": "#"

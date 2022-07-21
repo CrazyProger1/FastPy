@@ -1,7 +1,26 @@
+from abc import ABC, abstractmethod
 from .token_types import TokenTypes
 
 
-class Token:
+class BaseToken(ABC):
+    @abstractmethod
+    @property
+    def type(self) -> TokenTypes: ...
+
+    @abstractmethod
+    @property
+    def text(self) -> str: ...
+
+    @abstractmethod
+    @property
+    def line(self) -> int: ...
+
+    @abstractmethod
+    @property
+    def name(self) -> str: ...
+
+
+class Token(BaseToken):
     def __init__(self, token_type: TokenTypes, text: str, line: int, name: str = None):
         self._type = token_type
         self._text = text
