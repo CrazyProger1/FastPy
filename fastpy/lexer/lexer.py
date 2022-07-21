@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from .token import Token
 from ..exceptions import *
 from ..log import Logger
@@ -5,22 +6,27 @@ from .config import *
 import re
 
 
-class Lexer:
+class BaseLexer(ABC):
+    @abstractmethod
+    def lex(self) -> list[Token]: ...
+
+
+class Lexer(BaseLexer):
     def __init__(self, code: str):
         self._code = code
         self._tokens: list[Token] = []
 
     @Logger.info_decorator(pattern='Lexing: {line_number}: {code_line}')
-    def lex_line(self, code_line: str, line_number: int):
+    def _lex_line(self, code_line: str, line_number: int) -> None:
         pass
 
-    @Logger.info_decorator('Start lexing...')
+    @Logger.info_decorator('Start lexing...', ending_message='Lexing complete')
     def lex(self) -> list[Token]:
         for i, code_line in enumerate(self._code.split('\n')):
             if code_line == '' or code_line.startswith(COMMENT_START_SYMBOL):
                 continue
 
-            self.lex_line(
+            self._lex_line(
                 code_line=code_line,
                 line_number=i + 1
             )

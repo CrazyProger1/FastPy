@@ -3,5 +3,6 @@ from .token import *
 
 __all__ = [
     'Lexer',
-    'Token'
+    'Token',
+    'BaseLexer'
 ]
