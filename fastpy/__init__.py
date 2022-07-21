@@ -9,5 +9,5 @@ __all__ = [
     'log',
     'exceptions',
     'lexer',
-    'translate'
+    'translate',
 ]
