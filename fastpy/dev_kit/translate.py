@@ -1,3 +1,5 @@
+from filesystem import *
 
-def translate(source_file: str, **kwargs):
+
+def translate(source: str, **kwargs):
     pass
