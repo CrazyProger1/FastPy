@@ -1,5 +1,7 @@
 {
-  "description": "FastPy language translator.",
+  "parser": {
+    "description": "FastPy language translator."
+  },
   "arguments": [
     {
       "args": [
