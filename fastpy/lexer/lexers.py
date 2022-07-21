@@ -82,6 +82,11 @@ class Lexer(BaseLexer):
                 code_line=code_line,
                 line_number=i + 1
             )
+            self._tokens.append(create_token(
+                token_type=TokenTypes.endline,
+                text='\n',
+                line=i + 1,
+            ))
 
         return self._tokens
 

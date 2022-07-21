@@ -43,7 +43,7 @@ class OperatorDetector(BaseDetector):
                line_number: int,
                column_number: int,
                regex_pattern: str,
-               supposed_token_type: TokenTypes) -> BaseToken:
+               supposed_token_type: TokenTypes) -> BaseToken:  # test variant, to refactor!!
 
         cut_string = code_line[column_number::]
 
@@ -56,6 +56,29 @@ class OperatorDetector(BaseDetector):
                     line=line_number,
                     name=OPERATORS.get(start)
                 )
+
+        similar_ops = SIMILAR_OPERATORS.get(start)
+
+        if similar_ops:
+            for op in similar_ops:
+                if op in string.ascii_letters:
+                    result = re.match(op + ' ', cut_string)
+                else:
+                    result = re.match(op, cut_string)
+
+                if result:
+                    return create_token(
+                        token_type=supposed_token_type,
+                        text=result.group(),
+                        line=line_number,
+                        name=OPERATORS.get(start)
+                    )
+            return create_token(
+                token_type=supposed_token_type,
+                text=start,
+                line=line_number,
+                name=OPERATORS.get(start)
+            )
 
         for op in OPERATORS.keys():
             if op.startswith(start):

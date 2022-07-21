@@ -1,7 +1,7 @@
-error = True # auto type detection
-error: bool = True # same as above, but with the type specified
+error = true # auto type detection
+error: bool = true # same as above, but with the type specified
 
-if error == True:
+if error == true:
     log_error('Error!')
 
 # same as above

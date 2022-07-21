@@ -11,7 +11,7 @@ lexer_config = JsonConfig(
 COMMENT_START_SYMBOL = lexer_config['comment_start']
 TOKEN_CLASS = lexer_config['token_class']
 LEXER_CLASS = lexer_config['lexer_class']
-TOKEN_DETECTION = lexer_config['tokens_detection']
+TOKEN_DETECTION = lexer_config.get('tokens_detection', {})
 
 operators_config = JsonConfig(
     filepath=os.path.join(CONFIG_FOLDER, 'operators.json'),
