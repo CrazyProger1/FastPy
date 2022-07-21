@@ -1,6 +1,7 @@
-from .lexer import *
-from .token import *
+from .lexers import *
+from .tokens import *
 from .config import *
+from .detectors import *
 
 __all__ = [
     'Lexer',
@@ -9,5 +10,6 @@ __all__ = [
     'BaseToken',
     'lex_code',
     'code_from_tokens',
-    'create_token'
+    'create_token',
+    'BaseDetector',
 ]

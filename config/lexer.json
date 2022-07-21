@@ -1,7 +1,14 @@
 {
-  "lexer_class": "fastpy.lexer.lexer.Lexer",
-  "token_class": "fastpy.lexer.token.Token",
-  "regex": {
+  "lexer_class": "fastpy.lexer.lexers.Lexer",
+  "token_class": "fastpy.lexer.tokens.Token",
+  "tokens_detection": {
+    "literal": {
+      "detector": "fastpy.lexer.detectors.LiteralDetector",
+      "regexes": [
+        "\"[\\s\\S]+\"",
+        "'[\\s\\S]+'"
+      ]
+    }
   },
   "comment_start": "#"
 }

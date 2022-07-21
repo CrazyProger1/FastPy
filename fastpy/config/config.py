@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 CONFIG_FOLDER = 'config'
 
 
-class Config(ABC):
+class BaseConfig(ABC):
     @abstractmethod
     def load(self) -> None: ...
 

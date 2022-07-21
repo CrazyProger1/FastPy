@@ -4,7 +4,7 @@ from .config import *
 from ..exceptions import ConfigNotLoadedError
 
 
-class JsonConfig(Config):
+class JsonConfig(BaseConfig):
     def __init__(self, filepath: str, authoload: bool = True):
         self._filepath = None
         self._config = None
@@ -27,7 +27,10 @@ class JsonConfig(Config):
 
     def load(self):
         with open(self._filepath, 'r') as cf:
-            self._config = json.load(cf)
+            try:
+                self._config = json.load(cf)
+            except json.decoder.JSONDecodeError as e:
+                raise json.decoder.JSONDecodeError(f'File "{self._filepath}" has wrong format', e.doc, e.pos)
             self._config_type = type(self._config)
 
     def save(self):

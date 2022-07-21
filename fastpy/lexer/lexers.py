@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from fastpy.import_tools import import_class
+from .detectors import BaseDetector
 from .special_symbols import *
 from .config import *
-from .token import BaseToken, create_token
+from .tokens import BaseToken, create_token
 from ..log import Logger
 
 
@@ -12,11 +13,16 @@ class BaseLexer(ABC):
 
 
 class Lexer(BaseLexer):
+
     def __init__(self, code: str):
         self._code = code
         self._tokens: list[BaseToken] = []
+        self._token_detectors = {
+            token_type: import_class(detection_info.get('detector'))()
+            for token_type, detection_info in TOKEN_DETECTION.items()
+        }
 
-    def _discover_token(self, code_line: str, line_number: int, column_number: int) -> int:
+    def _detect_token(self, code_line: str, line_number: int, column_number: int) -> int:
         start_symbol = code_line[column_number]
 
         if start_symbol in SPECIAL_SYMBOLS.keys():
@@ -28,6 +34,22 @@ class Lexer(BaseLexer):
             )
             self._tokens.append(token)
 
+        for token_type, detection_info in TOKEN_DETECTION.items():
+            supposed_token_type = TokenTypes.__getattr__(token_type)
+            detector: BaseDetector = self._token_detectors.get(token_type)
+            regexes = detection_info.get('regexes')
+
+            for regex in regexes:
+                token = detector.detect(
+                    code_line=code_line,
+                    line_number=line_number,
+                    column_number=column_number,
+                    regex_pattern=regex,
+                    supposed_token_type=supposed_token_type
+                )
+                if token:
+                    self._tokens.append(token)
+
         return -1
 
     @Logger.info_decorator(pattern='Lexing: {line_number}: {code_line}')
@@ -37,7 +59,7 @@ class Lexer(BaseLexer):
             if column <= ignore_before:
                 continue
 
-            ignore_before = self._discover_token(
+            ignore_before = self._detect_token(
                 code_line=code_line,
                 line_number=line_number,
                 column_number=column,
