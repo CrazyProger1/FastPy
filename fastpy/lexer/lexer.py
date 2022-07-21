@@ -3,6 +3,7 @@ from .token import BaseToken
 from ..exceptions import *
 from ..log import Logger
 from .config import *
+from import_tools import import_class
 import re
 
 
@@ -32,3 +33,7 @@ class Lexer(BaseLexer):
             )
 
         return self._tokens
+
+
+def lex_code(code: str) -> list[BaseToken]:
+    return import_class(LEXER_CLASS)(code).lex()

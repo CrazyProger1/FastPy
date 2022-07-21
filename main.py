@@ -1,10 +1,15 @@
 import fastpy
 import argparse
 from config import *
-import pydoc
+
+
+def make_action(args: argparse.Namespace):
+    if args.translate:
+        fastpy.translate(**vars(args))
 
 
 def setup_argparse() -> argparse.ArgumentParser:
+    """Configuring the console argument parser"""
     argparser = argparse.ArgumentParser(**ARGPARSE_CONFIG['parser'])
 
     for argument_config in ARGPARSE_CONFIG['arguments']:
@@ -16,12 +21,7 @@ def setup_argparse() -> argparse.ArgumentParser:
 def main():
     argparser = setup_argparse()
     parsed_args = argparser.parse_args()
-
-    fastpy.lexer.lex_code('''
-# Just a comment :D
-
-log('Hello, World!') # print hello world
-''')  # TEST
+    make_action(parsed_args)
 
 
 if __name__ == '__main__':
