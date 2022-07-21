@@ -1,6 +1,7 @@
 import os
 import json
 from .config import *
+from ..exceptions import ConfigNotLoadedError
 
 
 class JsonConfig(Config):
@@ -34,11 +35,17 @@ class JsonConfig(Config):
             if self._config:
                 json.dump(self._config, cf)
 
+    def get(self, key: str | int, default: any) -> any:
+        try:
+            return self.__getitem__(key)
+        except (KeyError, IndexError):
+            return default
+
     def __getitem__(self, item) -> any:
         if self._config:
             return self._config[item]
         else:
-            raise
+            raise ConfigNotLoadedError('Config not loaded yet')
 
     def __iter__(self):
         if issubclass(self._config_type, dict):
