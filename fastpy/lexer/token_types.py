@@ -9,8 +9,13 @@ class TokenTypes(Enum):
     comma = 5
     start_parenthesis = 6
     end_parenthesis = 7
-    gap = 8
-    number = 9
+    start_braces = 8
+    end_braces = 9
+    start_square = 10
+    end_square = 11
+    gap = 12
+    tab = 13
+    number = 14
 
     def __eq__(self, other):
         if isinstance(other, int):
