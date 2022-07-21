@@ -3,20 +3,20 @@ from .token_types import TokenTypes
 
 
 class BaseToken(ABC):
-    @abstractmethod
     @property
+    @abstractmethod
     def type(self) -> TokenTypes: ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def text(self) -> str: ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def line(self) -> int: ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def name(self) -> str: ...
 
 
