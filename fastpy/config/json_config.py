@@ -35,13 +35,13 @@ class JsonConfig(Config):
             if self._config:
                 json.dump(self._config, cf)
 
-    def get(self, key: str | int, default: any) -> any:
+    def get(self, key: str | int, default: any = None) -> any:
         try:
             return self.__getitem__(key)
         except (KeyError, IndexError):
             return default
 
-    def __getitem__(self, item) -> any:
+    def __getitem__(self, item):
         if self._config:
             return self._config[item]
         else:

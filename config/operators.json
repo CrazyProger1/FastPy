@@ -1,0 +1,34 @@
+{
+  "operators": {
+    "+": "addition",
+    "-": "subtraction",
+    "*": "multiplication",
+    "/": "division",
+    "^": "exponentiation",
+    "%": "modulus",
+    "if": "if",
+    "elif": "elif",
+    "else": "else",
+    "=": "assign",
+    ">": "greater",
+    "<": "less",
+    "==": "equal",
+    "and": "and",
+    "or": "or",
+    "fun": "function",
+    "return": "return",
+    "while": "while",
+    "for": "for",
+    "break": "break",
+    "continue": "continue",
+    "@": "directive",
+    ":": "body_start",
+    "->": "return_type",
+    ".": "access"
+  },
+  "similar_operators": {
+    "-": [
+      "->"
+    ]
+  }
+}
