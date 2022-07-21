@@ -1,6 +1,9 @@
-from .config import *
+import fastpy.config
+import fastpy.exceptions
+import fastpy.log
 
 __all__ = [
-    'JsonConfig',
-    'Config'
+    'config',
+    'log',
+    'exceptions'
 ]

@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+CONFIG_FOLDER = 'config'
+
 
 class Config(ABC):
     @abstractmethod

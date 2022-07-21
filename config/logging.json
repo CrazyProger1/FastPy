@@ -1,0 +1,4 @@
+{
+  "format": "%(levelname)s: %(message)s",
+  "app_name": "FastPy"
+}

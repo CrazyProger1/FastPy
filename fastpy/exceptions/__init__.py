@@ -2,10 +2,6 @@ class BaseError(Exception):
     pass
 
 
-class CompilationError(BaseError):
-    pass
-
-
 class LexingError(BaseError):
     pass
 
@@ -18,3 +14,5 @@ class TranspilingError(BaseError):
     pass
 
 
+class CompilationError(BaseError):
+    pass
