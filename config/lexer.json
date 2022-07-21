@@ -3,10 +3,28 @@
   "token_class": "fastpy.lexer.tokens.Token",
   "tokens_detection": {
     "literal": {
-      "detector": "fastpy.lexer.detectors.LiteralDetector",
+      "detector": "fastpy.lexer.detectors.UniversalDetector",
       "regexes": [
         "\"[\\s\\S]+\"",
         "'[\\s\\S]+'"
+      ]
+    },
+    "number": {
+      "detector": "fastpy.lexer.detectors.UniversalDetector",
+      "regexes": [
+        "[\\d]+"
+      ]
+    },
+    "identifier": {
+      "detector": "fastpy.lexer.detectors.UniversalDetector",
+      "regexes": [
+        "[a-zA-Z_]+"
+      ]
+    },
+    "operator": {
+      "detector": "fastpy.lexer.detectors.OperatorDetector",
+      "regexes": [
+        ""
       ]
     }
   },

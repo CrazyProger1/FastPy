@@ -13,7 +13,6 @@ class BaseLexer(ABC):
 
 
 class Lexer(BaseLexer):
-
     def __init__(self, code: str):
         self._code = code
         self._tokens: list[BaseToken] = []
@@ -37,6 +36,10 @@ class Lexer(BaseLexer):
         for token_type, detection_info in TOKEN_DETECTION.items():
             supposed_token_type = TokenTypes.__getattr__(token_type)
             detector: BaseDetector = self._token_detectors.get(token_type)
+
+            if supposed_token_type not in detector.detects:
+                continue
+
             regexes = detection_info.get('regexes')
 
             for regex in regexes:
@@ -49,13 +52,17 @@ class Lexer(BaseLexer):
                 )
                 if token:
                     self._tokens.append(token)
+                    return len(token.text) + column_number - 1
 
         return -1
 
     @Logger.info_decorator(pattern='Lexing: {line_number}: {code_line}')
     def _lex_line(self, code_line: str, line_number: int) -> None:
-        ignore_before = 0
+        ignore_before = -1
         for column, char in enumerate(code_line):
+            if char == COMMENT_START_SYMBOL:
+                return
+
             if column <= ignore_before:
                 continue
 
