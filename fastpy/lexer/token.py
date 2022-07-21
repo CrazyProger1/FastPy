@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 from .token_types import TokenTypes
+from fastpy.import_tools import import_class
+from .config import *
 
 
 class BaseToken(ABC):
@@ -43,9 +45,25 @@ class Token(BaseToken):
     def name(self) -> str | None:
         return self._name
 
+    def __repr__(self):
+        return self._text
+
 
 def code_from_tokens(tokens: list[BaseToken] | tuple[BaseToken]):
     code = ''
     for token in tokens:
         code += token.text
     return code
+
+
+_token_class: BaseToken | None = None
+
+
+def create_token(token_type: TokenTypes, text: str, line: int, name: str = None, **kwargs) -> BaseToken:
+    """Token factory"""
+    global _token_class
+
+    if not _token_class:
+        _token_class = import_class(TOKEN_CLASS)
+
+    return _token_class(token_type, text, line, name, **kwargs)
