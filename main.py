@@ -1,6 +1,7 @@
 import fastpy
 import argparse
 from config import *
+import pydoc
 
 
 def setup_argparse() -> argparse.ArgumentParser:
@@ -16,11 +17,11 @@ def main():
     argparser = setup_argparse()
     parsed_args = argparser.parse_args()
 
-    fastpy.lexer.Lexer('''
+    fastpy.lexer.lex_code('''
 # Just a comment :D
 
 log('Hello, World!') # print hello world
-''').lex()  # TEST
+''')  # TEST
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from ..config import JsonConfig, CONFIG_FOLDER
 import os
+import pydoc
 
 lexer_config = JsonConfig(
     filepath=os.path.join(CONFIG_FOLDER, 'lexer.json'),
@@ -7,6 +8,8 @@ lexer_config = JsonConfig(
 )
 
 COMMENT_START_SYMBOL = lexer_config['comment_start']
+TOKEN_CLASS = lexer_config['token_class']
+LEXER_CLASS = lexer_config['lexer_class']
 
 operators_config = JsonConfig(
     filepath=os.path.join(CONFIG_FOLDER, 'operators.json'),

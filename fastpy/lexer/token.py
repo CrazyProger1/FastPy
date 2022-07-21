@@ -44,7 +44,7 @@ class Token(BaseToken):
         return self._name
 
 
-def code_from_tokens(tokens: list[Token] | tuple[Token]):
+def code_from_tokens(tokens: list[BaseToken] | tuple[BaseToken]):
     code = ''
     for token in tokens:
         code += token.text
