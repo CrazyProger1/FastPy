@@ -1,3 +1,5 @@
 {
-
+  "regex": {
+  },
+  "comment_start": "#"
 }

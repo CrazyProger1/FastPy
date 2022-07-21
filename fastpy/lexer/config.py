@@ -6,6 +6,8 @@ lexer_config = JsonConfig(
     authoload=True
 )
 
+COMMENT_START_SYMBOL = lexer_config['comment_start']
+
 operators_config = JsonConfig(
     filepath=os.path.join(CONFIG_FOLDER, 'operators.json'),
     authoload=True

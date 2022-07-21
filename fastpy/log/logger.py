@@ -30,3 +30,17 @@ class Logger:
     @staticmethod
     def log_critical(*msg: any, sep: str = ' '):
         Logger.logger.critical(sep.join(map(str, msg)))
+
+    @staticmethod
+    def info_decorator(*msg: any, sep: str = ' ', pattern: str = None):
+        def deco(func):
+            def wrapper(*args, **kwargs):
+                if pattern:
+                    Logger.log_info(pattern.format(**kwargs), sep=sep)
+                else:
+                    Logger.log_info(*msg, sep=sep)
+                func(*args, **kwargs)
+
+            return wrapper
+
+        return deco

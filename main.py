@@ -15,7 +15,12 @@ def setup_argparse() -> argparse.ArgumentParser:
 def main():
     argparser = setup_argparse()
     parsed_args = argparser.parse_args()
-    print(parsed_args)
+
+    fastpy.lexer.Lexer('''
+# Just a comment :D
+
+log('Hello, World!') # print hello world
+''').lex()  # TEST
 
 
 if __name__ == '__main__':

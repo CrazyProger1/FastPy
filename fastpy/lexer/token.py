@@ -23,3 +23,10 @@ class Token:
     @property
     def name(self) -> str | None:
         return self._name
+
+
+def code_from_tokens(tokens: list[Token] | tuple[Token]):
+    code = ''
+    for token in tokens:
+        code += token.text
+    return code
