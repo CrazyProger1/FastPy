@@ -92,4 +92,4 @@ class Lexer(BaseLexer):
 
 
 def lex_code(code: str) -> list[BaseToken]:
-    return import_class(LEXER_CLASS)(code).lex()
+    return import_class(LEXER_CLASS_PATH)(code).lex()

@@ -46,7 +46,7 @@ class Token(BaseToken):
         return self._name
 
     def __repr__(self):
-        return self._text
+        return f'{self._text}({self._type.name})'
 
 
 def code_from_tokens(tokens: list[BaseToken] | tuple[BaseToken]):
@@ -64,6 +64,6 @@ def create_token(token_type: TokenTypes, text: str, line: int, name: str = None,
     global _token_class
 
     if not _token_class:
-        _token_class = import_class(TOKEN_CLASS)
+        _token_class = import_class(TOKEN_CLASS_PATH)
 
     return _token_class(token_type, text, line, name, **kwargs)
