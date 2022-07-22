@@ -76,7 +76,7 @@ class Lexer(BaseLexer):
                 column_number=column,
             )
 
-    @Logger.info_decorator('Start lexing...', ending_message='Lexing complete')
+    @Logger.info_decorator('Start lexing...', ending_message='Lexing completed in {time}')
     def lex(self) -> list[BaseToken]:
         for i, code_line in enumerate(self._code.split('\n')):
             if code_line == '' or code_line.startswith(COMMENT_START_SYMBOL):

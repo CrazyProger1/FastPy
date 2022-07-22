@@ -1,4 +1,5 @@
 from .formatter import *
+from datetime import datetime
 
 
 class Logger:
@@ -50,10 +51,16 @@ class Logger:
                 else:
                     Logger.log_info(*msg, sep=sep)
 
+                start = datetime.now()
                 out = func(*args, **kwargs)
+                end = datetime.now()
+                lead_time = end - start
 
                 if ending_message:
-                    Logger.log_info(ending_message)
+                    if '{time}' in ending_message:
+                        Logger.log_info(ending_message.format(time=lead_time))
+                    else:
+                        Logger.log_info(ending_message)
 
                 return out
 

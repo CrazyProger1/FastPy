@@ -12,4 +12,5 @@ __all__ = [
     'code_from_tokens',
     'create_token',
     'BaseDetector',
+    'TokenTypes'
 ]
