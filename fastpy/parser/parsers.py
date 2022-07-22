@@ -14,10 +14,13 @@ class BaseParser(ABC):
     def __init__(self, tokens: list[BaseToken]): ...
 
     @abstractmethod
-    def parse(self) -> BaseAST: ...
+    def parse(self) -> BaseAST:
+        """Parses tokens and returns an Abstract Syntax Tree"""
 
 
 class Parser(BaseParser):
+    """Basic parser of FastPy"""
+
     def __init__(self, tokens: list[BaseToken]):
         self._tokens = tokens
         self._ast = create_ast()
@@ -57,6 +60,7 @@ class Parser(BaseParser):
                     parser.parse(tokens, node_class, **data)
 
     def _detect_struct_start(self, node: BaseNode, level: int):
+        """Checks if a node is the start of a structure and creates the structure"""
         if isinstance(node, NodeWithBody):
             self._current_structure = Structure(
                 node=node,
@@ -67,6 +71,7 @@ class Parser(BaseParser):
 
     @Logger.info_decorator(pattern='Parsing: {expr_tokens[0].line}: {expr_tokens}: level: {expr_level}')
     def _parse_expression(self, expr_tokens: list[BaseToken], expr_level: int):
+        """Parses each line of code split into tokens"""
         node = self._parse_node(expr_tokens)
 
         if node:

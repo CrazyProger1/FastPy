@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 
-CONFIG_FOLDER = 'config'
+CONFIG_FOLDER = 'config'  # Folder with all configs
 
 
 class BaseConfig(ABC):
+    """Config interface"""
+
     @abstractmethod
     def load(self) -> None: ...
 

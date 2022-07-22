@@ -13,10 +13,13 @@ class BaseLexer(ABC):
     def __init__(self, code: str): ...
 
     @abstractmethod
-    def lex(self) -> list[BaseToken]: ...
+    def lex(self) -> list[BaseToken]:
+        """Splits the code into a list of tokens"""
 
 
 class Lexer(BaseLexer):
+    """Basic lexer of FastPy"""
+
     def __init__(self, code: str):
         self._code = code
         self._tokens: list[BaseToken] = []
@@ -26,6 +29,8 @@ class Lexer(BaseLexer):
         }
 
     def _detect_token(self, code_line: str, line_number: int, column_number: int) -> int:
+        """Detects and extracts a token from a line of code"""
+
         start_symbol = code_line[column_number]
 
         if start_symbol in SPECIAL_SYMBOLS.keys():
@@ -62,6 +67,8 @@ class Lexer(BaseLexer):
 
     @Logger.info_decorator(pattern='Lexing: {line_number}: {code_line}')
     def _lex_line(self, code_line: str, line_number: int) -> None:
+        """Splits each line of the code into tokens"""
+
         ignore_before = -1
         for column, char in enumerate(code_line):
             if char == COMMENT_START_SYMBOL:
