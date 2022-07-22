@@ -8,6 +8,10 @@ from ..log import Logger
 
 
 class BaseLexer(ABC):
+
+    @abstractmethod
+    def __init__(self, code: str): ...
+
     @abstractmethod
     def lex(self) -> list[BaseToken]: ...
 
@@ -91,5 +95,6 @@ class Lexer(BaseLexer):
         return self._tokens
 
 
-def lex_code(code: str) -> list[BaseToken]:
-    return import_class(LEXER_CLASS_PATH)(code).lex()
+def create_lexer(code: str) -> BaseLexer:
+    """Lexer factory"""
+    return import_class(LEXER_CLASS_PATH)(code)

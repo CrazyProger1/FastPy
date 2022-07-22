@@ -1,0 +1,4 @@
+{
+  "parser_class": "fastpy.parser.parsers.Parser",
+  "ast_class": "fastpy.parser.ast.AST"
+}

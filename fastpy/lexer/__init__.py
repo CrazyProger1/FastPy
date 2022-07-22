@@ -8,7 +8,7 @@ __all__ = [
     'Token',
     'BaseLexer',
     'BaseToken',
-    'lex_code',
+    'create_lexer',
     'code_from_tokens',
     'create_token',
     'BaseDetector',
