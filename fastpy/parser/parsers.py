@@ -5,6 +5,7 @@ from .config import *
 from ..import_tools import import_class
 from ..log import Logger
 from .nodes import *
+from .node_parsers import *
 from .structure import *
 
 
@@ -22,9 +23,38 @@ class Parser(BaseParser):
         self._ast = create_ast()
         self._structures: list[Structure] = []
         self._current_structure: Structure | None = None
+        self._node_parsers = {}
+        self._load_node_parsers()
+
+    def _load_node_parsers(self):
+        """Loads parsers, node classes and extra arguments for every node type"""
+        for node_name, parsing_info in NODE_PARSING.items():
+            self._node_parsers.update({
+                node_name: {
+                    'node_class': import_class(parsing_info.get('node_class')),
+
+                    'parser_instance': import_class(parsing_info.get('parser_class'))(),
+                    # Here parser instance is creating
+
+                    'extra_data': parsing_info.get('extra_data')
+                }
+            })
 
     def _parse_node(self, tokens: list[BaseToken]) -> BaseNode | None:
-        pass
+        """Looks through each node type, finds the parser, and parses the node"""
+        for node_name, parsing_info in self._node_parsers.items():
+
+            parser: BaseNodeParser = parsing_info.get('parser_instance')
+            node_class: type[BaseNode] = parsing_info.get('node_class')
+
+            if node_class not in parser.parses:
+                continue
+
+            extra_data: list = parsing_info.get('extra_data')
+
+            for data in extra_data:
+                if parser.validate(tokens, node_class, **data):
+                    parser.parse(tokens, node_class, **data)
 
     def _detect_struct_start(self, node: BaseNode, level: int):
         if isinstance(node, NodeWithBody):

@@ -8,3 +8,4 @@ parser_config = JsonConfig(
 
 AST_CLASS_PATH = parser_config['ast_class']
 PARSER_CLASS_PATH = parser_config['parser_class']
+NODE_PARSING = parser_config.get('node_parsing', {})

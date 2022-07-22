@@ -1,4 +1,36 @@
 {
   "parser_class": "fastpy.parser.parsers.Parser",
-  "ast_class": "fastpy.parser.ast.AST"
+  "ast_class": "fastpy.parser.ast.AST",
+  "node_parsing": {
+    "assignment": {
+      "node_class": "fastpy.parser.nodes.AssignNode",
+      "parser_class": "fastpy.parser.node_parsers.AssignNodeParser",
+      "extra_data": [
+        {
+          "supposed_types": [
+            2,
+            1
+          ],
+          "supposed_names": [
+            null,
+            "assign"
+          ]
+        },
+        {
+          "supposed_types": [
+            2,
+            1,
+            2,
+            1
+          ],
+          "supposed_names": [
+            null,
+            "body_start",
+            null,
+            "assign"
+          ]
+        }
+      ]
+    }
+  }
 }
