@@ -7,18 +7,16 @@ class BaseNode(ABC):
     @abstractmethod
     def line(self) -> int: ...
 
-    @abstractmethod
-    def have_body(self) -> bool: ...
+
+class NodeWithBody(BaseNode, ABC):
+    _body = []
+
+    def push_node_to_body(self, node: BaseNode):
+        self._body.append(node)
 
 
-class BellyNode(BaseNode, ABC):
-    def have_body(self) -> bool:
-        return True
-
-
-class ThinNode(BaseNode, ABC):
-    def have_body(self) -> bool:
-        return False
+class BasicNode(BaseNode, ABC):
+    pass
 
 
 class PrintableNode(BaseNode, ABC):
@@ -30,7 +28,7 @@ class PrintableNode(BaseNode, ABC):
         return self.__class__.__name__ + text
 
 
-class VariableNode(ThinNode, PrintableNode):
+class VariableNode(BasicNode, PrintableNode):
     def __init__(self, identifier: BaseToken):
         self.identifier = identifier
 
@@ -38,7 +36,7 @@ class VariableNode(ThinNode, PrintableNode):
         return self.identifier.line
 
 
-class ValueNode(ThinNode, PrintableNode):
+class ValueNode(BasicNode, PrintableNode):
     def __init__(self, value: BaseToken):
         self.value = value
 
@@ -46,7 +44,7 @@ class ValueNode(ThinNode, PrintableNode):
         return self.value.line
 
 
-class AssignNode(ThinNode, PrintableNode):
+class AssignNode(BasicNode, PrintableNode):
     def __init__(self,
                  identifier: BaseToken,
                  value_type: BaseToken = None,
@@ -59,7 +57,7 @@ class AssignNode(ThinNode, PrintableNode):
         return self.identifier.line
 
 
-class FuncNode(BellyNode, PrintableNode):
+class FuncNode(NodeWithBody, PrintableNode):
     def __init__(self,
                  identifier: BaseToken,
                  arguments: list[AssignNode] = None,
@@ -67,21 +65,21 @@ class FuncNode(BellyNode, PrintableNode):
                  return_type: BaseToken = None):
         self.identifier = identifier
         self.arguments = arguments or []
-        self.body = body or []
+        self._body = body or []
         self.return_type = return_type
 
     def line(self) -> int:
         return self.identifier.line
 
 
-class IfNode(BellyNode, PrintableNode):
+class IfNode(NodeWithBody, PrintableNode):
     def __init__(self,
                  condition: list[BaseNode] = None,
                  body: list[BaseNode] = None,
                  elif_cases: list = None,
                  else_body: list[BaseNode] = None):
         self.condition = condition
-        self.body = body or []
+        self._body = body or []
         self.elif_cases: list[IfNode.__init__] = elif_cases
         self.else_body = else_body
 
@@ -91,7 +89,7 @@ class IfNode(BellyNode, PrintableNode):
         return self.condition[0].line
 
 
-class BinOpNode(ThinNode, PrintableNode):
+class BinOpNode(BasicNode, PrintableNode):
     def __init__(self,
                  left_operand: BaseNode = None,
                  right_operand: BaseNode = None,
@@ -116,14 +114,14 @@ class BinOpNode(ThinNode, PrintableNode):
 #         pass
 
 
-class WhileNode(BellyNode, PrintableNode):
+class WhileNode(NodeWithBody, PrintableNode):
     def __init__(self,
                  condition: list[BaseNode] = None,
                  body: list[BaseNode] = None,
                  else_body: list[BaseNode] = None):
         self.condition = condition
-        self.body = body or []
         self.else_body = else_body or []
+        self._body = body
 
     def line(self) -> int:
         if not self.condition or len(self.condition) == 0:
