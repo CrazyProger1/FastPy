@@ -27,7 +27,7 @@ class BaseNodeParser(ABC):
 class UniversalNodeParser(BaseNodeParser):
     """Basic universal node parser of FastPy"""
 
-    parses = (AssignNode,)
+    parses = (AssignNode, ValueNode)
 
     def validate(self,
                  tokens: list[BaseToken],

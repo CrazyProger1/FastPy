@@ -69,7 +69,7 @@
           "validate_data": {
             "validators": {
               "check_fixed_token_length": {
-                "length": 5
+                "length": 3
               },
               "check_token_types": {
                 "types": [
@@ -93,8 +93,45 @@
         }
       ]
     },
-    "variable": {
-
+    "value": {
+      "node_class": "fastpy.parser.nodes.ValueNode",
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "cases": [
+        {
+          "validate_data": {
+            "validators": {
+              "check_fixed_token_length": {
+                "length": 1
+              },
+              "check_token_types": {
+                "types": [
+                  3
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "value": 0
+          }
+        },
+        {
+          "validate_data": {
+            "validators": {
+              "check_fixed_token_length": {
+                "length": 1
+              },
+              "check_token_types": {
+                "types": [
+                  13
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "value": 0
+          }
+        }
+      ]
     }
   }
 }
