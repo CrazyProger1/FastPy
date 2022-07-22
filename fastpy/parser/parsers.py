@@ -19,8 +19,11 @@ class Parser(BaseParser):
         self._tokens = tokens
         self._ast = create_ast()
 
+    def _parse_node(self, tokens: list[BaseToken]):
+        pass
+
     @Logger.info_decorator(pattern='Parsing: {expr_tokens[0].line}: {expr_tokens}: level: {expr_level}')
-    def parse_expression(self, expr_tokens: list[BaseToken], expr_level: int):
+    def _parse_expression(self, expr_tokens: list[BaseToken], expr_level: int):
         pass
 
     @Logger.info_decorator('Start parsing...', ending_message='Parsing completed in {time}')
@@ -42,7 +45,7 @@ class Parser(BaseParser):
                 continue
 
             elif token.type in [TokenTypes.endline]:
-                self.parse_expression(expr_tokens=expr_tokens, expr_level=expr_level)
+                self._parse_expression(expr_tokens=expr_tokens, expr_level=expr_level)
                 expr_tokens.clear()
                 expr_level = 0
                 code_started = False
