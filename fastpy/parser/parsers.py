@@ -39,25 +39,32 @@ class Parser(BaseParser):
                     'parser_instance': import_class(parsing_info.get('parser_class'))(),
                     # Here parser instance is creating
 
-                    'extra_data': parsing_info.get('extra_data')
+                    'cases': parsing_info.get('cases')
                 }
             })
 
-    def _parse_node(self, tokens: list[BaseToken]) -> BaseNode | None:
+    def _parse_node(self, tokens: list[BaseToken], possible_nodes: tuple[BaseNode] = None) -> BaseNode | None:
         """Looks through each node type, finds the parser, and parses the node"""
         for node_name, parsing_info in self._node_parsers.items():
 
             parser: BaseNodeParser = parsing_info.get('parser_instance')
             node_class: type[BaseNode] = parsing_info.get('node_class')
 
-            if node_class not in parser.parses:
+            if node_class not in parser.parses or possible_nodes and node_class not in possible_nodes:
                 continue
 
-            extra_data: list = parsing_info.get('extra_data')
+            cases: list = parsing_info.get('cases')  # additional arguments to be passed to the parser
 
-            for data in extra_data:
-                if parser.validate(tokens, node_class, **data):
-                    parser.parse(tokens, node_class, **data)
+            for data in cases:
+                if parser.validate(tokens, node_class, **data.get('validate_data')):
+                    node = parser.parse(
+                        tokens=tokens,
+                        supposed_node_type=node_class,
+                        parse_node_callback=self._parse_node,
+                        **data.get('parse_data')
+                    )
+                    if node:
+                        return node
 
     def _detect_struct_start(self, node: BaseNode, level: int):
         """Checks if a node is the start of a structure and creates the structure"""
@@ -75,6 +82,7 @@ class Parser(BaseParser):
         node = self._parse_node(expr_tokens)
 
         if node:
+            print("DETECTED NODE:", node)
             self._detect_struct_start(node=node, level=expr_level)
             if self._current_structure and self._current_structure.within_struct(expr_level):
                 self._current_structure.push_node(node)

@@ -3,6 +3,9 @@ from ..lexer import BaseToken
 
 
 class BaseNode(ABC):
+    @abstractmethod
+    def __init__(self, *args, **kwargs): ...
+
     @property
     @abstractmethod
     def line(self) -> int: ...
@@ -22,7 +25,7 @@ class BasicNode(BaseNode, ABC):
 class PrintableNode(BaseNode, ABC):
     def __repr__(self):
         text = '('
-        for attr_name, attr_value in vars(self):
+        for attr_name, attr_value in vars(self).items():
             text += f'{attr_name}:{attr_value}, '
         text += ')'
         return self.__class__.__name__ + text

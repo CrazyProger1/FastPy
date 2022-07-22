@@ -2,34 +2,44 @@
 from ..lexer import BaseToken
 
 
-def check_token_types(tokens: list[BaseToken], types: list[int]) -> bool:
-    for token, supposed_type in zip(tokens, types):
-        if supposed_type is None:
-            continue
+class Validators:
+    @staticmethod
+    def check_token_types(tokens: list[BaseToken], types: list[int]) -> bool:
+        for token, supposed_type in zip(tokens, types):
+            if supposed_type is None:
+                continue
 
-        if token.type != supposed_type:
-            return False
+            if token.type != supposed_type:
+                return False
 
-    return True
+        return True
 
+    @staticmethod
+    def check_token_texts(tokens: list[BaseToken], texts: list[str]) -> bool:
+        for token, supposed_text in zip(tokens, texts):
+            if supposed_text is None:
+                continue
 
-def check_token_texts(tokens: list[BaseToken], texts: list[str]) -> bool:
-    for token, supposed_text in zip(tokens, texts):
-        if supposed_text is None:
-            continue
+            if token.text != supposed_text:
+                return False
 
-        if token.text != supposed_text:
-            return False
+        return True
 
-    return True
+    @staticmethod
+    def check_token_names(tokens: list[BaseToken], names: list[str]) -> bool:
+        for token, supposed_name in zip(tokens, names):
+            if supposed_name is None:
+                continue
 
+            if token.name != supposed_name:
+                return False
 
-def check_token_names(tokens: list[BaseToken], names: list[str]) -> bool:
-    for token, supposed_name in zip(tokens, names):
-        if supposed_name is None:
-            continue
+        return True
 
-        if token.name != supposed_name:
-            return False
+    @staticmethod
+    def check_min_token_length(tokens: list[BaseToken], min_length: int):
+        return len(tokens) >= min_length
 
-    return True
+    @staticmethod
+    def check_fixed_token_length(tokens: list[BaseToken], length: int):
+        return len(tokens) == length

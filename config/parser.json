@@ -4,33 +4,97 @@
   "node_parsing": {
     "assignment": {
       "node_class": "fastpy.parser.nodes.AssignNode",
-      "parser_class": "fastpy.parser.node_parsers.AssignNodeParser",
-      "extra_data": [
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "cases": [
         {
-          "supposed_types": [
-            2,
-            1
-          ],
-          "supposed_names": [
-            null,
-            "assign"
-          ]
+          "validate_data": {
+            "validators": {
+              "check_min_token_length": {
+                "min_length": 3
+              },
+              "check_token_types": {
+                "types": [
+                  2,
+                  1
+                ]
+              },
+              "check_token_names": {
+                "names": [
+                  null,
+                  "assign"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": 0,
+            "value": {
+              "slice_start": 2
+            }
+          }
         },
         {
-          "supposed_types": [
-            2,
-            1,
-            2,
-            1
-          ],
-          "supposed_names": [
-            null,
-            "body_start",
-            null,
-            "assign"
-          ]
+          "validate_data": {
+            "validators": {
+              "check_min_token_length": {
+                "min_length": 5
+              },
+              "check_token_types": {
+                "types": [
+                  2,
+                  1,
+                  2,
+                  1
+                ]
+              },
+              "check_token_names": {
+                "names": [
+                  null,
+                  "body_start",
+                  null,
+                  "assign"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": 0,
+            "value_type": 2,
+            "value": {
+              "slice_start": 4
+            }
+          }
+        },
+        {
+          "validate_data": {
+            "validators": {
+              "check_fixed_token_length": {
+                "length": 5
+              },
+              "check_token_types": {
+                "types": [
+                  2,
+                  1,
+                  2
+                ]
+              },
+              "check_token_names": {
+                "names": [
+                  null,
+                  "body_start"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": 0,
+            "value_type": 2
+          }
         }
       ]
+    },
+    "variable": {
+
     }
   }
 }
