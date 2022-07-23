@@ -14,7 +14,14 @@ class FileSystem:
             f.write(content)
 
     @staticmethod
+    def remove_quotes(path: str):
+        for symbol in ['"', "'"]:
+            path = path.replace(symbol, '')
+        return path
+
+    @staticmethod
     def normalize_path(path: str) -> str:
+        path = FileSystem.remove_quotes(path)
         if os.path.exists(path):
             return os.path.abspath(path)
         else:

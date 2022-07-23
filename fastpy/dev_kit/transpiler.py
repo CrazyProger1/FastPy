@@ -25,7 +25,7 @@ class Transpiler:
         # importing modules are processed after parsing
         for node in ast.module_nodes(module):
             if isinstance(node, ImportNode):
-                importing_file = node.filepath.text
+                importing_file = Fs.normalize_path(node.filepath.text)
                 self._transpile_file(importing_file, Fs.get_name(importing_file))
 
         # third step: transpiling

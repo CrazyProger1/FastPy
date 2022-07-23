@@ -54,7 +54,7 @@ class AST(BaseAST):
         out = ''
 
         for key, value in self._tree.items():
-            out += key + ':\n    '
+            out += '\n' + key + ':\n    '
             out += '\n    '.join(map(str, value))
 
         return out

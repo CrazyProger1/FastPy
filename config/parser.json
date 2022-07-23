@@ -132,6 +132,32 @@
           }
         }
       ]
+    },
+    "import": {
+      "node_class": "fastpy.parser.nodes.ImportNode",
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "cases": [
+        {
+          "validate_data": {
+            "validators": {
+              "check_min_token_length": {
+                "min_length": 4
+              },
+              "check_token_texts": {
+                "texts": [
+                  "import",
+                  "(",
+                  null,
+                  ")"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "filepath": 2
+          }
+        }
+      ]
     }
   }
 }

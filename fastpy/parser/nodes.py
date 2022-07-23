@@ -144,5 +144,8 @@ class ImportNode(BasicNode, PrintableNode):
         self.filepath = filepath
         self.parts = parts
 
+    @property
     def line(self) -> int:
-        pass
+        if not self.filepath:
+            return -1
+        return self.filepath.line
