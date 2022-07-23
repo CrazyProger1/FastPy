@@ -79,7 +79,7 @@ class Parser(BaseParser):
             self._structures.append(self._current_structure)
             Logger.log_info('Structure detected:', node, ': level:', level)
 
-    @Logger.info_decorator(pattern='Parsing: {expr_tokens[0].line}: {expr_tokens}: level: {expr_level}')
+    @Logger.info(pattern='Parsing: {expr_tokens[0].line}: {expr_tokens}: level: {expr_level}')
     def _parse_expression(self, expr_tokens: list[BaseToken], expr_level: int):
         """Parses each line of code split into tokens"""
         node = self._parse_node(expr_tokens)
@@ -98,7 +98,8 @@ class Parser(BaseParser):
                     self._current_structure = None
                     self._structures.clear()
 
-    @Logger.info_decorator('Start parsing...', ending_message='Parsing completed in {time}')
+    @Logger.info('Start parsing...', ending_message='Parsing completed in {time}')
+    @Logger.catch_errors()
     def parse(self) -> BaseAST:
         expr_tokens = []
         expr_level = 0
@@ -117,7 +118,13 @@ class Parser(BaseParser):
                 continue
 
             elif token.type in [TokenTypes.endline]:
-                self._parse_expression(expr_tokens=expr_tokens, expr_level=expr_level)
+                try:
+                    self._parse_expression(expr_tokens=expr_tokens, expr_level=expr_level)
+                except ParsingError as e:
+                    Logger.log_critical(f'{self._current_module}: {expr_tokens[0].line}: {e}')
+                    os.system('pause')
+                    exit(-1)
+
                 expr_tokens.clear()
                 expr_level = 0
                 code_started = False

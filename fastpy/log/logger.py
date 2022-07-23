@@ -43,7 +43,7 @@ class Logger:
             print(colorama.Style.RESET_ALL, end='')
 
     @staticmethod
-    def info_decorator(*msg: any, sep: str = ' ', pattern: str = None, ending_message: str = None):
+    def info(*msg: any, sep: str = ' ', pattern: str = None, ending_message: str = None):
         def deco(func):
             def wrapper(*args, **kwargs):
                 if pattern:
@@ -61,6 +61,23 @@ class Logger:
                         Logger.log_info(ending_message.format(time=lead_time))
                     else:
                         Logger.log_info(ending_message)
+
+                return out
+
+            return wrapper
+
+        return deco
+
+    @staticmethod
+    def catch_errors():
+        def deco(func):
+            def wrapper(*args, **kwargs):
+                try:
+                    out = func(*args, **kwargs)
+                except Exception as e:
+                    Logger.log_critical(e)
+                    os.system('pause')
+                    exit(-1)
 
                 return out
 

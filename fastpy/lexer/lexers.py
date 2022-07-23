@@ -65,7 +65,7 @@ class Lexer(BaseLexer):
 
         return -1
 
-    @Logger.info_decorator(pattern='Lexing: {line_number}: {code_line}')
+    @Logger.info(pattern='Lexing: {line_number}: {code_line}')
     def _lex_line(self, code_line: str, line_number: int) -> None:
         """Splits each line of the code into tokens"""
 
@@ -83,7 +83,8 @@ class Lexer(BaseLexer):
                 column_number=column,
             )
 
-    @Logger.info_decorator('Start lexing...', ending_message='Lexing completed in {time}')
+    @Logger.info('Start lexing...', ending_message='Lexing completed in {time}')
+    @Logger.catch_errors()
     def lex(self) -> list[BaseToken]:
         for i, code_line in enumerate(self._code.split('\n')):
             if code_line == '' or code_line.startswith(COMMENT_START_SYMBOL):
@@ -93,6 +94,7 @@ class Lexer(BaseLexer):
                 code_line=code_line,
                 line_number=i + 1
             )
+
             self._tokens.append(create_token(
                 token_type=TokenTypes.endline,
                 text='\n',
