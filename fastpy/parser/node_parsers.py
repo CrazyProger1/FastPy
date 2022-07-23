@@ -38,8 +38,10 @@ class UniversalNodeParser(BaseNodeParser):
             results = []
 
             for validator_name, arguments in validators.items():
+
                 result = getattr(Validators, validator_name)(tokens=tokens, **arguments)
                 results.append(result)
+
             return all(results)
 
     def parse(self,

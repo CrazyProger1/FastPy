@@ -48,49 +48,23 @@ class OperatorDetector(BaseDetector):
         cut_string = code_line[column_number::]
 
         start = cut_string[0]
-        if start in OPERATORS.keys():
-            if start not in SIMILAR_OPERATORS.keys():
-                return create_token(
-                    token_type=supposed_token_type,
-                    text=start,
-                    line=line_number,
-                    name=OPERATORS.get(start)
-                )
 
-        similar_ops = SIMILAR_OPERATORS.get(start)
+        overlaps = []
 
-        if similar_ops:
-            for op in similar_ops:
-                if op in string.ascii_letters:
-                    result = re.match(op + ' ', cut_string)
+        for op, name in OPERATORS.items():
+            if start == op[0]:
+                if op[0] in string.ascii_letters:
+                    if re.match(op + ' ', cut_string):
+                        overlaps.append(op)
                 else:
-                    result = re.match(op, cut_string)
+                    if re.match(op, cut_string):
+                        overlaps.append(op)
 
-                if result:
-                    return create_token(
-                        token_type=supposed_token_type,
-                        text=result.group(),
-                        line=line_number,
-                        name=OPERATORS.get(start)
-                    )
+        if len(overlaps) > 0:
+            overlaps.sort(key=len)
             return create_token(
-                token_type=supposed_token_type,
-                text=start,
-                line=line_number,
-                name=OPERATORS.get(start)
+                supposed_token_type,
+                overlaps[-1],
+                line_number,
+                OPERATORS.get(overlaps[-1])
             )
-
-        for op in OPERATORS.keys():
-            if op.startswith(start):
-                if op in string.ascii_letters:
-                    result = re.match(op + ' ', cut_string)
-                else:
-                    result = re.match(op, cut_string)
-
-                if result:
-                    return create_token(
-                        token_type=supposed_token_type,
-                        text=result.group(),
-                        line=line_number,
-                        name=OPERATORS.get(start)
-                    )

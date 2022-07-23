@@ -1,5 +1,5 @@
-from .translate import *
+from .transpiler import Transpiler
 
 __all__ = [
-    'translate'
+    'Transpiler'
 ]

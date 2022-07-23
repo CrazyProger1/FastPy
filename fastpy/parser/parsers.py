@@ -10,8 +10,10 @@ from .structure import *
 
 
 class BaseParser(ABC):
+    """Parser interface"""
+
     @abstractmethod
-    def __init__(self, tokens: list[BaseToken]): ...
+    def __init__(self, tokens: list[BaseToken], module: str = None): ...
 
     @abstractmethod
     def parse(self) -> BaseAST:
@@ -21,12 +23,13 @@ class BaseParser(ABC):
 class Parser(BaseParser):
     """Basic parser of FastPy"""
 
-    def __init__(self, tokens: list[BaseToken]):
+    def __init__(self, tokens: list[BaseToken], module: str = None):
         self._tokens = tokens
         self._ast = create_ast()
         self._structures: list[Structure] = []
         self._current_structure: Structure | None = None
         self._node_parsers = {}
+        self._current_module = module or '__main__'
         self._load_node_parsers()
 
     def _load_node_parsers(self):
@@ -82,11 +85,12 @@ class Parser(BaseParser):
         node = self._parse_node(expr_tokens)
 
         if node:
-            print("DETECTED NODE:", node)
+            Logger.log_info(f'Detected: {node.line}: {node}')
             self._detect_struct_start(node=node, level=expr_level)
             if self._current_structure and self._current_structure.within_struct(expr_level):
                 self._current_structure.push_node(node)
             else:
+                self._ast.push_node(self._current_module, node)
                 if self._current_structure and len(self._structures) >= 2:
                     self._structures.pop(-1)
                     self._current_structure = self._structures[-1]
@@ -125,7 +129,7 @@ class Parser(BaseParser):
         return self._ast
 
 
-def create_parser(tokens: list[BaseToken]) -> BaseParser:
+def create_parser(tokens: list[BaseToken], module: str = None) -> BaseParser:
     """Parser factory"""
 
-    return import_class(PARSER_CLASS_PATH)(tokens)
+    return import_class(PARSER_CLASS_PATH)(tokens, module)

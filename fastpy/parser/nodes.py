@@ -12,10 +12,10 @@ class BaseNode(ABC):
 
 
 class NodeWithBody(BaseNode, ABC):
-    _body = []
+    body = []
 
     def push_node_to_body(self, node: BaseNode):
-        self._body.append(node)
+        self.body.append(node)
 
 
 class BasicNode(BaseNode, ABC):
@@ -35,6 +35,7 @@ class VariableNode(BasicNode, PrintableNode):
     def __init__(self, identifier: BaseToken):
         self.identifier = identifier
 
+    @property
     def line(self) -> int:
         return self.identifier.line
 
@@ -43,6 +44,7 @@ class ValueNode(BasicNode, PrintableNode):
     def __init__(self, value: BaseToken):
         self.value = value
 
+    @property
     def line(self) -> int:
         return self.value.line
 
@@ -56,6 +58,7 @@ class AssignNode(BasicNode, PrintableNode):
         self.value_type = value_type
         self.value = value
 
+    @property
     def line(self) -> int:
         return self.identifier.line
 
@@ -71,6 +74,7 @@ class FuncNode(NodeWithBody, PrintableNode):
         self._body = body or []
         self.return_type = return_type
 
+    @property
     def line(self) -> int:
         return self.identifier.line
 
@@ -86,6 +90,7 @@ class IfNode(NodeWithBody, PrintableNode):
         self.elif_cases: list[IfNode.__init__] = elif_cases
         self.else_body = else_body
 
+    @property
     def line(self) -> int:
         if not self.condition or len(self.condition) == 0:
             return -1
@@ -103,6 +108,7 @@ class BinOpNode(BasicNode, PrintableNode):
         self.operator = operator
         self.priority = priority
 
+    @property
     def line(self) -> int:
         if self.left_operand:
             return self.left_operand.line
@@ -124,9 +130,19 @@ class WhileNode(NodeWithBody, PrintableNode):
                  else_body: list[BaseNode] = None):
         self.condition = condition
         self.else_body = else_body or []
-        self._body = body
+        self.body = body
 
+    @property
     def line(self) -> int:
         if not self.condition or len(self.condition) == 0:
             return -1
         return self.condition[0].line
+
+
+class ImportNode(BasicNode, PrintableNode):
+    def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):
+        self.filepath = filepath
+        self.parts = parts
+
+    def line(self) -> int:
+        pass

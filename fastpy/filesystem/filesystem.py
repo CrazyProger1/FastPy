@@ -21,7 +21,7 @@ class FileSystem:
             raise FileNotFoundError(f'The path "{path}" does not exist.')
 
     @staticmethod
-    def replace_ext(path: str, new_ext: str):
+    def replace_ext(path: str, new_ext: str) -> str:
         path, current_ext = os.path.splitext(path)
         return path + new_ext
 
@@ -29,3 +29,7 @@ class FileSystem:
     def copy_files(src_folder: str, dest_folder: str):
         for file in os.listdir(src_folder):
             shutil.copyfile(os.path.join(src_folder, file), os.path.join(dest_folder, file))
+
+    @staticmethod
+    def get_name(path: str) -> str:
+        return os.path.splitext(os.path.basename(path))[0]

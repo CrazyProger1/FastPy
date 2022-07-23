@@ -11,4 +11,5 @@ __all__ = [
     'Parser',
     'create_parser',
     'create_ast',
+    'ImportNode'
 ]
