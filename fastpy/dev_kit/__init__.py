@@ -1,5 +1,5 @@
-from .transpiler import Transpiler
+from .transpiler import TranspileAPI
 
 __all__ = [
-    'Transpiler'
+    'TranspileAPI'
 ]

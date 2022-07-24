@@ -38,5 +38,13 @@ class FileSystem:
             shutil.copyfile(os.path.join(src_folder, file), os.path.join(dest_folder, file))
 
     @staticmethod
-    def get_name(path: str) -> str:
+    def get_filename_without_ext(path: str) -> str:
         return os.path.splitext(os.path.basename(path))[0]
+
+    @staticmethod
+    def get_filename(path: str):
+        return os.path.basename(path)
+
+    @staticmethod
+    def exists(path: str) -> bool:
+        return os.path.exists(path)

@@ -10,7 +10,7 @@ from ..log import Logger
 class BaseLexer(ABC):
 
     @abstractmethod
-    def __init__(self, code: str): ...
+    def __init__(self, code: str, module: str = None, filepath: str = None): ...
 
     @abstractmethod
     def lex(self) -> list[BaseToken]:
@@ -20,7 +20,8 @@ class BaseLexer(ABC):
 class Lexer(BaseLexer):
     """Basic lexer of FastPy"""
 
-    def __init__(self, code: str):
+    @Logger.info(pattern='Lexer created ({module})')
+    def __init__(self, code: str, module: str = None, filepath: str = None):
         self._code = code
         self._tokens: list[BaseToken] = []
         self._token_detectors = {
@@ -104,6 +105,10 @@ class Lexer(BaseLexer):
         return self._tokens
 
 
-def create_lexer(code: str) -> BaseLexer:
+def create_lexer(code: str, module: str = None, filepath: str = None) -> BaseLexer:
     """Lexer factory"""
-    return import_class(LEXER_CLASS_PATH)(code)
+    return import_class(LEXER_CLASS_PATH)(
+        code=code,
+        module=module,
+        filepath=filepath
+    )

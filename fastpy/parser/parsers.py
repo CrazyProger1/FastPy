@@ -13,7 +13,10 @@ class BaseParser(ABC):
     """Parser interface"""
 
     @abstractmethod
-    def __init__(self, tokens: list[BaseToken], module: str = None): ...
+    def __init__(self,
+                 tokens: list[BaseToken],
+                 module: str = None,
+                 filepath: str = None): ...
 
     @abstractmethod
     def parse(self) -> BaseAST:
@@ -23,12 +26,18 @@ class BaseParser(ABC):
 class Parser(BaseParser):
     """Basic parser of FastPy"""
 
-    def __init__(self, tokens: list[BaseToken], module: str = None):
+    @Logger.info(pattern='Parser created ({module})')
+    def __init__(self,
+                 tokens: list[BaseToken],
+                 module: str = None,
+                 filepath: str = None
+                 ):
         self._tokens = tokens
         self._ast = create_ast()
         self._structures: list[Structure] = []
         self._current_structure: Structure | None = None
         self._node_parsers = {}
+        self._current_module_filepath = filepath
         self._current_module = module or '__main__'
         self._load_node_parsers()
 
@@ -68,6 +77,8 @@ class Parser(BaseParser):
                     )
                     if node:
                         return node
+
+        raise ParsingError('SyntaxError: node not recognized')
 
     def _detect_struct_start(self, node: BaseNode, level: int):
         """Checks if a node is the start of a structure and creates the structure"""
@@ -121,7 +132,7 @@ class Parser(BaseParser):
                 try:
                     self._parse_expression(expr_tokens=expr_tokens, expr_level=expr_level)
                 except ParsingError as e:
-                    Logger.log_critical(f'{self._current_module}: {expr_tokens[0].line}: {e}')
+                    Logger.log_critical(f'{self._current_module_filepath}: {expr_tokens[0].line}: {e}')
                     os.system('pause')
                     exit(-1)
 
@@ -136,7 +147,13 @@ class Parser(BaseParser):
         return self._ast
 
 
-def create_parser(tokens: list[BaseToken], module: str = None) -> BaseParser:
+def create_parser(tokens: list[BaseToken],
+                  module: str = None,
+                  filepath: str = None) -> BaseParser:
     """Parser factory"""
 
-    return import_class(PARSER_CLASS_PATH)(tokens, module)
+    return import_class(PARSER_CLASS_PATH)(
+        tokens=tokens,
+        module=module,
+        filepath=filepath
+    )

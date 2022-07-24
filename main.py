@@ -5,7 +5,7 @@ from config import *
 
 def make_action(args: argparse.Namespace):
     if args.translate:
-        fastpy.Transpiler(**vars(args)).transpile()
+        fastpy.TranspileAPI(**vars(args)).transpile()
 
 
 def setup_argparse() -> argparse.ArgumentParser:

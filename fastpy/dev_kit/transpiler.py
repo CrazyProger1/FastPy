@@ -4,7 +4,7 @@ from fastpy.lexer import create_lexer
 from fastpy.parser import create_parser, BaseAST, ImportNode
 
 
-class Transpiler:
+class TranspileAPI:
     def __init__(self, source: str, **kwargs):
         self.main_source_file = source
         self.kwargs = kwargs
@@ -13,12 +13,12 @@ class Transpiler:
         # first step: lexing
         source_file = Fs.normalize_path(source_file)
         source_code = Fs.read_file(source_file)
-        lexer = create_lexer(source_code)
+        lexer = create_lexer(source_code, module, source_file)
         tokens = lexer.lex()
         Logger.print_raw('|'.join(map(str, tokens)), 'TOKENS:')
 
         # second step: parsing
-        parser = create_parser(tokens, module)
+        parser = create_parser(tokens, module, source_file)
         ast = parser.parse()
         Logger.print_raw(ast, 'ABSTRACT SYNTAX TREE:')
 
@@ -26,7 +26,7 @@ class Transpiler:
         for node in ast.module_nodes(module):
             if isinstance(node, ImportNode):
                 importing_file = Fs.normalize_path(node.filepath.text)
-                self._transpile_file(importing_file, Fs.get_name(importing_file))
+                self._transpile_file(importing_file, Fs.get_filename_without_ext(importing_file))
 
         # third step: transpiling
 
