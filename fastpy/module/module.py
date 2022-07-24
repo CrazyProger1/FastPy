@@ -12,6 +12,7 @@ class Module:
         self.filename = Fs.get_filename_without_ext(self.filepath)
         self.name = name or self.filename
         self.source_code = ''
+        self.tokens = []
 
         if authoload:
             self.load_source()
@@ -20,3 +21,6 @@ class Module:
         if Fs.exists(self.filepath):
             with open(self.filepath, 'r') as sf:
                 self.source_code = sf.read()
+
+    def __repr__(self):
+        return f'Module({self.name})<{self.filepath}>'

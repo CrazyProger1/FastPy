@@ -5,12 +5,13 @@ from .special_symbols import *
 from .config import *
 from .tokens import BaseToken, create_token
 from ..log import Logger
+from ..module import Module
 
 
 class BaseLexer(ABC):
 
     @abstractmethod
-    def __init__(self, code: str, module: str = None, filepath: str = None): ...
+    def __init__(self, module: Module): ...
 
     @abstractmethod
     def lex(self) -> list[BaseToken]:
@@ -21,8 +22,9 @@ class Lexer(BaseLexer):
     """Basic lexer of FastPy"""
 
     @Logger.info(pattern='Lexer created ({module})')
-    def __init__(self, code: str, module: str = None, filepath: str = None):
-        self._code = code
+    def __init__(self, module: Module):
+        self._current_module = module
+        self._code = module.source_code
         self._tokens: list[BaseToken] = []
         self._token_detectors = {
             token_type: import_class(detection_info.get('detector'))()
@@ -105,10 +107,8 @@ class Lexer(BaseLexer):
         return self._tokens
 
 
-def create_lexer(code: str, module: str = None, filepath: str = None) -> BaseLexer:
+def create_lexer(module: Module) -> BaseLexer:
     """Lexer factory"""
     return import_class(LEXER_CLASS_PATH)(
-        code=code,
         module=module,
-        filepath=filepath
     )

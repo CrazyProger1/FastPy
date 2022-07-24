@@ -3,20 +3,21 @@ from ..import_tools import import_class
 from .config import *
 from .nodes import *
 from typing import Iterable
+from ..module import Module
 
 
 class BaseAST(ABC):
     @abstractmethod
-    def add_module(self, module_name: str) -> None: ...
+    def add_module(self, module: Module) -> None: ...
 
     @abstractmethod
-    def push_node(self, module_name: str, node: BaseNode) -> None: ...
+    def push_node(self, module: Module, node: BaseNode) -> None: ...
 
     @abstractmethod
-    def pop_node(self, module_name: str, index: int) -> BaseNode: ...
+    def pop_node(self, module: Module, index: int) -> BaseNode: ...
 
     @abstractmethod
-    def remove_node(self, module_name: str, node: BaseNode) -> None: ...
+    def remove_node(self, module: Module, node: BaseNode) -> None: ...
 
     @abstractmethod
     def module_nodes(self, module_name: str) -> Iterable[BaseNode]: ...
@@ -28,27 +29,28 @@ class AST(BaseAST):
             '__main__': []
         }
 
-    def add_module(self, module_name: str) -> None:
-        self._tree.update({module_name: []})
+    def add_module(self, module: Module) -> None:
+        self._tree.update({module.name: []})
 
-    def push_node(self, module_name: str, node: BaseNode):
-        if self._tree.get(module_name) is None:
-            self.add_module(module_name)
+    def push_node(self, module: Module, node: BaseNode):
+        if self._tree.get(module.name) is None:
+            self._tree.update({module.name: [node]})
+            return
 
-        return self._tree.get(module_name).append(node)
+        self._tree.get(module.name).append(node)
 
     def _check_module_existence(self, module_name: str):
         module_nodes_list = self._tree.get(module_name)
         if not module_nodes_list:
             raise ValueError(f'Module with that name "{module_name}" is not exists')
 
-    def pop_node(self, module_name: str, index: int) -> BaseNode:
-        self._check_module_existence(module_name)
-        return self._tree.get(module_name).pop(index)
+    def pop_node(self, module: Module, index: int) -> BaseNode:
+        self._check_module_existence(module.name)
+        return self._tree.get(module.name).pop(index)
 
-    def remove_node(self, module_name: str, node: BaseNode) -> None:
-        self._check_module_existence(module_name)
-        self._tree.get(module_name).remove(node)
+    def remove_node(self, module: Module, node: BaseNode) -> None:
+        self._check_module_existence(module.name)
+        self._tree.get(module.name).remove(node)
 
     def __repr__(self):
         out = ''
