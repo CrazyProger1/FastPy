@@ -13,12 +13,16 @@ class TranspileAPI:
     def _transpile_file(self, module: Module) -> str:
 
         # first step: lexing
-        lexer = create_lexer(module)
+        lexer = create_lexer(module=module)
         tokens = lexer.lex()
         Logger.print_raw('|'.join(map(str, tokens)), 'TOKENS:')
 
         # second step: parsing
-        parser = create_parser(tokens, module)
+        parser = create_parser(
+            module=module,
+            tokens=tokens
+        )
+
         ast = parser.parse()
         Logger.print_raw(ast, 'ABSTRACT SYNTAX TREE:')
 
