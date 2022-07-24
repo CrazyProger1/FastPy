@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from ..lexer import BaseToken
 from ..exceptions import *
-import os
+from ..filesystem import FileSystem as Fs
 
 
 class BaseNode(ABC):
@@ -149,7 +149,7 @@ class ImportNode(BasicNode, PrintableNode):
 
     def _check_filepath(self):
         filepath = self.filepath.text[1:-1]
-        if not os.path.exists(filepath):
+        if not Fs.exists(filepath):
             raise ParsingError(f'ImportError: module with this name "{filepath}" does not exists')
 
     @property

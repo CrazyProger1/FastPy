@@ -13,6 +13,7 @@
     ">": "greater",
     "<": "less",
     "==": "equal",
+    "!=": "not_equal",
     "and": "and",
     "or": "or",
     "fun": "function",

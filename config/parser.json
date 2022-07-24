@@ -2,7 +2,7 @@
   "parser_class": "fastpy.parser.parsers.Parser",
   "ast_class": "fastpy.parser.ast.AST",
   "node_parsing": {
-    "assignment": {
+    "AssignNode": {
       "node_class": "fastpy.parser.nodes.AssignNode",
       "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
       "cases": [
@@ -93,7 +93,7 @@
         }
       ]
     },
-    "value": {
+    "ValueNode": {
       "node_class": "fastpy.parser.nodes.ValueNode",
       "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
       "cases": [
@@ -133,7 +133,7 @@
         }
       ]
     },
-    "import": {
+    "ImportNode": {
       "node_class": "fastpy.parser.nodes.ImportNode",
       "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
       "cases": [

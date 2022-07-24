@@ -57,7 +57,7 @@ class OperatorDetector(BaseDetector):
                     if re.match(op + ' ', cut_string):
                         overlaps.append(op)
                 else:
-                    if re.match(op, cut_string):
+                    if re.match(re.escape(op), cut_string):
                         overlaps.append(op)
 
         if len(overlaps) > 0:

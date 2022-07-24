@@ -87,7 +87,7 @@ class Lexer(BaseLexer):
             )
 
     @Logger.info('Start lexing...', ending_message='Lexing completed in {time}')
-    @Logger.catch_errors()
+    # @Logger.catch_errors()
     def lex(self) -> list[BaseToken]:
         for i, code_line in enumerate(self._code.split('\n')):
             if code_line == '' or code_line.startswith(COMMENT_START_SYMBOL):
