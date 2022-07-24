@@ -1,6 +1,7 @@
 {
   "lexer_class": "fastpy.lexer.lexers.Lexer",
   "token_class": "fastpy.lexer.tokens.Token",
+  "comment_start": "#",
   "token_detection": {
     "operator": {
       "detector": "fastpy.lexer.detectors.OperatorDetector",
@@ -27,6 +28,5 @@
         "[a-zA-Z_]+"
       ]
     }
-  },
-  "comment_start": "#"
+  }
 }

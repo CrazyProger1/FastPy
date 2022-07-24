@@ -145,12 +145,6 @@ class ImportNode(BasicNode, PrintableNode):
     def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):
         self.filepath = filepath
         self.parts = parts
-        self._check_filepath()
-
-    def _check_filepath(self):
-        filepath = self.filepath.text[1:-1]
-        if not Fs.exists(filepath):
-            raise ParsingError(f'ImportError: module with this name "{filepath}" does not exists')
 
     @property
     def line(self) -> int:

@@ -43,7 +43,7 @@ class OperatorDetector(BaseDetector):
                line_number: int,
                column_number: int,
                regex_pattern: str,
-               supposed_token_type: TokenTypes) -> BaseToken:  # test variant, to refactor!!
+               supposed_token_type: TokenTypes) -> BaseToken:
 
         cut_string = code_line[column_number::]
 
