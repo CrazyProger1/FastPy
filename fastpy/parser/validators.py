@@ -4,6 +4,15 @@ from ..lexer import BaseToken
 
 class Validators:
     @staticmethod
+    def check_token_type(tokens: list[BaseToken], token_index: int, possible_types: list[int | str]) -> bool:
+        token_type = tokens[token_index].type
+
+        if isinstance(possible_types[0], str):
+            return token_type.name in possible_types
+        else:
+            return token_type.value in possible_types
+
+    @staticmethod
     def check_tokens_types(tokens: list[BaseToken], types: list[int]) -> bool:
         for token, supposed_type in zip(tokens, types):
             if supposed_type is None:

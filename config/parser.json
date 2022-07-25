@@ -75,7 +75,8 @@
             "value": {
               "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
               "possible_node_classes": [
-                "fastpy.parser.nodes.ValueNode"
+                "fastpy.parser.nodes.ValueNode",
+                "fastpy.parser.nodes.VariableNode"
               ],
               "tokens_slice": {
                 "start_index": 2
@@ -116,6 +117,31 @@
         }
       ]
     },
+    "VariableNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.VariableNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_fixed_tokens_length": {
+                "length": 1
+              },
+              "check_tokens_types": {
+                "types": [
+                  "identifier"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": {
+              "index": 0
+            }
+          }
+        }
+      ]
+    },
     "ValueNode": {
       "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
       "node_class": "fastpy.parser.nodes.ValueNode",
@@ -125,6 +151,13 @@
             "methods": {
               "check_fixed_tokens_length": {
                 "length": 1
+              },
+              "check_token_type": {
+                "token_index": 0,
+                "possible_types": [
+                  "literal",
+                  "number"
+                ]
               }
             }
           },

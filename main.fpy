@@ -3,3 +3,5 @@
 a: int = 200
 b = 10
 c: int
+
+d = a
