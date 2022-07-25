@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ..lexer import BaseToken, TokenTypes
+from ..lexer import BaseToken, TokenTypes, code_from_tokens
 from ..module import Module
 from ..import_tools import import_class
 from .config import *
@@ -7,6 +7,7 @@ from .ast import *
 from ..exceptions import ParsingError
 from ..log import Logger
 from .structure import *
+from .node_parsers import *
 
 
 class BaseParser(ABC):
@@ -34,9 +35,54 @@ class Parser(BaseParser):
         self._current_struct: Structure | None = None
         self._structs: list[Structure] = []
         self._tokens = tokens
+        self._node_parsers = {}
+        self._load_parsers()
 
-    def _parse_node(self, tokens: list[BaseToken]) -> BaseNode:
-        pass
+    def _load_parsers(self):
+        for node_name, parse_info in NODE_PARSING.items():
+            self._node_parsers.update({
+                import_class(parse_info.get('node_class')):
+                    {
+                        'parser_instance': import_class(parse_info.get('parser_class'))(),
+                        'cases': parse_info.get('cases')
+                    }
+            })
+
+    def _parse_node(self, tokens: list[BaseToken],
+                    possible_node_types: list[type[BaseNode]] = None,
+                    parser: BaseNodeParser = None) -> BaseNode:
+        if parser:
+            for node_type in possible_node_types:
+                cases = self._node_parsers.get(node_type).get('cases')
+                for parser_args in cases:
+                    if parser.validate(tokens=tokens,
+                                       supposed_node_type=node_type,
+                                       **parser_args.get('validate_data')):
+                        return parser.parse(tokens=tokens,
+                                            supposed_node_type=node_type,
+                                            parse_node_clb=self._parse_node,
+                                            **parser_args.get('parse_data'))
+
+        for node_type, parser_info in self._node_parsers.items():
+            parser_instance: BaseNodeParser = parser_info.get('parser_instance')
+            cases = parser_info.get('cases')
+
+            if possible_node_types and node_type not in possible_node_types:
+                continue
+
+            if node_type not in parser_instance.parses:
+                continue
+
+            for parser_args in cases:
+                if parser_instance.validate(tokens=tokens,
+                                            supposed_node_type=node_type,
+                                            **parser_args.get('validate_data')):
+                    return parser_instance.parse(tokens=tokens,
+                                                 supposed_node_type=node_type,
+                                                 parse_node_clb=self._parse_node,
+                                                 **parser_args.get('parse_data'))
+
+        raise ParsingError(f'SyntaxError: failed to parse expression "{code_from_tokens(tokens)}"')
 
     def _detect_struct_start(self, node: BaseNode, level: int):
         if isinstance(node, NodeWithBody):

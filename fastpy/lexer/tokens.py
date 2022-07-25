@@ -23,7 +23,11 @@ class BaseToken(ABC):
 
 
 class Token(BaseToken):
-    def __init__(self, token_type: TokenTypes, text: str, line: int, name: str = None):
+    def __init__(self,
+                 token_type: TokenTypes,
+                 text: str,
+                 line: int,
+                 name: str = None):
         self._type = token_type
         self._text = text
         self._line = line
