@@ -41,9 +41,11 @@ class UniversalNodeParser(BaseNodeParser):
     def _parse_value(tokens: list[BaseToken], parse_node: callable, **value_data):
         index = value_data.get('index')
         parser_class_path = value_data.get('parser_class')
+        nullable = value_data.get('nullable', True)
+        value = None
 
         if index is not None:
-            return tokens[index]
+            value = tokens[index]
 
         elif parser_class_path:
             parser_class = import_class(parser_class_path)
@@ -55,18 +57,20 @@ class UniversalNodeParser(BaseNodeParser):
             tokens_slice_data = value_data.get('tokens_slice')
             slice_start = tokens_slice_data.get('start_index')
             if slice_start:
-                return parse_node(
+                value = parse_node(
                     tokens=tokens[slice_start::],
                     possible_node_types=possible_node_types,
                     parser=parser
                 )
+        if not nullable and not value:
+            raise ParsingError(value_data.get('error_message'))
+        return value
 
     def parse(self,
               tokens: list[BaseToken],
               supposed_node_type: type[BaseNode],
               parse_node_clb: callable,
               **extra_data) -> BaseNode:
-
         node_arguments = {}
         for key, value_data in extra_data.items():
             node_arguments.update({

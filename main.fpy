@@ -1,3 +1,5 @@
 #import('print.fpy')+=
 
-a: int = 10
+a: int = 200
+b = 10
+c: int
