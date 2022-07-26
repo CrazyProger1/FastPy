@@ -1,53 +1,53 @@
 
 interface Car:
-	public:
-		fun __init__(name: str, weight: int): ...
+    public:
+        fun __init__(name: str, weight: int): ...
 		
 		
-		@property
-		fun brand() -> str: ...
+        @property
+        fun brand() -> str: ...
 			
 		
-		@property
-		fun name() -> str: ...
+        @property
+        fun name() -> str: ...
 			
 			
-		@property
-		fun weight() -> int: ...
+        @property
+        fun weight() -> int: ...
 		
 
 class Tesla(Car): # Car implementation
-	private:
-		__name: str
-		__weight: int
-	public:
-		fun __init__(name: str, weight: int):
-			__name = name
-			__weight = weight
+    private:
+        __name: str
+        __weight: int
+    public:
+        fun __init__(name: str, weight: int):
+            __name = name
+            __weight = weight
 		
 		
-		@property
-		fun brand() -> str:
-			return 'Tesla'
+        @property
+        fun brand() -> str:
+            return 'Tesla'
 			
 		
-		@property
-		fun name() -> str:
-			return __name
+        @property
+        fun name() -> str:
+            return __name
 			
 			
-		@property
-		fun weight() -> int:
-			return __weight
+        @property
+        fun weight() -> int:
+            return __weight
 
 
 
 fun car_factory(car_brand: str, name: str, weight: int) -> Car:
-	match car_brand:
-		case "Tesla":
-			return Tesla(name, weight)
-		default:
-			return null
+    match car_brand:
+        case "Tesla":
+            return Tesla(name, weight)
+        default:
+            return null
 
 
 some_car: Car = car_factory("Tesla", "Model X", 2301) 
