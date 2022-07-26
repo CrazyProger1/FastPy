@@ -250,7 +250,7 @@ class BinOpNodeParser(BaseNodeParser):
 
 
 @singleton
-class ArgumentNodesParser(BaseNodeParser):
+class ArgumentsParser(BaseNodeParser):
     def validate(self,
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],
@@ -311,7 +311,7 @@ class LogicOpNodeParser(BaseNodeParser):
 
 
 @singleton
-class ConditionNodeParser(BaseNodeParser):
+class ConditionParser(BaseNodeParser):
     def validate(self,
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],

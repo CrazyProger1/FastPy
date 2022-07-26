@@ -218,7 +218,7 @@
               "index": 1
             },
             "arguments": {
-              "parser_class": "fastpy.parser.node_parsers.ArgumentNodesParser",
+              "parser_class": "fastpy.parser.node_parsers.ArgumentsParser",
               "possible_node_classes": [
                 "fastpy.parser.nodes.AssignNode"
               ],
@@ -253,7 +253,7 @@
               "index": 0
             },
             "arguments": {
-              "parser_class": "fastpy.parser.node_parsers.ArgumentNodesParser",
+              "parser_class": "fastpy.parser.node_parsers.ArgumentsParser",
               "possible_node_classes": [
                 "fastpy.parser.nodes.ValueNode",
                 "fastpy.parser.nodes.VariableNode",
@@ -275,9 +275,6 @@
         {
           "validate_data": {
             "methods": {
-              "check_min_tokens_length": {
-                "min_length": 3
-              },
               "check_token_names": {
                 "names": [
                   "if"
@@ -291,12 +288,15 @@
                 "possible_names": [
                   "body_start"
                 ]
+              },
+              "check_min_tokens_length": {
+                "min_length": 3
               }
             }
           },
           "parse_data": {
             "condition": {
-              "parser_class": "fastpy.parser.node_parsers.ConditionNodeParser",
+              "parser_class": "fastpy.parser.node_parsers.ConditionParser",
               "possible_node_classes": [
                 "fastpy.parser.nodes.LogicOpNode"
               ],

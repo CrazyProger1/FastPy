@@ -155,12 +155,11 @@ class LogicOpNode(BasicNode, PrintableNode):
     def __init__(self,
                  left_operand: BaseNode = None,
                  right_operand: BaseNode = None,
-                 operator: BaseToken = None,
-                 priority: int = None):
+                 operator: BaseToken = None):
+
         self.left_operand = left_operand
         self.right_operand = right_operand
         self.operator = operator
-        self.priority = priority
         self.in_brackets = False
 
     @property
