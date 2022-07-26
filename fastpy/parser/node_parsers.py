@@ -25,7 +25,14 @@ class BaseNodeParser(ABC):
 
 @singleton
 class UniversalNodeParser(BaseNodeParser):
-    parses = (AssignNode, FuncNode, CallNode, ValueNode, VariableNode)
+    parses = (
+        AssignNode,
+        FuncNode,
+        CallNode,
+        ValueNode,
+        VariableNode,
+        IfNode
+    )
 
     @staticmethod
     def _raise_exception(tokens: list[BaseToken], exception_data: dict):
@@ -280,3 +287,44 @@ class ArgumentNodesParser(BaseNodeParser):
                 arguments.append(node)
                 return arguments
             expr_tokens.append(token)
+
+
+@singleton
+class LogicOpNodeParser(BaseNodeParser):
+    parses = (LogicOpNode,)
+
+    def validate(self,
+                 tokens: list[BaseToken],
+                 supposed_node_type: type[BaseNode],
+                 **extra_data) -> bool:
+
+        if len(tokens) == 1 and tokens[0].type == TokenTypes.identifier:
+            return True
+
+    def parse(self,
+              tokens: list[BaseToken],
+              parse_node_clb: callable,
+              supposed_node_type: type[BaseNode],
+              **extra_data) -> BaseNode | list[BaseNode]:
+        if len(tokens) == 1 and tokens[0].type == TokenTypes.identifier:
+            return LogicOpNode(VariableNode(tokens[0]))
+
+
+@singleton
+class ConditionNodeParser(BaseNodeParser):
+    def validate(self,
+                 tokens: list[BaseToken],
+                 supposed_node_type: type[BaseNode],
+                 **extra_data) -> bool:
+        return True
+
+    def parse(self,
+              tokens: list[BaseToken],
+              parse_node_clb: callable,
+              supposed_node_type: type[BaseNode],
+              **extra_data) -> BaseNode | list[BaseNode]:
+        return parse_node_clb(
+            tokens[0:-1],
+            (LogicOpNode,),
+            LogicOpNodeParser()
+        )

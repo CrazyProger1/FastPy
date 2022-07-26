@@ -16,3 +16,4 @@ operators_config = JsonConfig(
 )
 
 BIN_OP_NAMES: list = operators_config['binary_operator_names']  # Names of binary operators
+LOGIC_OP_NAMES: list = operators_config['logic_operator_names']  # Names of logic operators

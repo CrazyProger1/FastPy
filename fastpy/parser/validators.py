@@ -18,7 +18,18 @@ class Validators:
         return token_name in possible_names
 
     @staticmethod
-    def check_tokens_types(tokens: list[BaseToken], types: list[int]) -> bool:
+    def check_token_type_presence(tokens: list[BaseToken], required_types: list[str | int]):
+        types = tuple(map(lambda t: t.type.name, tokens)) \
+            if isinstance(required_types[0], str) \
+            else tuple(map(lambda t: t.type.value, tokens))
+
+        for required_type in required_types:
+            if required_type not in types:
+                return False
+        return True
+
+    @staticmethod
+    def check_token_types(tokens: list[BaseToken], types: list[int]) -> bool:
         for token, supposed_type in zip(tokens, types):
             if supposed_type is None:
                 continue
@@ -29,7 +40,7 @@ class Validators:
         return True
 
     @staticmethod
-    def check_tokens_texts(tokens: list[BaseToken], texts: list[str]) -> bool:
+    def check_token_texts(tokens: list[BaseToken], texts: list[str]) -> bool:
         for token, supposed_text in zip(tokens, texts):
             if supposed_text is None:
                 continue
@@ -40,7 +51,7 @@ class Validators:
         return True
 
     @staticmethod
-    def check_tokens_names(tokens: list[BaseToken], names: list[str]) -> bool:
+    def check_token_names(tokens: list[BaseToken], names: list[str]) -> bool:
         for token, supposed_name in zip(tokens, names):
             if supposed_name is None:
                 continue

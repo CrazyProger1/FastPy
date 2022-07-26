@@ -41,6 +41,14 @@
     "multiplication",
     "division",
     "exponentiation",
-    "modulus"
+    "modulus",
+    "greater",
+    "less",
+    "equal",
+    "not_equal"
+  ],
+  "logic_operator_names": [
+    "and",
+    "or"
   ]
 }

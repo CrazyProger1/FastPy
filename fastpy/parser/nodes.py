@@ -151,6 +151,23 @@ class BinOpNode(BasicNode, PrintableNode):
         return -1
 
 
+class LogicOpNode(BasicNode, PrintableNode):
+    def __init__(self,
+                 left_operand: BaseNode = None,
+                 right_operand: BaseNode = None,
+                 operator: BaseToken = None,
+                 priority: int = None):
+        self.left_operand = left_operand
+        self.right_operand = right_operand
+        self.operator = operator
+        self.priority = priority
+        self.in_brackets = False
+
+    @property
+    def line(self) -> int:
+        return self.left_operand.line
+
+
 # class ForNode(BellyNode, PrintableNode):
 #     def __init__(self,
 #                  body: list[BaseNode] = None,

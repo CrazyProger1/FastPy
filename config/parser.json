@@ -12,7 +12,7 @@
               "check_min_tokens_length": {
                 "min_length": 5
               },
-              "check_tokens_types": {
+              "check_token_types": {
                 "types": [
                   "identifier",
                   "operator",
@@ -20,7 +20,7 @@
                   "operator"
                 ]
               },
-              "check_tokens_names": {
+              "check_token_names": {
                 "names": [
                   null,
                   "body_start",
@@ -56,13 +56,13 @@
               "check_min_tokens_length": {
                 "min_length": 3
               },
-              "check_tokens_types": {
+              "check_token_types": {
                 "types": [
                   "identifier",
                   "operator"
                 ]
               },
-              "check_tokens_names": {
+              "check_token_names": {
                 "names": [
                   null,
                   "assign"
@@ -93,14 +93,14 @@
               "check_fixed_tokens_length": {
                 "length": 3
               },
-              "check_tokens_types": {
+              "check_token_types": {
                 "types": [
                   "identifier",
                   "operator",
                   "identifier"
                 ]
               },
-              "check_tokens_names": {
+              "check_token_names": {
                 "names": [
                   null,
                   "body_start",
@@ -130,7 +130,7 @@
               "check_fixed_tokens_length": {
                 "length": 1
               },
-              "check_tokens_types": {
+              "check_token_types": {
                 "types": [
                   "identifier"
                 ]
@@ -182,14 +182,14 @@
               "check_min_tokens_length": {
                 "min_length": 5
               },
-              "check_tokens_types": {
+              "check_token_types": {
                 "types": [
                   "operator",
                   "identifier",
                   "start_parenthesis"
                 ]
               },
-              "check_tokens_names": {
+              "check_token_names": {
                 "names": [
                   "function"
                 ]
@@ -201,6 +201,14 @@
                 "token_index": -1,
                 "possible_names": [
                   "body_start"
+                ]
+              },
+              "check_token_type_presence": {
+                "exception": {
+                  "message": "SyntaxError: expected close bracket"
+                },
+                "required_types": [
+                  "end_parenthesis"
                 ]
               }
             }
@@ -232,7 +240,7 @@
               "check_min_tokens_length": {
                 "min_length": 3
               },
-              "check_tokens_types": {
+              "check_token_types": {
                 "types": [
                   "identifier",
                   "start_parenthesis"
@@ -256,6 +264,58 @@
                 "start_index": 2
               }
             }
+          }
+        }
+      ]
+    },
+    "IfNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.IfNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_min_tokens_length": {
+                "min_length": 3
+              },
+              "check_token_names": {
+                "names": [
+                  "if"
+                ]
+              },
+              "check_token_name": {
+                "exception": {
+                  "message": "SyntaxError: body start operator expected"
+                },
+                "token_index": -1,
+                "possible_names": [
+                  "body_start"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "condition": {
+              "parser_class": "fastpy.parser.node_parsers.ConditionNodeParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.LogicOpNode"
+              ],
+              "tokens_slice": {
+                "start_index": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "LogicOpNode": {
+      "parser_class": "fastpy.parser.node_parsers.LogicOpNodeParser",
+      "node_class": "fastpy.parser.nodes.LogicOpNode",
+      "cases": [
+        {
+          "validate_data": {
+          },
+          "parse_data": {
           }
         }
       ]
