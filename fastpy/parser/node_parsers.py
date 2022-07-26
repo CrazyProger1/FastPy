@@ -257,7 +257,15 @@ class ArgumentNodesParser(BaseNodeParser):
                 expr_tokens.clear()
                 continue
             elif token.type == TokenTypes.end_parenthesis:
-                node = parse_node_clb(expr_tokens)
+                if BinOpNodeParser().validate(expr_tokens, BinOpNode):
+                    try:
+                        node = parse_node_clb(expr_tokens)
+                    except ParsingError:
+                        expr_tokens.append(token)
+                        continue
+                else:
+                    node = parse_node_clb(expr_tokens)
+
                 arguments.append(node)
                 return arguments
             expr_tokens.append(token)

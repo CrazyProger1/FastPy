@@ -172,18 +172,6 @@
         }
       ]
     },
-    "BinOpNode": {
-      "parser_class": "fastpy.parser.node_parsers.BinOpNodeParser",
-      "node_class": "fastpy.parser.nodes.BinOpNode",
-      "cases": [
-        {
-          "validate_data": {
-          },
-          "parse_data": {
-          }
-        }
-      ]
-    },
     "FuncNode": {
       "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
       "node_class": "fastpy.parser.nodes.FuncNode",
@@ -252,12 +240,25 @@
               "possible_node_classes": [
                 "fastpy.parser.nodes.ValueNode",
                 "fastpy.parser.nodes.VariableNode",
-                "fastpy.parser.nodes.CallNode"
+                "fastpy.parser.nodes.CallNode",
+                "fastpy.parser.nodes.BinOpNode"
               ],
               "tokens_slice": {
                 "start_index": 2
               }
             }
+          }
+        }
+      ]
+    },
+    "BinOpNode": {
+      "parser_class": "fastpy.parser.node_parsers.BinOpNodeParser",
+      "node_class": "fastpy.parser.nodes.BinOpNode",
+      "cases": [
+        {
+          "validate_data": {
+          },
+          "parse_data": {
           }
         }
       ]
