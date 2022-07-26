@@ -34,5 +34,13 @@
     "=": [
       "=="
     ]
-  }
+  },
+  "binary_operator_names": [
+    "addition",
+    "subtraction",
+    "multiplication",
+    "division",
+    "exponentiation",
+    "modulus"
+  ]
 }

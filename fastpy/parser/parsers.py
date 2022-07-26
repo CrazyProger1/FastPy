@@ -39,29 +39,32 @@ class Parser(BaseParser):
         self._load_parsers()
 
     def _load_parsers(self):
-        for node_name, parse_info in NODE_PARSING.items():
+        for node_name, parse_data in NODE_PARSING.items():
             self._node_parsers.update({
-                import_class(parse_info.get('node_class')):
+                import_class(parse_data.get('node_class')):
                     {
-                        'parser_instance': import_class(parse_info.get('parser_class'))(),
-                        'cases': parse_info.get('cases')
+                        'parser_instance': import_class(parse_data.get('parser_class'))(),
+                        'cases': parse_data.get('cases')
                     }
             })
 
     def _parse_node(self, tokens: list[BaseToken],
                     possible_node_types: list[type[BaseNode]] = None,
-                    parser: BaseNodeParser = None) -> BaseNode:
+                    parser: BaseNodeParser = None,
+                    **parser_data) -> BaseNode:
         if parser:
             for node_type in possible_node_types:
                 cases = self._node_parsers.get(node_type).get('cases')
                 for parser_args in cases:
                     if parser.validate(tokens=tokens,
                                        supposed_node_type=node_type,
-                                       **parser_args.get('validate_data')):
+                                       **parser_args.get('validate_data'),
+                                       **parser_data):
                         return parser.parse(tokens=tokens,
                                             supposed_node_type=node_type,
                                             parse_node_clb=self._parse_node,
-                                            **parser_args.get('parse_data'))
+                                            **parser_args.get('parse_data'),
+                                            **parser_data)
 
         for node_type, parser_info in self._node_parsers.items():
             parser_instance: BaseNodeParser = parser_info.get('parser_instance')

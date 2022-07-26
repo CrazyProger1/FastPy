@@ -26,10 +26,10 @@ class BasicNode(BaseNode, ABC):
 
 class PrintableNode(BaseNode, ABC):
     def __repr__(self):
-        text = '('
+        text = '<'
         for attr_name, attr_value in vars(self).items():
-            text += f'{attr_name}:{attr_value}, '
-        text += ')'
+            text += f'{attr_name}:{attr_value.text if isinstance(attr_value, BaseToken) else attr_value}, '
+        text += '>'
         return self.__class__.__name__ + text
 
 
@@ -109,6 +109,28 @@ class BinOpNode(BasicNode, PrintableNode):
         self.right_operand = right_operand
         self.operator = operator
         self.priority = priority
+        self.in_brackets = False
+
+    @staticmethod
+    def _get_operand_len(operand: BaseNode):
+        if isinstance(operand, (VariableNode, ValueNode)):
+            return 1
+        elif isinstance(operand, BinOpNode):
+            return len(operand)
+        return 0
+
+    def __len__(self):
+        tokens_number = 1
+        tokens_number += self._get_operand_len(self.left_operand)
+        tokens_number += self._get_operand_len(self.right_operand)
+        return tokens_number
+
+    def __repr__(self):
+        op_text = f'{self.left_operand} {self.operator.text} {self.right_operand}'
+        if self.in_brackets:
+            op_text = '( ' + op_text + ' )'
+
+        return self.__class__.__name__ + f'<{op_text}>'
 
     @property
     def line(self) -> int:
