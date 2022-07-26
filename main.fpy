@@ -6,3 +6,7 @@ c: int
 
 d = a
 e = (20 - 10) + (d + 20) + a
+
+
+fun world(a: int, b: bool, c: str) -> null:
+    log('World')

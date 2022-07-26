@@ -20,17 +20,18 @@ class BaseNodeParser(ABC):
               tokens: list[BaseToken],
               parse_node_clb: callable,
               supposed_node_type: type[BaseNode],
-              **extra_data) -> BaseNode: ...
+              **extra_data) -> BaseNode | list[BaseNode]: ...
 
 
 @singleton
 class UniversalNodeParser(BaseNodeParser):
-    parses = (AssignNode,)
+    parses = (AssignNode, FuncNode, CallNode, ValueNode, VariableNode)
 
     def validate(self,
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],
                  **extra_data) -> bool:
+
         methods = extra_data.get('methods')
         if not methods:
             return False
@@ -41,6 +42,7 @@ class UniversalNodeParser(BaseNodeParser):
                     **method_kwargs
             ):
                 return False
+
         return True
 
     @staticmethod
@@ -77,6 +79,7 @@ class UniversalNodeParser(BaseNodeParser):
               supposed_node_type: type[BaseNode],
               parse_node_clb: callable,
               **extra_data) -> BaseNode:
+
         node_arguments = {}
         for key, value_data in extra_data.items():
             node_arguments.update({
@@ -226,3 +229,35 @@ class BinOpNodeParser(BaseNodeParser):
             operator=operator,
             right_operand=right_operand
         )
+
+
+@singleton
+class ArgumentNodesParser(BaseNodeParser):
+    def validate(self,
+                 tokens: list[BaseToken],
+                 supposed_node_type: type[BaseNode],
+                 **extra_data) -> bool:
+        return True
+
+    def parse(self,
+              tokens: list[BaseToken],
+              parse_node_clb: callable,
+              supposed_node_type: type[BaseNode],
+              **extra_data) -> BaseNode | list[BaseNode]:
+
+        if tokens[0].type == TokenTypes.end_parenthesis:
+            return []
+
+        arguments = []
+        expr_tokens = []
+        for token in tokens:
+            if token.type == TokenTypes.comma:
+                node = parse_node_clb(expr_tokens)
+                arguments.append(node)
+                expr_tokens.clear()
+                continue
+            elif token.type == TokenTypes.end_parenthesis:
+                node = parse_node_clb(expr_tokens)
+                arguments.append(node)
+                return arguments
+            expr_tokens.append(token)

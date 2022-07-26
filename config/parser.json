@@ -90,8 +90,8 @@
         {
           "validate_data": {
             "methods": {
-              "check_min_tokens_length": {
-                "min_length": 3
+              "check_fixed_tokens_length": {
+                "length": 3
               },
               "check_tokens_types": {
                 "types": [
@@ -180,6 +180,84 @@
           "validate_data": {
           },
           "parse_data": {
+          }
+        }
+      ]
+    },
+    "FuncNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.FuncNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_min_tokens_length": {
+                "min_length": 5
+              },
+              "check_tokens_types": {
+                "types": [
+                  "operator",
+                  "identifier",
+                  "start_parenthesis"
+                ]
+              },
+              "check_tokens_names": {
+                "names": [
+                  "function"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": {
+              "index": 1
+            },
+            "arguments": {
+              "parser_class": "fastpy.parser.node_parsers.ArgumentNodesParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.AssignNode"
+              ],
+              "tokens_slice": {
+                "start_index": 3
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CallNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.CallNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_min_tokens_length": {
+                "min_length": 3
+              },
+              "check_tokens_types": {
+                "types": [
+                  "identifier",
+                  "start_parenthesis"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": {
+              "index": 0
+            },
+            "arguments": {
+              "parser_class": "fastpy.parser.node_parsers.ArgumentNodesParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.ValueNode",
+                "fastpy.parser.nodes.VariableNode",
+                "fastpy.parser.nodes.CallNode"
+              ],
+              "tokens_slice": {
+                "start_index": 2
+              }
+            }
           }
         }
       ]

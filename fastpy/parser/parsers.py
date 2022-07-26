@@ -91,7 +91,7 @@ class Parser(BaseParser):
         if isinstance(node, NodeWithBody):
             self._current_struct = Structure(
                 node=node,
-                level=level
+                level=level + 4
             )
             self._structs.append(self._current_struct)
 
@@ -103,8 +103,6 @@ class Parser(BaseParser):
         """Parses each line of code split into tokens"""
 
         node = self._parse_node(expr_tokens)
-
-        self._detect_struct_start(node, expr_level)
 
         if self._within_struct(level=expr_level):
             self._current_struct.push_node(node=node)
@@ -118,6 +116,8 @@ class Parser(BaseParser):
                 self._current_struct = self._structs[-1]
             else:
                 self._current_struct = None
+
+        self._detect_struct_start(node, expr_level)
 
     @Logger.info('Start parsing...', ending_message='Parsing completed in {time}')
     # @Logger.catch_errors()

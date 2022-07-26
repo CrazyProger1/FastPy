@@ -56,7 +56,7 @@ class Token(BaseToken):
 def code_from_tokens(tokens: list[BaseToken] | tuple[BaseToken]):
     code = ''
     for token in tokens:
-        code += token.text
+        code += token.text + ' '
     return code
 
 

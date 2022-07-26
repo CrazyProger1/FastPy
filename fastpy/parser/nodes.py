@@ -73,8 +73,20 @@ class FuncNode(NodeWithBody, PrintableNode):
                  return_type: BaseToken = None):
         self.identifier = identifier
         self.arguments = arguments or []
-        self._body = body or []
+        self.body = body or []
         self.return_type = return_type
+
+    @property
+    def line(self) -> int:
+        return self.identifier.line
+
+
+class CallNode(BasicNode, PrintableNode):
+    def __init__(self,
+                 identifier: BaseToken,
+                 arguments: list[BaseNode] = None):
+        self.identifier = identifier
+        self.arguments = arguments or []
 
     @property
     def line(self) -> int:
@@ -88,7 +100,7 @@ class IfNode(NodeWithBody, PrintableNode):
                  elif_cases: list = None,
                  else_body: list[BaseNode] = None):
         self.condition = condition
-        self._body = body or []
+        self.body = body or []
         self.elif_cases: list[IfNode.__init__] = elif_cases
         self.else_body = else_body
 
