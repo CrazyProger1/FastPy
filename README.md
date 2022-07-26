@@ -80,11 +80,12 @@ log(some_car.weight) # 2301
 
 ## Features
 
-- Transpailable to C++. Therefore compiled. Therefore fast
+- Transpailable to C++. Therefore, compiled. Therefore, fast
 - Easy intuitive syntax, similar to Python
 - Statically typed
 - Easy expandable
-- Flexible, you can customize it for you or fully rewrite each component
+- Flexible, you can customize it for yourself or completely rewrite each component
+- Built-in logging system
 
 ## Customizing
 
