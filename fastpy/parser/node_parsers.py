@@ -110,6 +110,16 @@ class BinOpNodeParser(BaseNodeParser):
                     return True
                 return False
 
+    @staticmethod
+    def _check_operand_fields(operand: BinOpNode) -> bool:
+        if isinstance(operand, BinOpNode):
+            return not any((
+                operand.right_operand is None,
+                operand.left_operand is None,
+                operand.operator is None
+            ))
+        return True
+
     def parse(self,
               tokens: list[BaseToken],
               parse_node_clb: callable,
@@ -154,6 +164,8 @@ class BinOpNodeParser(BaseNodeParser):
                         operator = None
 
                 case TokenTypes.operator:
+                    if token.name not in BIN_OP_NAMES:
+                        break
                     if not operator:
                         operator = token
                     else:
@@ -166,6 +178,7 @@ class BinOpNodeParser(BaseNodeParser):
                         right_operand = None
 
                 case TokenTypes.start_parenthesis:
+
                     checked, operand = self.parse(
                         tokens[i + 1::],
                         parse_node_clb,
@@ -184,6 +197,7 @@ class BinOpNodeParser(BaseNodeParser):
 
                 case TokenTypes.end_parenthesis:
                     if parenthesis_expected:
+                        parenthesis_expected = False
                         if isinstance(left_operand, BinOpNode) and operator is None and right_operand is None:
                             return i + 1, left_operand
 
@@ -192,8 +206,20 @@ class BinOpNodeParser(BaseNodeParser):
                             operator=operator,
                             right_operand=right_operand
                         )
+                    else:
+                        raise ParsingError(f'SyntaxError: excess closing bracket "{code_from_tokens(tokens)}"')
+
+        if parenthesis_expected:
+            raise ParsingError(f'SyntaxError: close bracket expected')
+
+        if not self._check_operand_fields(right_operand) or not self._check_operand_fields(left_operand):
+            raise ParsingError(f'SyntaxError: unfinished expression "{code_from_tokens(tokens)}"')
+
         if isinstance(left_operand, BinOpNode) and operator is None and right_operand is None:
             return left_operand
+
+        if operator and not right_operand or not operator and right_operand:
+            raise ParsingError(f'SyntaxError: failed to parse math expression "{code_from_tokens(tokens)}"')
 
         return BinOpNode(
             left_operand=left_operand,
