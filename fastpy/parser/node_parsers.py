@@ -27,6 +27,11 @@ class BaseNodeParser(ABC):
 class UniversalNodeParser(BaseNodeParser):
     parses = (AssignNode, FuncNode, CallNode, ValueNode, VariableNode)
 
+    @staticmethod
+    def _raise_exception(tokens: list[BaseToken], exception_data: dict):
+        message = exception_data.get('message')
+        raise ParsingError(message + f' "{code_from_tokens(tokens)}"')
+
     def validate(self,
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],
@@ -37,10 +42,16 @@ class UniversalNodeParser(BaseNodeParser):
             return False
 
         for method_name, method_kwargs in methods.items():
+            exception = method_kwargs.get('exception')
+            if exception:
+                method_kwargs.pop('exception')
+
             if not getattr(Validators, method_name)(
                     tokens=tokens,
                     **method_kwargs
             ):
+                if exception:
+                    self._raise_exception(tokens=tokens, exception_data=exception)
                 return False
 
         return True

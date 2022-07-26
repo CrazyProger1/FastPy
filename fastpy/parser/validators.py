@@ -13,6 +13,11 @@ class Validators:
             return token_type.value in possible_types
 
     @staticmethod
+    def check_token_name(tokens: list[BaseToken], token_index: int, possible_names: list[str]) -> bool:
+        token_name = tokens[token_index].name
+        return token_name in possible_names
+
+    @staticmethod
     def check_tokens_types(tokens: list[BaseToken], types: list[int]) -> bool:
         for token, supposed_type in zip(tokens, types):
             if supposed_type is None:

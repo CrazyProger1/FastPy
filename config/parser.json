@@ -193,6 +193,15 @@
                 "names": [
                   "function"
                 ]
+              },
+              "check_token_name": {
+                "exception": {
+                  "message": "SyntaxError: body start operator expected"
+                },
+                "token_index": -1,
+                "possible_names": [
+                  "body_start"
+                ]
               }
             }
           },
