@@ -4,6 +4,8 @@
   "cpp_templates_dir": "cpp_code",
   "node_transpiling": {
     "fastpy.parser.nodes.AssignNode": "fastpy.transpiler.node_transpilers.AssignNodeTranspiler",
-    "fastpy.parser.nodes.ValueNode": "fastpy.transpiler.node_transpilers.ValueNodeTranspiler"
+    "fastpy.parser.nodes.ValueNode": "fastpy.transpiler.node_transpilers.ValueNodeTranspiler",
+    "fastpy.parser.nodes.VariableNode": "fastpy.transpiler.node_transpilers.VariableNodeTranspiler",
+    "fastpy.parser.nodes.BinOpNode": "fastpy.transpiler.node_transpilers.BinOpNodeTranspiler"
   }
 }

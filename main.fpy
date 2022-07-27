@@ -4,10 +4,10 @@ a: int = 200
 b = 10
 c: int
 
-#d = a
-#e = (20 - 10) + (d + 20) + a
-#
-#
+d = a
+e = (20 - 10) + (d + 20) + a
+
+
 #fun world(a: int, b: bool, c: str, d: int = (1 + 1) / 1 * 1 + (1 - 1)):
 #    log('World')
 #    log((1 + 1) * 1, 'world')

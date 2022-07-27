@@ -27,8 +27,7 @@ class Transpiler(BaseTranspiler):
         self._current_module = module
         self._ast = ast
         self._code_template: Template | None = None
-        self._internal_code = ''
-        self._external_code = ''
+        self._code = Code()
         self._transpilers = {}
 
         self._load_template()
@@ -48,12 +47,13 @@ class Transpiler(BaseTranspiler):
         if self._current_module.name == '__main__':
             self._code_template = env.get_template(CPP_MAIN_TEMPLATE_PATH)
 
-    def _transpile_node(self, node: BaseNode) -> Code:
+    def _transpile_node(self, node: BaseNode, **kwargs) -> BaseCode:
         Logger.log_info(f'Transpiling: {node.line}: {node}')
         transpiler: BaseNodeTranspiler = self._transpilers.get(node.__class__)
         return transpiler.transpile(
             node=node,
-            transpile_node_clb=self._transpile_node
+            transpile_node_clb=self._transpile_node,
+            **kwargs
         )
 
     @Logger.info('Start transpiling...', ending_message='Transpiling completed in {time}')
@@ -62,12 +62,13 @@ class Transpiler(BaseTranspiler):
             code = self._transpile_node(
                 node=node
             )
-            self._internal_code += code.internal + '\n'
-            self._external_code += code.external + '\n'
+
+            self._code.push_internal(code.internal, auto_semicolon=False)
+            self._code.push_external(code.external, auto_semicolon=False)
 
         return self._code_template.render(
-            external_code=self._external_code,
-            internal_code=self._internal_code
+            external_code=self._code.external,
+            internal_code=self._code.internal
         )
 
 
