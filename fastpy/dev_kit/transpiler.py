@@ -48,7 +48,10 @@ class TranspileAPI:
         out_folder = Fs.normalize_path(out_folder)
         Fs.makedirs(Fs.join(out_folder, 'bin'))
         Fs.makedirs(Fs.join(out_folder, 'src'))
-        Fs.write_file(Fs.join(out_folder, 'src', Fs.replace_ext(module.filename, '.cpp')), code)
+        filepath = Fs.join(out_folder, 'src',
+                           Fs.replace_ext(module.filename, '.cpp' if module.name == '__main__' else '.hpp'))
+        Fs.write_file(filepath, code)
+        Logger.log_info(f'Code saved to "{filepath}"')
 
     def _transpile_file(self, module: Module) -> str:
 

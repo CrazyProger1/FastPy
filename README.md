@@ -11,7 +11,7 @@ pytonic intuitive syntax.
 
 - ["Hello, World"](examples/hello_world.fpy) program:
 
-```python
+```
 # Just a comment :D
 
 log('Hello, World!')  # print hello world
@@ -19,7 +19,7 @@ log('Hello, World!')  # print hello world
 
 - ["Far Future"](examples/far_future.fpy) program:
 
-```python
+```
 
 interface Car:
     public:
@@ -90,9 +90,8 @@ log(some_car.weight) # 2301
 
 ## Customizing
 
-### Operators
-
-If you don't like how the operators look, you can change the [ops config file](config/operators.json).
+That language built in such a way as to support customizing at every stage of transpilation or interpreting. For more
+info, see [customizing doc file](docs/Customizing.md).
 
 ## Licence
 

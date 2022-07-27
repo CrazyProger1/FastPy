@@ -11,7 +11,11 @@ from ..module import Module
 class BaseLexer(ABC):
 
     @abstractmethod
-    def __init__(self, module: Module): ...
+    def __init__(self, module: Module):
+        """
+
+        :param module: the module parameter contains information about the currently processed file.
+        """
 
     @abstractmethod
     def lex(self) -> list[BaseToken]:
