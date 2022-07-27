@@ -103,3 +103,27 @@ class FuncNodeTranspiler(BaseNodeTranspiler):
         func_code = f'{return_type} {node.identifier.text} ({arguments}){{\n{body}\n}}'
         code.push_external(func_code)
         return code
+
+
+class CallNodeTranspiler(BaseNodeTranspiler):
+    @staticmethod
+    def _transpile_arguments(arguments: list[BaseNode], transpile_node_clb) -> str:
+        code = ''
+
+        for i, arg in enumerate(arguments):
+            code += transpile_node_clb(arg, endl=False, auto_semicolon=False).internal
+            if i <= len(arguments) - 2:
+                code += ', '
+
+        return code
+
+    def transpile(self,
+                  node: CallNode,
+                  transpile_node_clb: callable,
+                  **kwargs) -> BaseCode:
+        code = Code()
+        code.push_internal(
+            f'{node.identifier.text}({self._transpile_arguments(node.arguments, transpile_node_clb)})',
+            **kwargs
+        )
+        return code
