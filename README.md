@@ -89,8 +89,12 @@ log(some_car.weight) # 2301
 
 ## Customizing
 
-That language built in such a way as to support customizing at every stage of transpilation or interpreting. For more
+That language built in such a way as to support customizing at every stage of transpiling or interpreting. For more
 info, see [customizing doc file](docs/Customizing.md).
+
+## Highlighting
+
+To enable syntax highlighting, see [highlighting doc file](docs/Highlighting.md).
 
 ## Licence
 
