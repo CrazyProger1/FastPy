@@ -3,6 +3,7 @@ import argparse
 from config import *
 
 
+
 def make_action(args: argparse.Namespace):
     if args.translate:
         fastpy.TranspileAPI(**vars(args)).transpile()
