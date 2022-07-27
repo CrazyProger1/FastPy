@@ -11,7 +11,7 @@ pytonic intuitive syntax.
 
 - ["Hello, World"](examples/hello_world.fpy) program:
 
-```
+```python
 # Just a comment :D
 
 log('Hello, World!')  # print hello world
@@ -19,8 +19,7 @@ log('Hello, World!')  # print hello world
 
 - ["Far Future"](examples/far_future.fpy) program:
 
-```
-
+```python
 interface Car:
     public:
         fun __init__(name: str, weight: int): ...
