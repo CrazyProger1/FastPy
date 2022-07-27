@@ -50,7 +50,7 @@ void log_warning(const T &t, bool endl = false) {
 void world (int a, bool b, str c, int d = (1 + 1) / 1 * 1 + (1 - 1)){
 int abc = 10;
 auto bbc = 20;
-log('World');
+log("World");
 log((1 + 1) * 1);
 
 };
@@ -72,7 +72,7 @@ auto d = a;
 auto e = (20 - 10) + (d + 20) + a;
 
 
-world(a, true, 'bla bla bla', 91239012039);
+world(a, true, "bla bla bla", 91239012039);
 
 
 }

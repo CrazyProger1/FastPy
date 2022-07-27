@@ -30,8 +30,13 @@ class ValueNodeTranspiler(BaseNodeTranspiler):
                   transpile_node_clb: callable,
                   **kwargs) -> BaseCode:
         code = Code()
+
+        value = node.value.text
+        if isinstance(value, str):
+            value = value.replace('"', '\"').replace("'", '"')
+
         code.push_internal(
-            f'{node.value.text}',
+            f'{value}',
             **kwargs
         )
         return code
