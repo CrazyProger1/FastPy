@@ -17,7 +17,7 @@ class AssignNodeTranspiler(BaseNodeTranspiler):
         code.push_internal(
             f'{node.value_type.text if node.value_type is not None else "auto"} '
             f'{node.identifier.text}{" = " if node.value else ""}'
-            f'{transpile_node_clb(node=node.value).internal if node.value else ""}',
+            f'{transpile_node_clb(node=node.value, **kwargs).internal if node.value else ""}',
             **kwargs
         )
 
@@ -64,4 +64,42 @@ class BinOpNodeTranspiler(BaseNodeTranspiler):
             match_expr = '(' + match_expr + ')'
 
         code.push_internal(match_expr, **kwargs)
+        return code
+
+
+class FuncNodeTranspiler(BaseNodeTranspiler):
+
+    @staticmethod
+    def _transpile_arguments(arguments: list[BaseNode], transpile_node_clb) -> str:
+        code = ''
+
+        for i, arg in enumerate(arguments):
+            code += transpile_node_clb(arg, endl=False, auto_semicolon=False).internal
+            if i <= len(arguments) - 2:
+                code += ', '
+
+        return code
+
+    @staticmethod
+    def _transpile_body(body: list[BaseNode], transpile_node_clb) -> str:
+        code = Code()
+
+        for i, node in enumerate(body):
+            code.push_internal(
+                transpile_node_clb(node=node, endl=False, auto_semicolon=False).internal,
+            )
+
+        return code.internal
+
+    def transpile(self,
+                  node: FuncNode,
+                  transpile_node_clb: callable,
+                  **kwargs) -> BaseCode:
+        code = Code()
+        arguments = self._transpile_arguments(node.arguments, transpile_node_clb)
+        body = self._transpile_body(node.body, transpile_node_clb)
+
+        return_type = node.return_type.text if node.return_type else 'void'
+        func_code = f'{return_type} {node.identifier.text} ({arguments}){{\n{body}\n}}'
+        code.push_external(func_code)
         return code

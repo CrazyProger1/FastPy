@@ -8,7 +8,9 @@ d = a
 e = (20 - 10) + (d + 20) + a
 
 
-#fun world(a: int, b: bool, c: str, d: int = (1 + 1) / 1 * 1 + (1 - 1)):
+fun world(a: int, b: bool, c: str, d: int = (1 + 1) / 1 * 1 + (1 - 1)):
+    abc: int = 10
+    bbc = 20
 #    log('World')
 #    log((1 + 1) * 1, 'world')
 #
