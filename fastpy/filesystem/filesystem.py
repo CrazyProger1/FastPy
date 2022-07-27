@@ -52,3 +52,10 @@ class FileSystem:
     @staticmethod
     def join(*parts) -> str:
         return os.path.join(*parts)
+
+    @staticmethod
+    def makedirs(path: str):
+        try:
+            os.makedirs(path)
+        except FileExistsError:
+            pass

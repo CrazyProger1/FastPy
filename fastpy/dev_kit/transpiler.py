@@ -42,6 +42,14 @@ class TranspileAPI:
         Logger.print_raw(cpp_code, 'CPP CODE:')
         return cpp_code
 
+    def _save_cpp_code(self, module: Module, code: str):
+        out_folder = self.kwargs.get('output') or 'fastpy_build'
+        Fs.makedirs(out_folder)
+        out_folder = Fs.normalize_path(out_folder)
+        Fs.makedirs(Fs.join(out_folder, 'bin'))
+        Fs.makedirs(Fs.join(out_folder, 'src'))
+        Fs.write_file(Fs.join(out_folder, 'src', Fs.replace_ext(module.filename, '.cpp')), code)
+
     def _transpile_file(self, module: Module) -> str:
 
         # first step: lexing
@@ -58,6 +66,7 @@ class TranspileAPI:
 
         # third step: transpiling
         cpp_code = self._translate_file(module, ast)
+        self._save_cpp_code(module, cpp_code)
 
     def transpile(self) -> str:
         return self._transpile_file(Module(self.main_source_file, '__main__'))

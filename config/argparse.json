@@ -29,7 +29,7 @@
         "--output"
       ],
       "kwargs": {
-        "help": "output file path"
+        "help": "output folder"
       }
     }
   ]

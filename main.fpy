@@ -12,7 +12,7 @@ fun world(a: int, b: bool, c: str, d: int = (1 + 1) / 1 * 1 + (1 - 1)):
     abc: int = 10
     bbc = 20
     log('World')
-    log((1 + 1) * 1, 'world')
+    log((1 + 1) * 1)
 
 world(a, true, 'bla bla bla', 91239012039)
 #
