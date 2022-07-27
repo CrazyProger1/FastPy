@@ -1,3 +1,5 @@
 {
-  "transpiler_class": "fastpy.transpiler.transpilers.Transpiler"
+  "transpiler_class": "fastpy.transpiler.transpilers.Transpiler",
+  "cpp_main_template": "minimal_main.cpp",
+  "cpp_templates_dir": "cpp_code"
 }

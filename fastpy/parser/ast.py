@@ -20,7 +20,7 @@ class BaseAST(ABC):
     def remove_node(self, module: Module, node: BaseNode) -> None: ...
 
     @abstractmethod
-    def module_nodes(self, module_name: str) -> Iterable[BaseNode]: ...
+    def nodes(self, module_name: str) -> Iterable[BaseNode]: ...
 
 
 class AST(BaseAST):
@@ -61,7 +61,7 @@ class AST(BaseAST):
 
         return out
 
-    def module_nodes(self, module_name: str) -> Iterable[BaseNode]:
+    def nodes(self, module_name: str) -> Iterable[BaseNode]:
         for node in self._tree.get(module_name):
             yield node
 

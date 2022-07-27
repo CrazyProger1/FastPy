@@ -6,6 +6,7 @@ from .nodes import *
 
 __all__ = [
     'BaseAST',
+    'BaseNode',
     'AST',
     'BaseParser',
     'Parser',

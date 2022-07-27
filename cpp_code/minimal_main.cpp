@@ -1,4 +1,4 @@
-{% extends 'base.cpp' %}
+{% extends 'base_main.cpp' %}
 
 {% block includes %}
 #include<iostream>

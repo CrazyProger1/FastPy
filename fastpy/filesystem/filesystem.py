@@ -48,3 +48,7 @@ class FileSystem:
     @staticmethod
     def exists(path: str) -> bool:
         return os.path.exists(path)
+
+    @staticmethod
+    def join(*parts) -> str:
+        return os.path.join(*parts)

@@ -1,9 +1,13 @@
 from ..config import JsonConfig, CONFIG_FOLDER
-import os
+from ..filesystem import FileSystem as Fs
 
 transpiler_config = JsonConfig(
-    filepath=os.path.join(CONFIG_FOLDER, 'transpiler.json'),
+    filepath=Fs.join(CONFIG_FOLDER, 'transpiler.json'),
     authoload=True
 )
 
 TRANSPILER_CLASS_PATH = transpiler_config['transpiler_class']
+
+CPP_TEMPLATES_DIR = transpiler_config['cpp_templates_dir']
+
+CPP_MAIN_TEMPLATE_PATH = transpiler_config['cpp_main_template']
