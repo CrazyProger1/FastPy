@@ -96,6 +96,23 @@ info, see [customizing doc file](docs/Customizing.md).
 
 To enable syntax highlighting, see [highlighting doc file](docs/Highlighting.md).
 
+## Transpiling
+
+*Usage:*
+
+```shell
+python main.py [-h] -s SOURCE [-t] [-o OUTPUT]
+```
+
+*Examples:*
+
+- Transpile file **main.fpy** to C++ and save to **some_folder**:
+
+```shell
+python main.py -s main.fpy -t -o some_folder
+```
+
+
 ## Licence
 
 FastPy uses the MIT license. See the bundled [LICENSE](LICENSE) file for details.
