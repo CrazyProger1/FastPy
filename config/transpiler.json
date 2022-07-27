@@ -1,0 +1,3 @@
+{
+  "transpiler_class": "fastpy.transpiler.transpilers.Transpiler"
+}
