@@ -1,5 +1,9 @@
 {
   "transpiler_class": "fastpy.transpiler.transpilers.Transpiler",
   "cpp_main_template": "minimal_main.cpp",
-  "cpp_templates_dir": "cpp_code"
+  "cpp_templates_dir": "cpp_code",
+  "node_transpiling": {
+    "fastpy.parser.nodes.AssignNode": "fastpy.transpiler.node_transpilers.AssignNodeTranspiler",
+    "fastpy.parser.nodes.ValueNode": "fastpy.transpiler.node_transpilers.ValueNodeTranspiler"
+  }
 }
