@@ -4,5 +4,4 @@
 CMakeFiles/src.dir/main.cpp.obj: \
  ../include/builtin.hpp \
  ../include/termcolor.hpp \
- ../main.cpp \
- ../print.hpp
+ ../main.cpp

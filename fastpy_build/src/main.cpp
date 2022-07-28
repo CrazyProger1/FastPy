@@ -14,7 +14,10 @@
 
 
 int main(){
-    if (true && true || (1 + 1) && true) {
+    auto a = 1 + 1 - 1 * 1;
+
+
+if (a) {
 log("hello");
 
 }

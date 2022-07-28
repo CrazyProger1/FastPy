@@ -135,13 +135,16 @@ class OperationsNodeTranspiler(BaseNodeTranspiler):
         return operator
 
     def transpile(self,
-                  node: LogicOpNode,
+                  node: LogicOpNode | BinOpNode,
                   transpile_node_clb: callable,
                   **kwargs) -> BaseCode:
         code = Code()
         left_operand = transpile_node_clb(node.left_operand, auto_semicolon=False, endl=False)
-        right_operand = transpile_node_clb(node.right_operand, auto_semicolon=False, endl=False)
-        match_expr = f'{left_operand} {self._transpile_operator(node.operator.text)} {right_operand}'
+        if not node.right_operand:
+            match_expr = f'{left_operand}'
+        else:
+            right_operand = transpile_node_clb(node.right_operand, auto_semicolon=False, endl=False)
+            match_expr = f'{left_operand} {self._transpile_operator(node.operator.text)} {right_operand}'
 
         if node.in_brackets:
             match_expr = '(' + match_expr + ')'
