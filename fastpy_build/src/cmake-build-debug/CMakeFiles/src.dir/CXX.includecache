@@ -14,13 +14,35 @@ string
 termcolor.hpp
 D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/termcolor.hpp
 
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/termcolor.hpp
+iostream
+-
+unistd.h
+-
+io.h
+-
+windows.h
+-
+
 D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/main.cpp
 iostream
 -
 string
 -
-termcolor.hpp
-D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/termcolor.hpp
+include/termcolor.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/termcolor.hpp
+include/builtin.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/builtin.hpp
+print.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/print.hpp
+
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/print.hpp
+iostream
+-
+string
+-
+include/termcolor.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/termcolor.hpp
 include/builtin.hpp
 D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/builtin.hpp
 

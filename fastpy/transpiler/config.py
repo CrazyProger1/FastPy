@@ -14,3 +14,11 @@ CPP_TEMPLATE_PATH = transpiler_config['cpp_template']
 
 NODE_TRANSPILING = transpiler_config['node_transpiling']
 
+
+builtin_config = JsonConfig(
+    filepath=Fs.join(CONFIG_FOLDER, 'builtin.json'),
+    authoload=True
+)
+
+BUILTIN_TYPES = builtin_config['builtin_types']
+BUILTIN_FUNCTIONS = builtin_config['builtin_functions']

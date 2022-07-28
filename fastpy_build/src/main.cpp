@@ -1,11 +1,12 @@
 
 #include<iostream>
 #include<string>
-#include"termcolor.hpp"
+#include"include/termcolor.hpp"
 #include"include/builtin.hpp"
 
 
 
+#include "print.hpp"
 
 
 
@@ -20,9 +21,7 @@ log((1 + 1) * 1);
 
 
 int main(){
-    import("print.fpy");
-
-int a = 200;
+    int a = 200;
 
 
 auto b = 10;

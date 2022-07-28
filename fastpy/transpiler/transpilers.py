@@ -29,6 +29,7 @@ class Transpiler(BaseTranspiler):
         self._code_template: Template | None = None
         self._code = Code()
         self._transpilers = {}
+        self._additional_includes = Code()
 
         self._load_template()
         self._load_transpilers()
@@ -58,9 +59,24 @@ class Transpiler(BaseTranspiler):
             **kwargs
         )
 
+    def _transpile_import(self, node: CallNode):
+        for importing_file in node.arguments:
+            if isinstance(importing_file, ValueNode):
+                include_path = importing_file.value.text
+                include_path = include_path.replace("'", '').replace('"', '')
+                include_path = Fs.replace_ext(include_path, '.hpp')
+                self._additional_includes.push_external(
+                    f'#include "{include_path}"',
+                    auto_semicolon=False, endl=True
+                )
+
     @Logger.info('Start transpiling...', ending_message='Transpiling completed in {time}')
     def transpile(self) -> str:
         for node in self._ast.nodes(self._current_module.name):
+            if isinstance(node, CallNode) and node.identifier.text == BUILTIN_FUNCTIONS['import']:
+                self._transpile_import(node)
+                continue
+
             code = self._transpile_node(
                 node=node
             )
@@ -70,7 +86,8 @@ class Transpiler(BaseTranspiler):
 
         return self._code_template.render(
             external_code=self._code.external,
-            internal_code=self._code.internal
+            internal_code=self._code.internal,
+            additional_includes=self._additional_includes.external
         )
 
 

@@ -3,4 +3,6 @@
 
 CMakeFiles/src.dir/main.cpp.obj: \
  ../include/builtin.hpp \
- ../main.cpp
+ ../include/termcolor.hpp \
+ ../main.cpp \
+ ../print.hpp
