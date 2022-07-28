@@ -53,6 +53,6 @@ T input(const str &t) {
 
     T inp;
 
-    std::cin >> inp;
+    getline(std::cin, inp);
     return inp;
 }

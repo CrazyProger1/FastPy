@@ -26,13 +26,8 @@
 #if true and (1 + 1 * a):
 #    log('hello')
 
-d: int = input('hello>')
+d: str = input('hello>')
 
-a = 123123
-b = 123412
 
-c = a + b
-log(c, true)
+log(d);
 
-if c - 246535:
-    log('hello, world!')
