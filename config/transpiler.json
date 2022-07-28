@@ -11,6 +11,7 @@
     "fastpy.parser.nodes.FuncNode": "fastpy.transpiler.node_transpilers.FuncNodeTranspiler",
     "fastpy.parser.nodes.CallNode": "fastpy.transpiler.node_transpilers.CallNodeTranspiler",
     "fastpy.parser.nodes.IfNode": "fastpy.transpiler.node_transpilers.IfNodeTranspiler",
-    "fastpy.parser.nodes.LogicOpNode": "fastpy.transpiler.node_transpilers.OperationsNodeTranspiler"
+    "fastpy.parser.nodes.LogicOpNode": "fastpy.transpiler.node_transpilers.OperationsNodeTranspiler",
+    "fastpy.parser.nodes.ElseNode": "fastpy.transpiler.node_transpilers.ElseNodeTranspiler"
   }
 }

@@ -4,9 +4,10 @@
 
 - [x] Variables & base types
 - [x] Functions
-- [x] Modules
-- [ ] Conditions
+- [ ] Modules
+    - [x] Importing
+    - [ ] Namespaces
+- [x] Conditions
     - [x] if
-    - [ ] elif
-    - [ ] else
-- [ ] Namespaces
+    - [x] elif
+    - [x] else

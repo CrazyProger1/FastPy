@@ -53,10 +53,11 @@ class OperatorDetector(BaseDetector):
 
         for op, name in OPERATORS.items():
             if start == op[0]:
-                if op[0] in string.ascii_letters:
+                if op[0] in string.ascii_letters and name != 'else':
                     if re.match(op + ' ', cut_string):
                         overlaps.append(op)
                 else:
+
                     if re.match(re.escape(op), cut_string):
                         overlaps.append(op)
 

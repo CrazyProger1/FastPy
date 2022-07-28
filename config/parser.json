@@ -269,6 +269,37 @@
         }
       ]
     },
+    "ElseNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.ElseNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_token_names": {
+                "names": [
+                  "else"
+                ]
+              },
+              "check_token_name": {
+                "exception": {
+                  "message": "SyntaxError: body start operator expected"
+                },
+                "token_index": -1,
+                "possible_names": [
+                  "body_start"
+                ]
+              },
+              "check_fixed_tokens_length": {
+                "length": 2
+              }
+            }
+          },
+          "parse_data": {
+          }
+        }
+      ]
+    },
     "IfNode": {
       "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
       "node_class": "fastpy.parser.nodes.IfNode",
@@ -305,6 +336,44 @@
               "tokens_slice": {
                 "start_index": 1
               }
+            }
+          }
+        },
+        {
+          "validate_data": {
+            "methods": {
+              "check_token_names": {
+                "names": [
+                  "elif"
+                ]
+              },
+              "check_token_name": {
+                "exception": {
+                  "message": "SyntaxError: body start operator expected"
+                },
+                "token_index": -1,
+                "possible_names": [
+                  "body_start"
+                ]
+              },
+              "check_min_tokens_length": {
+                "min_length": 3
+              }
+            }
+          },
+          "parse_data": {
+            "condition": {
+              "parser_class": "fastpy.parser.node_parsers.ConditionParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.LogicOpNode",
+                "fastpy.parser.nodes.BinOpNode"
+              ],
+              "tokens_slice": {
+                "start_index": 1
+              }
+            },
+            "is_elif": {
+              "value": true
             }
           }
         }

@@ -25,12 +25,12 @@ log_info(name, true);
 
 }
 
-if (age > 15 && age < 18) {
+else if (age > 15) {
 log_warning(name, true);
 
 }
 
-if (age < 16) {
+else {
 log_error(name, true);
 
 }

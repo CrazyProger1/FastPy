@@ -110,16 +110,29 @@ class LogicOpNode(BasicNode, PrintableNode):
         return self.left_operand.line
 
 
+class ElseNode(NodeWithBody, PrintableNode):
+    def __init__(self, body: list[BaseNode] = None, ):
+        self.body = body or []
+
+    @property
+    def line(self) -> int:
+        if len(self.body) > 0:
+            return self.body[0].line
+        return -1
+
+
 class IfNode(NodeWithBody, PrintableNode):
     def __init__(self,
                  condition: LogicOpNode = None,
                  body: list[BaseNode] = None,
                  elif_cases: list = None,
-                 else_body: list[BaseNode] = None):
+                 else_case: ElseNode = None,
+                 is_elif: bool = False):
         self.condition = condition
         self.body = body or []
         self.elif_cases: list[IfNode.__init__] = elif_cases
-        self.else_body = else_body
+        self.else_case = else_case
+        self.is_elif = is_elif
 
     @property
     def line(self) -> int:

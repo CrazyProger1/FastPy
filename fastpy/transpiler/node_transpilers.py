@@ -173,7 +173,6 @@ class OperationsNodeTranspiler(BaseNodeTranspiler):
 
 @singleton
 class IfNodeTranspiler(BaseNodeTranspiler):
-
     @staticmethod
     def _transpile_condition(node: LogicOpNode, transpile_node_clb) -> str:
         return transpile_node_clb(node, endl=False, auto_semicolon=False).internal
@@ -197,5 +196,37 @@ class IfNodeTranspiler(BaseNodeTranspiler):
         condition = self._transpile_condition(node.condition, transpile_node_clb)
         body = self._transpile_body(node.body, transpile_node_clb)
 
-        code.push_internal(f'if ({condition}) {{\n{body}\n}}', auto_semicolon=False, endl=True)
+        code.push_internal(
+            f'{"else if" if node.is_elif else "if"} ({condition}) {{\n{body}\n}}',
+            auto_semicolon=False,
+            endl=True
+        )
+        return code
+
+
+class ElseNodeTranspiler(BaseNodeTranspiler):
+
+    @staticmethod
+    def _transpile_body(body: list[BaseNode], transpile_node_clb) -> str:
+        code = Code()
+
+        for i, node in enumerate(body):
+            code.push_internal(
+                transpile_node_clb(node=node, endl=False, auto_semicolon=False).internal,
+            )
+
+        return code.internal
+
+    def transpile(self,
+                  node: ElseNode,
+                  transpile_node_clb: callable,
+                  **kwargs) -> BaseCode:
+        code = Code()
+        body = self._transpile_body(node.body, transpile_node_clb)
+
+        code.push_internal(
+            f'else {{\n{body}\n}}',
+            auto_semicolon=False,
+            endl=True
+        )
         return code

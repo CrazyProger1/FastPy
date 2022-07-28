@@ -6,6 +6,7 @@ from ..parser import BaseAST, BaseNode
 from ..log import Logger
 from .node_transpilers import *
 from jinja2 import Environment, FileSystemLoader, Template
+from ..exceptions import *
 
 
 class BaseTranspiler(ABC):
@@ -53,6 +54,10 @@ class Transpiler(BaseTranspiler):
     def _transpile_node(self, node: BaseNode, **kwargs) -> BaseCode:
         Logger.log_info(f'Transpiling: {node.line}: {node}')
         transpiler: BaseNodeTranspiler = self._transpilers.get(node.__class__)
+        if not transpiler:
+            raise TranspilingError(f'You need to specify the node transpiler for "{node.__class__.__name__}"'
+                                   f' in "transpiler.json" config file')
+
         return transpiler.transpile(
             node=node,
             transpile_node_clb=self._transpile_node,

@@ -31,7 +31,8 @@ class UniversalNodeParser(BaseNodeParser):
         CallNode,
         ValueNode,
         VariableNode,
-        IfNode
+        IfNode,
+        ElseNode
     )
 
     @staticmethod
@@ -59,6 +60,7 @@ class UniversalNodeParser(BaseNodeParser):
             ):
                 if exception:
                     self._raise_exception(tokens=tokens, exception_data=exception)
+
                 return False
 
         return True
@@ -68,6 +70,10 @@ class UniversalNodeParser(BaseNodeParser):
         index = value_data.get('index')
         parser_class_path = value_data.get('parser_class')
         nullable = value_data.get('nullable', True)
+        value = value_data.get('value')
+        if value:
+            return value
+
         value = None
 
         if index is not None:
@@ -82,6 +88,7 @@ class UniversalNodeParser(BaseNodeParser):
             )
             tokens_slice_data = value_data.get('tokens_slice')
             slice_start = tokens_slice_data.get('start_index')
+
             if slice_start:
                 value = parse_node(
                     tokens=tokens[slice_start::],
@@ -151,10 +158,24 @@ class OperationNodeParser(BaseNodeParser):
 
     @staticmethod
     def _create_op_node(left_operand: BaseNode, operator: BaseToken, right_operand: BaseNode):
+        if not operator:
+            return LogicOpNode(
+                left_operand=left_operand,
+                operator=operator,
+                right_operand=right_operand
+            )
         if operator.name in ['and', 'or']:
-            return LogicOpNode(left_operand=left_operand, operator=operator, right_operand=right_operand)
+            return LogicOpNode(
+                left_operand=left_operand,
+                operator=operator,
+                right_operand=right_operand
+            )
         else:
-            return BinOpNode(left_operand=left_operand, operator=operator, right_operand=right_operand)
+            return BinOpNode(
+                left_operand=left_operand,
+                operator=operator,
+                right_operand=right_operand
+            )
 
     def parse(self,
               tokens: list[BaseToken],
