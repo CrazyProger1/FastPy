@@ -1,4 +1,4 @@
-# Code highlighting
+# FastPy code highlighting
 
 ## Notepad++
 

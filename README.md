@@ -137,6 +137,21 @@ python main.py -s main.fpy -t -c -o some_folder
 
 ![First run from IDE](docs/imgs/FirstRunFromIDE.gif)
 
+## TODO
+
+The entire list of completed and scheduled tasks is available in the [TODO file](docs/TODO.md).
+
+## Contributors
+
+<tr>
+		<td>
+       <a href="https://github.com/CrazyProger1/FastPy/contributors">
+       <img src="https://contrib.rocks/image?repo=CrazyProger1/FastPy" />
+       </a>
+		</td>
+</tr>
+
+
 ## Licence
 
 FastPy uses the MIT license. See the bundled [LICENSE](LICENSE) file for details.
