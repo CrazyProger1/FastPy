@@ -14,10 +14,13 @@
 
 
 int main(){
-    str d = input<str>("hello>");
+    str name = input<str>("Input your name $");
 
 
-log(d);
+    int age = input<int>("Input your age $");
+
+
+    log_info(name, true);
 
 
 }

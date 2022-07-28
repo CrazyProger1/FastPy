@@ -52,7 +52,10 @@ T input(const str &t) {
     }
 
     T inp;
+    if constexpr (std::is_same_v<std::decay_t<decltype(inp)>, str>)
+        getline(std::cin, inp);
+    else
+        std::cin>>inp;
 
-    getline(std::cin, inp);
     return inp;
 }

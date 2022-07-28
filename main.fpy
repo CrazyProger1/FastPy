@@ -1,33 +1,5 @@
-#import('print.fpy')
-#
-#world_text: str = "World!"
-#condition = true
-#
-#fun print_hello():
-#    hello_text: str = 'Hello, '
-#    log_info(hello_text)
-#
-#fun print_text(txt: str, endl: bool = true):
-#    log_info(txt, endl)
-#
-#
-#if condition and true:
-#    print_hello()
-#    print_text(world_text)
-#
-#print('First FastPy run from IDE!!!!!!') # imported print function from print lib
-#a = 1 - 1 * 1
-#
-#if a:
-#    log('hello')
+name: str = input('Input your name $')
+age: int = input('Input your age $')
 
-#a = 10
-#
-#if true and (1 + 1 * a):
-#    log('hello')
-
-d: str = input('hello>')
-
-
-log(d);
+log_info(name, true)
 
