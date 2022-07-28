@@ -1,5 +1,11 @@
 name: str = input('Input your name $')
 age: int = input('Input your age $')
 
-log_info(name, true)
+if age > 17:
+    log_info(name, true)
 
+if age > 15 and age < 18:
+    log_warning(name, true)
+
+if age < 16:
+    log_error(name, true)

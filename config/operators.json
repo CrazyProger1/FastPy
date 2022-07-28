@@ -23,7 +23,8 @@
     "for": "for",
     "break": "break",
     "continue": "continue",
-    "@": "directive",
+    "@": "decorator",
+    "$": "directive",
     ":": "body_start",
     "->": "return_type",
     ".": "access"
