@@ -119,6 +119,7 @@ python main.py -s main.fpy -t -c -o some_folder
 ```
 
 First run from IDE (script: [file](examples/first_run_from_ide.fpy)):
+
 ![First run from IDE](docs/imgs/FirstRunFromIDE.gif)
 
 ## Licence
