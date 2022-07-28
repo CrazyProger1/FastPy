@@ -59,7 +59,7 @@ class TranspileAPI:
     def _compile(self, main_cpp_file: str) -> str:
         out_folder = self.kwargs.get('output') or 'fastpy_build'
         out_bin_filepath = Fs.join(out_folder, 'bin', 'main.exe')
-        command = f'g++ {Fs.normalize_path(main_cpp_file)} -o {out_bin_filepath}'
+        command = f'g++ {Fs.normalize_path(main_cpp_file)} -o {out_bin_filepath} -std=c++1z'
         out_code = Fs.execute(command)
         if out_code == 0:
             Logger.log_info(f'Compilation complete, binaries saved to "{Fs.join(out_folder, "bin")}"')

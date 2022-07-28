@@ -17,10 +17,10 @@ int main(){
     str name = input<str>("Input your name $");
 
 
-    int age = input<int>("Input your age $");
+int age = input<int>("Input your age $");
 
 
-    log_info(name, true);
+log_info(name, true);
 
 
 }
