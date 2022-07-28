@@ -80,12 +80,12 @@ log(some_car.weight) # 2301
 
 ## Features
 
-- Transpailable to C++. Therefore, compiled. Therefore, fast
-- Easy intuitive syntax, similar to Python
-- Statically typed
-- Easy expandable
-- Flexible, you can customize it for yourself or completely rewrite each component
-- Built-in logging system
+- [x] Transpailable to C++. Therefore, compiled. Therefore, fast
+- [x] Easy intuitive syntax, similar to Python
+- [x] Statically typed
+- [x] Easy expandable
+- [x] Flexible, you can customize it for yourself or completely rewrite each component
+- [x] Built-in logging system
 
 ## Customizing
 
@@ -95,6 +95,21 @@ info, see [customizing doc file](docs/Customizing.md).
 ## Highlighting
 
 To enable syntax highlighting, see [highlighting doc file](docs/Highlighting.md).
+
+## Requirements
+
+To transpile and compile your program, you need to install the requirements.
+
+###Windows
+
+1) First, you need to install **[Python 3.10](https://www.python.org/downloads/release/python-3105/)**
+2) Then install some libs:
+
+```shell
+pip install -r requirements.txt
+```
+
+3) Next, you need to install **[MinGw](https://sourceforge.net/projects/mingw/)** (optional, only used for compilation)
 
 ## Transpiling
 
@@ -118,7 +133,7 @@ python main.py -s main.fpy -t -o some_folder
 python main.py -s main.fpy -t -c -o some_folder
 ```
 
-First run from IDE (script: [file](examples/first_run_from_ide.fpy)):
+*First run from IDE (script: [file](examples/first_run_from_ide.fpy)):*
 
 ![First run from IDE](docs/imgs/FirstRunFromIDE.gif)
 
