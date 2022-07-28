@@ -118,7 +118,8 @@ python main.py -s main.fpy -t -o some_folder
 python main.py -s main.fpy -t -c -o some_folder
 ```
 
-![](docs/imgs/FirstRunFromIDE.gif)
+First run from IDE (script: [file](examples/first_run_from_ide.fpy)):
+![First run from IDE](docs/imgs/FirstRunFromIDE.gif)
 
 ## Licence
 
