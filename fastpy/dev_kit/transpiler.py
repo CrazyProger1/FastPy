@@ -44,7 +44,7 @@ class TranspileAPI:
         Logger.print_raw(cpp_code, 'CPP CODE:')
         return cpp_code
 
-    def _save_cpp_code(self, module: Module, code: str):
+    def _save_cpp_code(self, module: Module, code: str) -> str:
         out_folder = self.kwargs.get('output') or 'fastpy_build'
         Fs.makedirs(out_folder)
         out_folder = Fs.normalize_path(out_folder)
@@ -54,6 +54,16 @@ class TranspileAPI:
                            Fs.replace_ext(module.filename, '.cpp' if module.name == '__main__' else '.hpp'))
         Fs.write_file(filepath, code)
         Logger.log_info(f'Code saved to "{filepath}"')
+        return filepath
+
+    def _compile(self, main_cpp_file: str) -> str:
+        out_folder = self.kwargs.get('output') or 'fastpy_build'
+        out_bin_filepath = Fs.join(out_folder, 'bin', 'main.exe')
+        command = f'g++ {Fs.normalize_path(main_cpp_file)} -o {out_bin_filepath}'
+        out_code = Fs.execute(command)
+        if out_code == 0:
+            Logger.log_info(f'Compilation complete, binaries saved to "{Fs.join(out_folder, "bin")}"')
+        return out_bin_filepath
 
     def _transpile_file(self, module: Module) -> str:
 
@@ -73,7 +83,7 @@ class TranspileAPI:
 
         # third step: transpiling
         cpp_code = self._translate_file(module, ast)
-        self._save_cpp_code(module, cpp_code)
+        return self._save_cpp_code(module, cpp_code)
 
     def _copy_reqs(self):
         out_folder = self.kwargs.get('output') or 'fastpy_build'
@@ -84,4 +94,6 @@ class TranspileAPI:
     def transpile(self) -> str:
         main_cpp_file = self._transpile_file(Module(self.main_source_file, '__main__'))
         self._copy_reqs()
+        if self.kwargs.get('compile', False):
+            return self._compile(main_cpp_file)
         return main_cpp_file

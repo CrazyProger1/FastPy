@@ -59,3 +59,7 @@ class FileSystem:
             os.makedirs(path)
         except FileExistsError:
             pass
+
+    @staticmethod
+    def execute(command: str) -> int:
+        return os.system('call ' + command)
