@@ -10,37 +10,31 @@
 
 
 
-void world (int a, bool b, str c, int d = (1 + 1) / 1 * 1 + (1 - 1)){
-int abc = 10;
-auto bbc = 20;
-log_info("World", true);
-log((1 + 1) * 1);
+void print_hello (){
+str hello_text = "Hello, ";
+log_info(hello_text);
+
+};void print_text (str txt, bool endl = true){
+log_info(txt, endl);
 
 };
 
 
 
 int main(){
-    int a = 200;
+    str world_text = "World!";
 
 
-auto b = 10;
+auto condition = true;
 
 
-int c;
-
-auto d = a;
-
-
-auto e = (20 - 10) + (d + 20) + a;
-
-
-world(a, true, "bla bla bla", 91239012039);
-
-if (true) {
-log_error("hello");
+if (condition) {
+print_hello();
+print_text(world_text);
 
 }
+
+print("First FastPy run from IDE!!!!!!");
 
 
 }

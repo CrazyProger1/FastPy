@@ -101,17 +101,24 @@ To enable syntax highlighting, see [highlighting doc file](docs/Highlighting.md)
 *Usage:*
 
 ```shell
-python main.py [-h] -s SOURCE [-t] [-o OUTPUT]
+python main.py [-h] -s SOURCE [-t] [-o OUTPUT] [-c]
 ```
 
 *Examples:*
 
-- Transpile file **main.fpy** to C++ and save to **some_folder**:
+- Transpile file **main.fpy** to C++ and save to **some_folder/src**:
 
 ```shell
 python main.py -s main.fpy -t -o some_folder
 ```
 
+- Transpile file **main.fpy** to C++ and save to **some_folder/src** and compile: 
+
+```shell
+python main.py -s main.fpy -t -c -o some_folder
+```
+
+![](docs/imgs/FirstRunFromIDE.gif)
 
 ## Licence
 

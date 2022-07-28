@@ -1,19 +1,18 @@
 import('print.fpy')
-a: int = 200
-b = 10
-c: int
 
-d = a
-e = (20 - 10) + (d + 20) + a
+world_text: str = "World!"
+condition = true
+
+fun print_hello():
+    hello_text: str = 'Hello, '
+    log_info(hello_text)
+
+fun print_text(txt: str, endl: bool = true):
+    log_info(txt, endl)
 
 
-fun world(a: int, b: bool, c: str, d: int = (1 + 1) / 1 * 1 + (1 - 1)):
-    abc: int = 10
-    bbc = 20
-    log_info('World', true)
-    log((1 + 1) * 1)
+if condition:
+    print_hello()
+    print_text(world_text)
 
-world(a, true, 'bla bla bla', 91239012039)
-
-if true:
-    log_error('hello')
+print('First FastPy run from IDE!!!!!!') # imported print function from print lib
