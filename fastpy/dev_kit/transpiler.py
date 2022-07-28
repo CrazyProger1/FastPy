@@ -75,5 +75,13 @@ class TranspileAPI:
         cpp_code = self._translate_file(module, ast)
         self._save_cpp_code(module, cpp_code)
 
+    def _copy_reqs(self):
+        out_folder = self.kwargs.get('output') or 'fastpy_build'
+        libs_folder = Fs.join(out_folder, 'src', 'include')
+        Fs.makedirs(libs_folder)
+        Fs.copy_files('cpp_code/libs', libs_folder)
+
     def transpile(self) -> str:
-        return self._transpile_file(Module(self.main_source_file, '__main__'))
+        main_cpp_file = self._transpile_file(Module(self.main_source_file, '__main__'))
+        self._copy_reqs()
+        return main_cpp_file
