@@ -1,7 +1,11 @@
 {
   "builtin_functions": {
     "import": "import",
-    "log": "log"
+    "log": "log",
+    "log_error": "log_error",
+    "log_warning": "log_waring",
+    "log_info": "log_info",
+    "input": "input"
   },
   "builtin_types": {
     "string": "str",

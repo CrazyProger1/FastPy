@@ -17,10 +17,19 @@ class BaseNodeTranspiler(ABC):
 class AssignNodeTranspiler(BaseNodeTranspiler):
     def transpile(self, node: AssignNode, transpile_node_clb: callable, **kwargs) -> BaseCode:
         code = Code()
+        value_node = node.value
+        value = ''
+        if value_node:
+            value = transpile_node_clb(
+                node=value_node,
+                **kwargs,
+                type=node.value_type.text if node.value_type else None
+            ).internal
+
         code.push_internal(
             f'{node.value_type.text if node.value_type is not None else "auto"} '
-            f'{node.identifier.text}{" = " if node.value else ""}'
-            f'{transpile_node_clb(node=node.value, **kwargs).internal if node.value else ""}',
+            f'{node.identifier.text}{" = " if value else ""}'
+            f'{value}',
             **kwargs
         )
 
@@ -117,8 +126,17 @@ class CallNodeTranspiler(BaseNodeTranspiler):
                   transpile_node_clb: callable,
                   **kwargs) -> BaseCode:
         code = Code()
+
+        cast_type = kwargs.get('type')
+        specify_type = False
+
+        if node.identifier.text == BUILTIN_FUNCTIONS['input']:
+            specify_type = True
+
         code.push_internal(
-            f'{node.identifier.text}({self._transpile_arguments(node.arguments, transpile_node_clb)})',
+            f'{node.identifier.text}'
+            f'{("<" + cast_type + ">") if specify_type else ""}'
+            f'({self._transpile_arguments(node.arguments, transpile_node_clb)})',
             **kwargs
         )
         return code

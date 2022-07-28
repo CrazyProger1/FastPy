@@ -14,11 +14,23 @@
 
 
 int main(){
-    auto a = 1 + 1 - 1 * 1;
+    str d = input<str>("hello>");
+
+    log(d);
+
+auto a = 123123;
 
 
-if (a) {
-log("hello");
+auto b = 123412;
+
+
+auto c = a + b;
+
+
+log(c, true);
+
+if (c - 246535) {
+log("hello, world!");
 
 }
 

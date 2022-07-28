@@ -42,7 +42,8 @@
               "possible_node_classes": [
                 "fastpy.parser.nodes.ValueNode",
                 "fastpy.parser.nodes.VariableNode",
-                "fastpy.parser.nodes.BinOpNode"
+                "fastpy.parser.nodes.BinOpNode",
+                "fastpy.parser.nodes.CallNode"
               ],
               "tokens_slice": {
                 "start_index": 4
@@ -298,7 +299,8 @@
             "condition": {
               "parser_class": "fastpy.parser.node_parsers.ConditionParser",
               "possible_node_classes": [
-                "fastpy.parser.nodes.LogicOpNode"
+                "fastpy.parser.nodes.LogicOpNode",
+                "fastpy.parser.nodes.BinOpNode"
               ],
               "tokens_slice": {
                 "start_index": 1
@@ -309,7 +311,7 @@
       ]
     },
     "LogicOpNode": {
-      "parser_class": "fastpy.parser.node_parsers.BinOpNodeParser",
+      "parser_class": "fastpy.parser.node_parsers.OperationNodeParser",
       "node_class": "fastpy.parser.nodes.LogicOpNode",
       "cases": [
         {
@@ -321,7 +323,7 @@
       ]
     },
     "BinOpNode": {
-      "parser_class": "fastpy.parser.node_parsers.BinOpNodeParser",
+      "parser_class": "fastpy.parser.node_parsers.OperationNodeParser",
       "node_class": "fastpy.parser.nodes.BinOpNode",
       "cases": [
         {

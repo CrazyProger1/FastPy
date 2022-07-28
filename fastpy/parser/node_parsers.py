@@ -113,7 +113,7 @@ class UniversalNodeParser(BaseNodeParser):
 
 
 @singleton
-class BinOpNodeParser(BaseNodeParser):
+class OperationNodeParser(BaseNodeParser):
     parses = (BinOpNode, LogicOpNode)
 
     def validate(self,
@@ -294,7 +294,7 @@ class ArgumentsParser(BaseNodeParser):
                 expr_tokens.clear()
                 continue
             elif token.type == TokenTypes.end_parenthesis:
-                if BinOpNodeParser().validate(expr_tokens, BinOpNode):
+                if OperationNodeParser().validate(expr_tokens, BinOpNode):
                     try:
                         node = parse_node_clb(expr_tokens)
                     except ParsingError:
@@ -323,6 +323,6 @@ class ConditionParser(BaseNodeParser):
               **extra_data) -> BaseNode | list[BaseNode]:
         return parse_node_clb(
             tokens[0:-1],
-            (LogicOpNode,),
-            BinOpNodeParser()
+            (LogicOpNode, BinOpNode),
+            OperationNodeParser()
         )

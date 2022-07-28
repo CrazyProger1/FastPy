@@ -70,11 +70,13 @@ class FuncNode(NodeWithBody, PrintableNode):
                  identifier: BaseToken,
                  arguments: list[AssignNode] = None,
                  body: list[BaseNode] = None,
-                 return_type: BaseToken = None):
+                 return_type: BaseToken = None,
+                 template: bool = False):
         self.identifier = identifier
         self.arguments = arguments or []
         self.body = body or []
         self.return_type = return_type
+        self.template = template
 
     @property
     def line(self) -> int:

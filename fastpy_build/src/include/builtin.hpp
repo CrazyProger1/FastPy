@@ -44,3 +44,15 @@ void log_warning(const T &t, bool endl = false) {
     std::cout << termcolor::on_yellow << termcolor::grey;
     log(t, endl);
 }
+
+template<typename T>
+T input(const str &t) {
+    if (!t.empty()) {
+        log(t);
+    }
+
+    T inp;
+
+    std::cin >> inp;
+    return inp;
+}

@@ -16,7 +16,23 @@
 #    print_text(world_text)
 #
 #print('First FastPy run from IDE!!!!!!') # imported print function from print lib
-a = 1 + 1 - 1 * 1
+#a = 1 - 1 * 1
+#
+#if a:
+#    log('hello')
 
-if a:
-    log('hello')
+#a = 10
+#
+#if true and (1 + 1 * a):
+#    log('hello')
+
+d: int = input('hello>')
+
+a = 123123
+b = 123412
+
+c = a + b
+log(c, true)
+
+if c - 246535:
+    log('hello, world!')
