@@ -3,13 +3,14 @@
   "cpp_main_template": "minimal_main.cpp",
   "cpp_templates_dir": "cpp_code",
   "cpp_template": "minimal.cpp",
-
   "node_transpiling": {
     "fastpy.parser.nodes.AssignNode": "fastpy.transpiler.node_transpilers.AssignNodeTranspiler",
     "fastpy.parser.nodes.ValueNode": "fastpy.transpiler.node_transpilers.ValueNodeTranspiler",
     "fastpy.parser.nodes.VariableNode": "fastpy.transpiler.node_transpilers.VariableNodeTranspiler",
     "fastpy.parser.nodes.BinOpNode": "fastpy.transpiler.node_transpilers.BinOpNodeTranspiler",
     "fastpy.parser.nodes.FuncNode": "fastpy.transpiler.node_transpilers.FuncNodeTranspiler",
-    "fastpy.parser.nodes.CallNode": "fastpy.transpiler.node_transpilers.CallNodeTranspiler"
+    "fastpy.parser.nodes.CallNode": "fastpy.transpiler.node_transpilers.CallNodeTranspiler",
+    "fastpy.parser.nodes.IfNode": "fastpy.transpiler.node_transpilers.IfNodeTranspiler",
+    "fastpy.parser.nodes.LogicOpNode": "fastpy.transpiler.node_transpilers.LogicOpNodeTranspiler"
   }
 }

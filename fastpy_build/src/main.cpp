@@ -13,7 +13,7 @@
 void world (int a, bool b, str c, int d = (1 + 1) / 1 * 1 + (1 - 1)){
 int abc = 10;
 auto bbc = 20;
-log("World");
+log_info("World", true);
 log((1 + 1) * 1);
 
 };
@@ -36,6 +36,11 @@ auto e = (20 - 10) + (d + 20) + a;
 
 
 world(a, true, "bla bla bla", 91239012039);
+
+if (true) {
+log_error("hello");
+
+}
 
 
 }
