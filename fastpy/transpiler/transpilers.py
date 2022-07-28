@@ -46,6 +46,8 @@ class Transpiler(BaseTranspiler):
 
         if self._current_module.name == '__main__':
             self._code_template = env.get_template(CPP_MAIN_TEMPLATE_PATH)
+        else:
+            self._code_template = env.get_template(CPP_TEMPLATE_PATH)
 
     def _transpile_node(self, node: BaseNode, **kwargs) -> BaseCode:
         Logger.log_info(f'Transpiling: {node.line}: {node}')

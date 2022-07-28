@@ -1,9 +1,11 @@
 from fastpy.filesystem import FileSystem as Fs
 from fastpy.log import Logger
 from fastpy.lexer import create_lexer, BaseToken
-from fastpy.parser import create_parser, BaseAST, ImportNode
+from fastpy.parser import create_parser, BaseAST
+from fastpy.parser.nodes import CallNode
 from fastpy.module import Module
 from fastpy.transpiler import create_transpiler
+from .config import BUILTIN_FUNCTIONS
 
 
 class TranspileAPI:
@@ -63,9 +65,11 @@ class TranspileAPI:
 
         # importing modules are processed after parsing
         for node in ast.nodes(module.name):
-            if isinstance(node, ImportNode):
-                importing_file = Fs.normalize_path(node.filepath.text)
-                self._transpile_file(Module(importing_file))
+            if isinstance(node, CallNode):
+                if node.identifier.text == BUILTIN_FUNCTIONS['import']:
+                    for importing_file in node.arguments:
+                        importing_file = Fs.normalize_path(importing_file.value.text)
+                        self._transpile_file(Module(importing_file))
 
         # third step: transpiling
         cpp_code = self._translate_file(module, ast)

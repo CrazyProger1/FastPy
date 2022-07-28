@@ -1,4 +1,4 @@
-#import('print.fpy')+=
+import('print.fpy')
 a: int = 200
 b = 10
 c: int

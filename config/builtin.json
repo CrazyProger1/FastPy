@@ -1,0 +1,11 @@
+{
+  "builtin_functions": {
+    "import": "import",
+    "log": "log"
+  },
+  "builtin_types": {
+    "string": "str",
+    "integer": "int",
+    "boolean": "bool"
+  }
+}

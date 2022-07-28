@@ -191,13 +191,13 @@ class WhileNode(NodeWithBody, PrintableNode):
         return self.condition[0].line
 
 
-class ImportNode(BasicNode, PrintableNode):
-    def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):
-        self.filepath = filepath
-        self.parts = parts
-
-    @property
-    def line(self) -> int:
-        if not self.filepath:
-            return -1
-        return self.filepath.line
+# class ImportNode(BasicNode, PrintableNode):
+#     def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):
+#         self.filepath = filepath
+#         self.parts = parts
+#
+#     @property
+#     def line(self) -> int:
+#         if not self.filepath:
+#             return -1
+#         return self.filepath.line

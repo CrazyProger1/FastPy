@@ -1,21 +1,20 @@
+{% extends 'base.cpp' %}
 
+{% block includes %}
 #include<iostream>
 #include<string>
 #include"termcolor.hpp"
+{% endblock %}
 
 
-
-
-
-
-
+{% block builtin_types %}
 
 typedef std::string str;
 
+{% endblock %}
 
 
-
-
+{% block builtin_functions %}
 template<typename T>
 void log(const T &t, bool endl = false) {
     std::cout << t;
@@ -44,37 +43,4 @@ void log_warning(const T &t, bool endl = false) {
     std::cout << termcolor::on_yellow << termcolor::grey;
     log(t, endl);
 }
-
-
-
-void world (int a, bool b, str c, int d = (1 + 1) / 1 * 1 + (1 - 1)){
-int abc = 10;
-auto bbc = 20;
-log("World");
-log((1 + 1) * 1);
-
-};
-
-
-
-int main(){
-    import("print.fpy");
-
-int a = 200;
-
-
-auto b = 10;
-
-
-int c;
-
-auto d = a;
-
-
-auto e = (20 - 10) + (d + 20) + a;
-
-
-world(a, true, "bla bla bla", 91239012039);
-
-
-}
+{% endblock %}
