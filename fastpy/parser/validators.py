@@ -1,5 +1,5 @@
 """Additional tools for tokens validation"""
-from ..lexer import BaseToken
+from ..lexer import BaseToken, TokenTypes
 
 
 class Validators:
@@ -18,13 +18,21 @@ class Validators:
         return token_name in possible_names
 
     @staticmethod
-    def check_token_type_presence(tokens: list[BaseToken], required_types: list[str | int]):
+    def check_token_type_presence(tokens: list[BaseToken], required_types: list[str | int | TokenTypes]):
         types = tuple(map(lambda t: t.type.name, tokens)) \
             if isinstance(required_types[0], str) \
             else tuple(map(lambda t: t.type.value, tokens))
 
         for required_type in required_types:
             if required_type not in types:
+                return False
+        return True
+
+    @staticmethod
+    def check_token_name_presence(tokens: list[BaseToken], required_names: list[str]):
+        names = tuple(map(lambda t: t.name, tokens))
+        for required_name in required_names:
+            if required_name not in names:
                 return False
         return True
 

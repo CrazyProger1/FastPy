@@ -16,6 +16,7 @@
     "!=": "not_equal",
     "and": "and",
     "or": "or",
+    "not": "not",
     "fun": "function",
     "return": "return",
     "while": "while",
@@ -50,5 +51,9 @@
   "logic_operator_names": [
     "and",
     "or"
-  ]
+  ],
+  "fastpy_cpp_equivalents": {
+    "and": "&&",
+    "or": "||"
+  }
 }

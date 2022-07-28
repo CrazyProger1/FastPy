@@ -114,22 +114,30 @@ class UniversalNodeParser(BaseNodeParser):
 
 @singleton
 class BinOpNodeParser(BaseNodeParser):
-    parses = (BinOpNode,)
+    parses = (BinOpNode, LogicOpNode)
 
     def validate(self,
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],
                  **extra_data) -> bool:
-        left_operand = None
+        if supposed_node_type is LogicOpNode:
+            if len(tokens) == 1 and tokens[0].type == TokenTypes.identifier:
+                return True
 
-        for token in tokens:
-            if not left_operand and token.type in [TokenTypes.identifier, TokenTypes.number]:
-                left_operand = token
-            elif token.type == TokenTypes.operator \
-                    and token.name in BIN_OP_NAMES:
-                if left_operand:
+            for token in tokens:
+                if token.type == TokenTypes.operator and token.name in ['and', 'or', 'not']:
                     return True
-                return False
+        elif supposed_node_type is BinOpNode:
+            left_operand = None
+
+            for token in tokens:
+                if not left_operand and token.type in [TokenTypes.identifier, TokenTypes.number]:
+                    left_operand = token
+                elif token.type == TokenTypes.operator \
+                        and token.name in BIN_OP_NAMES:
+                    if left_operand:
+                        return True
+                    return False
 
     @staticmethod
     def _check_operand_fields(operand: BinOpNode) -> bool:
@@ -141,11 +149,21 @@ class BinOpNodeParser(BaseNodeParser):
             ))
         return True
 
+    @staticmethod
+    def _create_op_node(left_operand: BaseNode, operator: BaseToken, right_operand: BaseNode):
+        if operator.name in ['and', 'or']:
+            return LogicOpNode(left_operand=left_operand, operator=operator, right_operand=right_operand)
+        else:
+            return BinOpNode(left_operand=left_operand, operator=operator, right_operand=right_operand)
+
     def parse(self,
               tokens: list[BaseToken],
               parse_node_clb: callable,
               supposed_node_type: type[BaseNode],
-              **extra_data) -> BinOpNode | tuple[int, BinOpNode]:
+              **extra_data) -> BinOpNode | tuple[int, BinOpNode] | LogicOpNode | tuple[int, LogicOpNode]:
+        if len(tokens) == 1 and tokens[0].type == TokenTypes.identifier:
+            return LogicOpNode(VariableNode(tokens[0]))
+
         left_operand, right_operand = None, None
         operator = None
         ignore_before = -1
@@ -162,7 +180,7 @@ class BinOpNodeParser(BaseNodeParser):
                     elif not right_operand:
                         right_operand = ValueNode(token)
                     else:
-                        left_operand = BinOpNode(
+                        left_operand = self._create_op_node(
                             left_operand=left_operand,
                             operator=operator,
                             right_operand=right_operand
@@ -176,7 +194,7 @@ class BinOpNodeParser(BaseNodeParser):
                     elif not right_operand:
                         right_operand = VariableNode(token)
                     else:
-                        left_operand = BinOpNode(
+                        left_operand = self._create_op_node(
                             left_operand=left_operand,
                             operator=operator,
                             right_operand=right_operand
@@ -185,12 +203,12 @@ class BinOpNodeParser(BaseNodeParser):
                         operator = None
 
                 case TokenTypes.operator:
-                    if token.name not in BIN_OP_NAMES:
+                    if token.name not in BIN_OP_NAMES + LOGIC_OP_NAMES:
                         break
                     if not operator:
                         operator = token
                     else:
-                        left_operand = BinOpNode(
+                        left_operand = self._create_op_node(
                             left_operand=left_operand,
                             operator=operator,
                             right_operand=right_operand
@@ -206,7 +224,7 @@ class BinOpNodeParser(BaseNodeParser):
                         supposed_node_type,
                         parenthesis_expected=True
                     )
-                    if isinstance(operand, BinOpNode):
+                    if isinstance(operand, (BinOpNode, LogicOpNode)):
                         operand.in_brackets = True
 
                     ignore_before = checked + i
@@ -219,10 +237,11 @@ class BinOpNodeParser(BaseNodeParser):
                 case TokenTypes.end_parenthesis:
                     if parenthesis_expected:
                         parenthesis_expected = False
-                        if isinstance(left_operand, BinOpNode) and operator is None and right_operand is None:
+                        if isinstance(left_operand,
+                                      (BinOpNode, LogicOpNode)) and operator is None and right_operand is None:
                             return i + 1, left_operand
 
-                        return i + 1, BinOpNode(
+                        return i + 1, self._create_op_node(
                             left_operand=left_operand,
                             operator=operator,
                             right_operand=right_operand
@@ -236,13 +255,13 @@ class BinOpNodeParser(BaseNodeParser):
         if not self._check_operand_fields(right_operand) or not self._check_operand_fields(left_operand):
             raise ParsingError(f'SyntaxError: unfinished expression "{code_from_tokens(tokens)}"')
 
-        if isinstance(left_operand, BinOpNode) and operator is None and right_operand is None:
+        if isinstance(left_operand, (BinOpNode, LogicOpNode)) and operator is None and right_operand is None:
             return left_operand
 
         if operator and not right_operand or not operator and right_operand:
             raise ParsingError(f'SyntaxError: failed to parse math expression "{code_from_tokens(tokens)}"')
 
-        return BinOpNode(
+        return self._create_op_node(
             left_operand=left_operand,
             operator=operator,
             right_operand=right_operand
@@ -290,27 +309,6 @@ class ArgumentsParser(BaseNodeParser):
 
 
 @singleton
-class LogicOpNodeParser(BaseNodeParser):
-    parses = (LogicOpNode,)
-
-    def validate(self,
-                 tokens: list[BaseToken],
-                 supposed_node_type: type[BaseNode],
-                 **extra_data) -> bool:
-
-        if len(tokens) == 1 and tokens[0].type == TokenTypes.identifier:
-            return True
-
-    def parse(self,
-              tokens: list[BaseToken],
-              parse_node_clb: callable,
-              supposed_node_type: type[BaseNode],
-              **extra_data) -> BaseNode | list[BaseNode]:
-        if len(tokens) == 1 and tokens[0].type == TokenTypes.identifier:
-            return LogicOpNode(VariableNode(tokens[0]))
-
-
-@singleton
 class ConditionParser(BaseNodeParser):
     def validate(self,
                  tokens: list[BaseToken],
@@ -326,5 +324,5 @@ class ConditionParser(BaseNodeParser):
         return parse_node_clb(
             tokens[0:-1],
             (LogicOpNode,),
-            LogicOpNodeParser()
+            BinOpNodeParser()
         )

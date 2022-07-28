@@ -7,10 +7,10 @@
     "fastpy.parser.nodes.AssignNode": "fastpy.transpiler.node_transpilers.AssignNodeTranspiler",
     "fastpy.parser.nodes.ValueNode": "fastpy.transpiler.node_transpilers.ValueNodeTranspiler",
     "fastpy.parser.nodes.VariableNode": "fastpy.transpiler.node_transpilers.VariableNodeTranspiler",
-    "fastpy.parser.nodes.BinOpNode": "fastpy.transpiler.node_transpilers.BinOpNodeTranspiler",
+    "fastpy.parser.nodes.BinOpNode": "fastpy.transpiler.node_transpilers.OperationsNodeTranspiler",
     "fastpy.parser.nodes.FuncNode": "fastpy.transpiler.node_transpilers.FuncNodeTranspiler",
     "fastpy.parser.nodes.CallNode": "fastpy.transpiler.node_transpilers.CallNodeTranspiler",
     "fastpy.parser.nodes.IfNode": "fastpy.transpiler.node_transpilers.IfNodeTranspiler",
-    "fastpy.parser.nodes.LogicOpNode": "fastpy.transpiler.node_transpilers.LogicOpNodeTranspiler"
+    "fastpy.parser.nodes.LogicOpNode": "fastpy.transpiler.node_transpilers.OperationsNodeTranspiler"
   }
 }

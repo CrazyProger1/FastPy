@@ -14,7 +14,6 @@ CPP_TEMPLATE_PATH = transpiler_config['cpp_template']
 
 NODE_TRANSPILING = transpiler_config['node_transpiling']
 
-
 builtin_config = JsonConfig(
     filepath=Fs.join(CONFIG_FOLDER, 'builtin.json'),
     authoload=True
@@ -22,3 +21,10 @@ builtin_config = JsonConfig(
 
 BUILTIN_TYPES = builtin_config['builtin_types']
 BUILTIN_FUNCTIONS = builtin_config['builtin_functions']
+
+operators_config = JsonConfig(
+    filepath=Fs.join(CONFIG_FOLDER, 'operators.json'),
+    authoload=True
+)
+
+OPERATORS_EQUIVALENTS = operators_config['fastpy_cpp_equivalents']

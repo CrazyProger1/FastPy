@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from ..parser.nodes import *
 from .code import *
 from ..singleton import singleton
+from .config import *
 
 
 class BaseNodeTranspiler(ABC):
@@ -56,24 +57,6 @@ class VariableNodeTranspiler(BaseNodeTranspiler):
             f'{node.identifier.text}',
             **kwargs
         )
-        return code
-
-
-@singleton
-class BinOpNodeTranspiler(BaseNodeTranspiler):
-    def transpile(self,
-                  node: BinOpNode,
-                  transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
-        code = Code()
-        left_operand = transpile_node_clb(node.left_operand, auto_semicolon=False, endl=False)
-        right_operand = transpile_node_clb(node.right_operand, auto_semicolon=False, endl=False)
-        match_expr = f'{left_operand} {node.operator.text} {right_operand}'
-
-        if node.in_brackets:
-            match_expr = '(' + match_expr + ')'
-
-        code.push_internal(match_expr, **kwargs)
         return code
 
 
@@ -142,24 +125,28 @@ class CallNodeTranspiler(BaseNodeTranspiler):
 
 
 @singleton
-class LogicOpNodeTranspiler(BaseNodeTranspiler):
+class OperationsNodeTranspiler(BaseNodeTranspiler):
     @staticmethod
-    def _transpile_operand(operand: BaseNode, transpile_node_clb) -> str | None:
-        if not operand:
-            return None
+    def _transpile_operator(operator: str) -> str:
+        eq = OPERATORS_EQUIVALENTS.get(operator)
+        if eq:
+            return eq
 
-        return transpile_node_clb(operand, auto_semicolon=False, endl=False).internal
+        return operator
 
     def transpile(self,
                   node: LogicOpNode,
                   transpile_node_clb: callable,
                   **kwargs) -> BaseCode:
         code = Code()
-        left_operand = self._transpile_operand(node.left_operand, transpile_node_clb)
-        right_operand = self._transpile_operand(node.right_operand, transpile_node_clb)
-        if not right_operand:
-            code.push_internal(f'{left_operand}', **kwargs)
+        left_operand = transpile_node_clb(node.left_operand, auto_semicolon=False, endl=False)
+        right_operand = transpile_node_clb(node.right_operand, auto_semicolon=False, endl=False)
+        match_expr = f'{left_operand} {self._transpile_operator(node.operator.text)} {right_operand}'
 
+        if node.in_brackets:
+            match_expr = '(' + match_expr + ')'
+
+        code.push_internal(match_expr, **kwargs)
         return code
 
 
