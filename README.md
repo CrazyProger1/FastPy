@@ -100,7 +100,7 @@ To enable syntax highlighting, see [highlighting doc file](docs/Highlighting.md)
 
 To transpile and compile your program, you need to install the requirements.
 
-###Windows
+### Windows
 
 1) First, you need to install **[Python 3.10](https://www.python.org/downloads/release/python-3105/)**
 2) Then install some libs:
