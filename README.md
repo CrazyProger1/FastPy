@@ -89,7 +89,7 @@ log(some_car.weight) # 2301
 
 ## Customizing
 
-That language built in such a way as to support customizing at every stage of transpiling or interpreting. For more
+That language is built in such a way that allows to support customizing at every stage of transpiling or interpreting. For more
 info, see [customizing doc file](docs/Customizing.md).
 
 ## Highlighting
@@ -109,7 +109,7 @@ To transpile and compile your program, you need to install the requirements.
 pip install -r requirements.txt
 ```
 
-3) Next, you need to install **[MinGw](https://sourceforge.net/projects/mingw/)** (optional, only used for compilation)
+3) Next, you need to install **[MinGW](https://sourceforge.net/projects/mingw/)** (optional, only used for compilation)
 
 ## Transpiling
 
