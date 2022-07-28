@@ -93,9 +93,24 @@ class CallNode(BasicNode, PrintableNode):
         return self.identifier.line
 
 
+class LogicOpNode(BasicNode, PrintableNode):
+    def __init__(self,
+                 left_operand: BaseNode = None,
+                 right_operand: BaseNode = None,
+                 operator: BaseToken = None):
+        self.left_operand = left_operand
+        self.right_operand = right_operand
+        self.operator = operator
+        self.in_brackets = False
+
+    @property
+    def line(self) -> int:
+        return self.left_operand.line
+
+
 class IfNode(NodeWithBody, PrintableNode):
     def __init__(self,
-                 condition: list[BaseNode] = None,
+                 condition: LogicOpNode = None,
                  body: list[BaseNode] = None,
                  elif_cases: list = None,
                  else_body: list[BaseNode] = None):
@@ -106,9 +121,7 @@ class IfNode(NodeWithBody, PrintableNode):
 
     @property
     def line(self) -> int:
-        if not self.condition or len(self.condition) == 0:
-            return -1
-        return self.condition[0].line
+        return self.condition.line
 
 
 class BinOpNode(BasicNode, PrintableNode):
@@ -151,22 +164,6 @@ class BinOpNode(BasicNode, PrintableNode):
         return -1
 
 
-class LogicOpNode(BasicNode, PrintableNode):
-    def __init__(self,
-                 left_operand: BaseNode = None,
-                 right_operand: BaseNode = None,
-                 operator: BaseToken = None):
-
-        self.left_operand = left_operand
-        self.right_operand = right_operand
-        self.operator = operator
-        self.in_brackets = False
-
-    @property
-    def line(self) -> int:
-        return self.left_operand.line
-
-
 # class ForNode(BellyNode, PrintableNode):
 #     def __init__(self,
 #                  body: list[BaseNode] = None,
@@ -189,7 +186,6 @@ class WhileNode(NodeWithBody, PrintableNode):
         if not self.condition or len(self.condition) == 0:
             return -1
         return self.condition[0].line
-
 
 # class ImportNode(BasicNode, PrintableNode):
 #     def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):

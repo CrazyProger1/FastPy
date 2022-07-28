@@ -1,0 +1,4 @@
+"D:\Programs\CLion 2021.2.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=D:/Programming/C++/Compilers/mingw64/bin/g++.exe -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" D:\Programming\Python\Projects\FastPy-public\fastpy_build\src
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/cmake-build-debug

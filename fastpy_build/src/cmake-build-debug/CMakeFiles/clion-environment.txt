@@ -1,0 +1,4 @@
+ToolSet: w64 6.0 (local)@D:\Programming\C++\Compilers\mingw64
+Options: 
+
+Options:-DCMAKE_CXX_COMPILER=D:/Programming/C++/Compilers/mingw64/bin/g++.exe

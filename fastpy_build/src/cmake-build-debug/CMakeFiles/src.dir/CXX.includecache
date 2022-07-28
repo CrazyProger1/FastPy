@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/builtin.hpp
+iostream
+-
+string
+-
+termcolor.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/termcolor.hpp
+
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/main.cpp
+iostream
+-
+string
+-
+termcolor.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/termcolor.hpp
+include/builtin.hpp
+D:/Programming/Python/Projects/FastPy-public/fastpy_build/src/include/builtin.hpp
+
