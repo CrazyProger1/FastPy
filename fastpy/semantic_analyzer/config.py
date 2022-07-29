@@ -7,3 +7,4 @@ analyzer_config = JsonConfig(
 )
 
 ANALYZER_CLASS_PATH: str = analyzer_config['semantic_analyzer_class']  # analyzer class path to import
+NODE_ANALYZING: dict = analyzer_config['node_analyzing']
