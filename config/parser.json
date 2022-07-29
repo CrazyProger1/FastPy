@@ -206,7 +206,7 @@
               },
               "check_token_type_presence": {
                 "exception": {
-                  "message": "SyntaxError: expected close bracket"
+                  "message": "SyntaxError: close bracket expected"
                 },
                 "required_types": [
                   "end_parenthesis"
@@ -246,6 +246,15 @@
                   "identifier",
                   "start_parenthesis"
                 ]
+              },
+              "check_token_type": {
+                "token_index": -1,
+                "possible_types": [
+                  "end_parenthesis"
+                ],
+                "exception": {
+                  "message": "SyntaxError: close bracket expected"
+                }
               }
             }
           },

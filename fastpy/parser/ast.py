@@ -62,7 +62,11 @@ class AST(BaseAST):
         return out
 
     def nodes(self, module_name: str) -> Iterable[BaseNode]:
-        for node in self._tree.get(module_name):
+        module_nodes = self._tree.get(module_name)
+        if not module_nodes:
+            return ()
+
+        for node in module_nodes:
             yield node
 
 

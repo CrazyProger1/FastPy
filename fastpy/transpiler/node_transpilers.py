@@ -26,8 +26,12 @@ class AssignNodeTranspiler(BaseNodeTranspiler):
                 type=node.value_type.text if node.value_type else None
             ).internal
 
+        var_type = ''
+        if node.definition:
+            var_type = f'{node.value_type.text if node.value_type is not None else "auto"} '
+
         code.push_internal(
-            f'{node.value_type.text if node.value_type is not None else "auto"} '
+            f'{var_type}'
             f'{node.identifier.text}{" = " if value else ""}'
             f'{value}',
             **kwargs

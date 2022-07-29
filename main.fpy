@@ -1,11 +1,15 @@
-name: str = input('Input your name $')
-age: int = input('Input your age $')
 
-if age > 17:
-    log_info(name, true)
 
-elif age > 15:
-    log_warning(name, true)
+fun body():
+    log('hello!', true)
 
-else:
-    log_error(name, true)
+
+fun for_loop(i: int):
+    if i > 0:
+        i = i - 1
+        body()
+        for_loop(i)
+
+
+
+for_loop(10)

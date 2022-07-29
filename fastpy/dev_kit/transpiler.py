@@ -6,6 +6,7 @@ from fastpy.parser.nodes import CallNode
 from fastpy.module import Module
 from fastpy.transpiler import create_transpiler
 from .config import BUILTIN_FUNCTIONS
+from fastpy.exceptions import *
 
 
 class TranspileAPI:
@@ -78,8 +79,11 @@ class TranspileAPI:
             if isinstance(node, CallNode):
                 if node.identifier.text == BUILTIN_FUNCTIONS['import']:
                     for importing_file in node.arguments:
-                        importing_file = Fs.normalize_path(importing_file.value.text)
-                        self._transpile_file(Module(importing_file))
+                        try:
+                            importing_file = Fs.normalize_path(importing_file.value.text)
+                            self._transpile_file(Module(importing_file))
+                        except FileNotFoundError as e:
+                            raise ParsingError('ImportError: ' + e.args[0].casefold())
 
         # third step: transpiling
         cpp_code = self._translate_file(module, ast)

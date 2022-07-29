@@ -24,6 +24,14 @@ class BasicNode(BaseNode, ABC):
     pass
 
 
+class NamedNode(BaseNode, ABC):
+    identifier = None
+
+
+class NodeWithScope(NodeWithBody, NamedNode, ABC):
+    identifier = None
+
+
 class PrintableNode(BaseNode, ABC):
     def __repr__(self):
         text = '<'
@@ -33,7 +41,7 @@ class PrintableNode(BaseNode, ABC):
         return self.__class__.__name__ + text
 
 
-class VariableNode(BasicNode, PrintableNode):
+class VariableNode(BasicNode, PrintableNode, NamedNode):
     def __init__(self, identifier: BaseToken):
         self.identifier = identifier
 
@@ -51,7 +59,7 @@ class ValueNode(BasicNode, PrintableNode):
         return self.value.line
 
 
-class AssignNode(BasicNode, PrintableNode):
+class AssignNode(BasicNode, PrintableNode, NamedNode):
     def __init__(self,
                  identifier: BaseToken,
                  value_type: BaseToken = None,
@@ -59,13 +67,14 @@ class AssignNode(BasicNode, PrintableNode):
         self.identifier = identifier
         self.value_type = value_type
         self.value = value
+        self.definition = True
 
     @property
     def line(self) -> int:
         return self.identifier.line
 
 
-class FuncNode(NodeWithBody, PrintableNode):
+class FuncNode(NodeWithScope, PrintableNode, NamedNode):
     def __init__(self,
                  identifier: BaseToken,
                  arguments: list[AssignNode] = None,

@@ -1,4 +1,0 @@
-
-
-fun print(txt: str):
-    log(txt)

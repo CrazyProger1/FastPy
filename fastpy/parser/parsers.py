@@ -60,12 +60,15 @@ class Parser(BaseParser):
                                        supposed_node_type=node_type,
                                        **parser_args.get('validate_data'),
                                        **parser_data):
-                        return parser.parse(tokens=tokens,
-                                            supposed_node_type=node_type,
-                                            parse_node_clb=self._parse_node,
-                                            **parser_args.get('parse_data'),
-                                            **parser_data)
+                        node = parser.parse(
+                            tokens=tokens,
+                            supposed_node_type=node_type,
+                            parse_node_clb=self._parse_node,
+                            **parser_args.get('parse_data'),
+                            **parser_data
+                        )
 
+                        return node
         for node_type, parser_info in self._node_parsers.items():
             parser_instance: BaseNodeParser = parser_info.get('parser_instance')
             cases = parser_info.get('cases')
@@ -80,10 +83,13 @@ class Parser(BaseParser):
                 if parser_instance.validate(tokens=tokens,
                                             supposed_node_type=node_type,
                                             **parser_args.get('validate_data')):
-                    return parser_instance.parse(tokens=tokens,
-                                                 supposed_node_type=node_type,
-                                                 parse_node_clb=self._parse_node,
-                                                 **parser_args.get('parse_data'))
+                    node = parser_instance.parse(
+                        tokens=tokens,
+                        supposed_node_type=node_type,
+                        parse_node_clb=self._parse_node,
+                        **parser_args.get('parse_data')
+                    )
+                    return node
 
         raise ParsingError(f'SyntaxError: failed to parse expression "{code_from_tokens(tokens)}"')
 
@@ -148,6 +154,8 @@ class Parser(BaseParser):
                     Logger.log_critical(f'{self._current_module.filepath}: {expr_tokens[0].line}: {e}')
                     os.system('pause')
                     exit(-1)
+                except IndexError:
+                    pass
 
                 expr_tokens.clear()
                 expr_level = 0

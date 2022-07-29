@@ -9,31 +9,24 @@
 
 
 
+void body (){
+log("hello!", true);
 
+};void for_loop (int i){
+if (i > 0) {
+auto i = i - 1;
+body();
+for_loop(i);
+
+}
+;
+
+};
 
 
 
 int main(){
-    str name = input<str>("Input your name $");
-
-
-int age = input<int>("Input your age $");
-
-
-if (age > 17) {
-log_info(name, true);
-
-}
-
-else if (age > 15) {
-log_warning(name, true);
-
-}
-
-else {
-log_error(name, true);
-
-}
+    for_loop(10);
 
 
 }
