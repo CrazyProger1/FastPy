@@ -234,3 +234,29 @@ class ElseNodeTranspiler(BaseNodeTranspiler):
             endl=True
         )
         return code
+
+
+class WhileNodeTranspiler(BaseNodeTranspiler):
+    @staticmethod
+    def _transpile_body(body: list[BaseNode], transpile_node_clb) -> str:
+        code = Code()
+
+        for i, node in enumerate(body):
+            code.push_internal(
+                transpile_node_clb(node=node, endl=False, auto_semicolon=False).internal,
+            )
+
+        return code.internal
+
+    @staticmethod
+    def _transpile_condition(node: LogicOpNode, transpile_node_clb) -> str:
+        return transpile_node_clb(node, endl=False, auto_semicolon=False).internal
+
+    def transpile(self,
+                  node: WhileNode,
+                  transpile_node_clb: callable,
+                  **kwargs) -> BaseCode:
+        code = Code()
+        code.push_internal(f'while ({self._transpile_condition(node.condition, transpile_node_clb)})'
+                           f'\n{{\n{self._transpile_body(node.body, transpile_node_clb)}\n}}\n')
+        return code

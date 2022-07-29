@@ -2,8 +2,8 @@
 
 ## Main tasks
 
-- [ ] Variables
-    - [ ] scopes
+- [x] Variables
+    - [x] scopes
     - [x] creation
 - [x] Functions
 - [ ] Modules

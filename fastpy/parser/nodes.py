@@ -130,24 +130,6 @@ class ElseNode(NodeWithBody, PrintableNode):
         return -1
 
 
-class IfNode(NodeWithBody, PrintableNode):
-    def __init__(self,
-                 condition: LogicOpNode = None,
-                 body: list[BaseNode] = None,
-                 elif_cases: list = None,
-                 else_case: ElseNode = None,
-                 is_elif: bool = False):
-        self.condition = condition
-        self.body = body or []
-        self.elif_cases: list[IfNode.__init__] = elif_cases
-        self.else_case = else_case
-        self.is_elif = is_elif
-
-    @property
-    def line(self) -> int:
-        return self.condition.line
-
-
 class BinOpNode(BasicNode, PrintableNode):
     def __init__(self,
                  left_operand: BaseNode = None,
@@ -188,6 +170,24 @@ class BinOpNode(BasicNode, PrintableNode):
         return -1
 
 
+class IfNode(NodeWithBody, PrintableNode):
+    def __init__(self,
+                 condition: LogicOpNode | BinOpNode = None,
+                 body: list[BaseNode] = None,
+                 elif_cases: list = None,
+                 else_case: ElseNode = None,
+                 is_elif: bool = False):
+        self.condition = condition
+        self.body = body or []
+        self.elif_cases: list[IfNode.__init__] = elif_cases
+        self.else_case = else_case
+        self.is_elif = is_elif
+
+    @property
+    def line(self) -> int:
+        return self.condition.line
+
+
 # class ForNode(BellyNode, PrintableNode):
 #     def __init__(self,
 #                  body: list[BaseNode] = None,
@@ -198,18 +198,18 @@ class BinOpNode(BasicNode, PrintableNode):
 
 class WhileNode(NodeWithBody, PrintableNode):
     def __init__(self,
-                 condition: list[BaseNode] = None,
+                 condition: LogicOpNode | BinOpNode = None,
                  body: list[BaseNode] = None,
                  else_body: list[BaseNode] = None):
         self.condition = condition
         self.else_body = else_body or []
-        self.body = body
+        self.body = body or []
 
     @property
     def line(self) -> int:
         if not self.condition or len(self.condition) == 0:
             return -1
-        return self.condition[0].line
+        return self.condition.line
 
 # class ImportNode(BasicNode, PrintableNode):
 #     def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):

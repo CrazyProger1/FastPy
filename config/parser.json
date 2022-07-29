@@ -388,6 +388,47 @@
         }
       ]
     },
+    "WhileNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.WhileNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_min_tokens_length": {
+                "min_length": 3
+              },
+              "check_token_names": {
+                "names": [
+                  "while"
+                ]
+              },
+              "check_token_name": {
+                "exception": {
+                  "message": "SyntaxError: body start operator expected"
+                },
+                "token_index": -1,
+                "possible_names": [
+                  "body_start"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "condition": {
+              "parser_class": "fastpy.parser.node_parsers.ConditionParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.LogicOpNode",
+                "fastpy.parser.nodes.BinOpNode"
+              ],
+              "tokens_slice": {
+                "start_index": 1
+              }
+            }
+          }
+        }
+      ]
+    },
     "LogicOpNode": {
       "parser_class": "fastpy.parser.node_parsers.OperationNodeParser",
       "node_class": "fastpy.parser.nodes.LogicOpNode",
