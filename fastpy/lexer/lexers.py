@@ -6,6 +6,7 @@ from .config import *
 from .tokens import BaseToken, create_token
 from ..log import Logger
 from ..module import Module
+from ..exceptions import *
 
 
 class BaseLexer(ABC):
@@ -97,10 +98,15 @@ class Lexer(BaseLexer):
             if code_line == '' or code_line.startswith(COMMENT_START_SYMBOL):
                 continue
 
-            self._lex_line(
-                code_line=code_line,
-                line_number=i + 1
-            )
+            try:
+                self._lex_line(
+                    code_line=code_line,
+                    line_number=i + 1
+                )
+            except LexingError as e:
+                Logger.log_critical(f'{self._current_module.filepath}: {i + 1}: {e}')
+                os.system('pause')
+                exit(-1)
 
             self._tokens.append(create_token(
                 token_type=TokenTypes.endline,

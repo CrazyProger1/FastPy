@@ -1,3 +1,4 @@
+import os
 from abc import abstractmethod, ABC
 from .config import *
 from ..import_tools import import_class
@@ -82,9 +83,14 @@ class Transpiler(BaseTranspiler):
                 self._transpile_import(node)
                 continue
 
-            code = self._transpile_node(
-                node=node
-            )
+            try:
+                code = self._transpile_node(
+                    node=node
+                )
+            except TranspilingError as e:
+                Logger.log_critical(f'{self._current_module.filepath}: {node.line}: {e}')
+                os.system('pause')
+                exit(-1)
 
             self._code.push_internal(code.internal, auto_semicolon=False)
             self._code.push_external(code.external, auto_semicolon=False)
