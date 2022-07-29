@@ -5,24 +5,14 @@
 #include"include/builtin.hpp"
 
 
-
-
-
-
-
-
-
-
-int main(){
+int main() {
     auto i = 20;
 
 
-while (i > 0)
-{
-auto i = i - 1;
+    while (i > 0) {
+        i = i - 1;
 
-}
-;
+    };
 
 
 }

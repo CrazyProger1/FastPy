@@ -18,6 +18,7 @@ class BaseNodeAnalyzer(ABC):
                 scope: Scope): ...
 
 
+@singleton
 class AssignNodeAnalyzer(BaseNodeAnalyzer):
     def analyze(self,
                 node: AssignNode,
@@ -32,6 +33,7 @@ class AssignNodeAnalyzer(BaseNodeAnalyzer):
             node.definition = False
 
 
+@singleton
 class FuncNodeAnalyzer(BaseNodeAnalyzer):
     @staticmethod
     def _analyze_args(arguments: list[AssignNode], analyze_node_clb: callable):
@@ -58,6 +60,7 @@ class FuncNodeAnalyzer(BaseNodeAnalyzer):
         self._analyze_body(node.body, analyze_node_clb)
 
 
+@singleton
 class IfNodeAnalyzer(BaseNodeAnalyzer):
 
     @staticmethod
@@ -74,6 +77,7 @@ class IfNodeAnalyzer(BaseNodeAnalyzer):
         self._analyze_body(node.body, analyze_node_clb)
 
 
+@singleton
 class CallNodeAnalyzer(BaseNodeAnalyzer):
     @staticmethod
     def _analyze_args(arguments: list[BaseNode], analyze_node_clb: callable):
@@ -90,3 +94,21 @@ class CallNodeAnalyzer(BaseNodeAnalyzer):
 
         if not scope.already_defined(node.identifier.text):
             raise AnalyzingError(f'SemanticError: function with name "{node.identifier.text}" does not exists')
+
+
+class WhileNodeAnalyzer(BaseNodeAnalyzer):
+    def _analyze_condition(self):
+        pass
+
+    @staticmethod
+    def _analyze_body(body: list[BaseNode], analyze_node_clb: callable):
+        for body_node in body:
+            analyze_node_clb(body_node)
+
+    def analyze(self,
+                node: WhileNode,
+                module: Module,
+                ast: BaseAST,
+                analyze_node_clb: callable,
+                scope: Scope):
+        self._analyze_body(node.body, analyze_node_clb)
