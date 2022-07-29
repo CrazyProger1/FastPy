@@ -14,6 +14,10 @@ class ParsingError(BaseError):
     pass
 
 
+class AnalyzingError(BaseError):
+    pass
+
+
 class TranspilingError(BaseError):
     pass
 

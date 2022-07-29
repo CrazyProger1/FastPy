@@ -1,0 +1,3 @@
+{
+  "semantic_analyzer_class": "fastpy.semantic_analyzer.analyzers.Analyzer"
+}

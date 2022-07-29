@@ -2,6 +2,7 @@ from fastpy.filesystem import FileSystem as Fs
 from fastpy.log import Logger
 from fastpy.lexer import create_lexer, BaseToken
 from fastpy.parser import create_parser, BaseAST
+from fastpy.semantic_analyzer import create_analyzer
 from fastpy.parser.nodes import CallNode
 from fastpy.module import Module
 from fastpy.transpiler import create_transpiler
@@ -45,6 +46,14 @@ class TranspileAPI:
         Logger.print_raw(cpp_code, 'CPP CODE:')
         return cpp_code
 
+    @staticmethod
+    def _analyze_file(module: Module, ast: BaseAST):
+        analyzer = create_analyzer(
+            module=module,
+            ast=ast
+        )
+        analyzer.analyze()
+
     def _save_cpp_code(self, module: Module, code: str) -> str:
         out_folder = self.kwargs.get('output') or 'fastpy_build'
         Fs.makedirs(out_folder)
@@ -85,7 +94,10 @@ class TranspileAPI:
                         except FileNotFoundError as e:
                             raise ParsingError('ImportError: ' + e.args[0].casefold())
 
-        # third step: transpiling
+        # third step: semantic analyzing
+        self._analyze_file(module, ast)
+
+        # fourth step: transpiling
         cpp_code = self._translate_file(module, ast)
         return self._save_cpp_code(module, cpp_code)
 
