@@ -1,6 +1,8 @@
 {
   "semantic_analyzer_class": "fastpy.semantic_analyzer.analyzers.Analyzer",
   "node_analyzing": {
-
+    "fastpy.parser.nodes.AssignNode": "fastpy.semantic_analyzer.node_analyzers.AssignNodeAnalyzer",
+    "fastpy.parser.nodes.FuncNode": "fastpy.semantic_analyzer.node_analyzers.FuncNodeAnalyzer",
+    "fastpy.parser.nodes.IfNode": "fastpy.semantic_analyzer.node_analyzers.IfNodeAnalyzer"
   }
 }

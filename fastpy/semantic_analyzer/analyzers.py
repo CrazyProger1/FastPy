@@ -32,7 +32,8 @@ class Analyzer(BaseAnalyzer):
         self._current_module = module
         self._ast = ast
         self._analyzers = {}
-        self._current_scope: Scope | None = None
+        self._current_scope: Scope | None = Scope()
+        self._scopes = [self._current_scope]
         self._load_node_analyzers()
 
     def _load_node_analyzers(self):
@@ -41,8 +42,22 @@ class Analyzer(BaseAnalyzer):
                 import_class(node_class_path): import_class(analyzer_class_path)()
             })
 
-    def _analyze_node(self, node: BaseNode):
+    def _detect_scope_start(self, node: BaseNode):
+        if isinstance(node, FuncNode):
+            global_vars = self._current_scope.get_global()
+            self._current_scope = Scope(node)
+            self._current_scope.push_several(global_vars)
+            self._scopes.append(self._current_scope)
+
+    def _detect_scope_end(self, node: BaseNode):
+        if self._current_scope.is_scope_node(node):
+            self._scopes.pop(-1)
+            self._current_scope = self._scopes[-1]
+
+    def _analyze_node(self, node: BaseNode, **kwargs):
         Logger.log_info(f'Analyzing: {node.line}: {node}')
+
+        self._detect_scope_start(node)
 
         analyzer: BaseNodeAnalyzer = self._analyzers.get(node.__class__)
 
@@ -54,6 +69,11 @@ class Analyzer(BaseAnalyzer):
                 analyze_node_clb=self._analyze_node,
                 scope=self._current_scope
             )
+
+        self._detect_scope_end(node)
+
+        if isinstance(node, NamedNode):
+            self._current_scope.push(node)
 
     @Logger.info('Start analyzing...', ending_message='Analysis completed in {time}')
     def analyze(self) -> None:
