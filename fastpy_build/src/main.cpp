@@ -11,6 +11,7 @@ int main() {
 
     while (i > 0) {
         i = i - 1;
+        log(i, true);
 
     };
 

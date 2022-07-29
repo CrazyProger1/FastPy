@@ -15,7 +15,7 @@
     - [x] else
 - [ ] Loops
     - [ ] for
-    - [ ] while
+    - [x] while
 - [ ] Match-Case
 - [ ] Builtin
     - [ ] types
