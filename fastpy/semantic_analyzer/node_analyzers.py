@@ -4,6 +4,8 @@ from ..parser.nodes import *
 from ..parser import BaseAST
 from ..module import Module
 from .scope import *
+from ..exceptions import *
+from .config import *
 
 
 class BaseNodeAnalyzer(ABC):
@@ -48,14 +50,16 @@ class FuncNodeAnalyzer(BaseNodeAnalyzer):
                 analyze_node_clb: callable,
                 scope: Scope):
 
+        if scope.already_defined(node.identifier.text):
+            raise AnalyzingError(f'SemanticError: function with name "{node.identifier.text}" already defined')
+
+        scope.push(node)
         self._analyze_args(node.arguments, analyze_node_clb)
         self._analyze_body(node.body, analyze_node_clb)
 
-        if scope.already_defined(node.identifier.text):
-            raise
-
 
 class IfNodeAnalyzer(BaseNodeAnalyzer):
+
     @staticmethod
     def _analyze_body(body: list[BaseNode], analyze_node_clb: callable):
         for body_node in body:
@@ -71,10 +75,18 @@ class IfNodeAnalyzer(BaseNodeAnalyzer):
 
 
 class CallNodeAnalyzer(BaseNodeAnalyzer):
+    @staticmethod
+    def _analyze_args(arguments: list[BaseNode], analyze_node_clb: callable):
+        for arg_node in arguments:
+            analyze_node_clb(arg_node)
+
     def analyze(self,
-                node: BaseNode,
+                node: CallNode,
                 module: Module,
                 ast: BaseAST,
                 analyze_node_clb: callable,
                 scope: Scope):
-        pass
+        self._analyze_args(node.arguments, analyze_node_clb)
+
+        if not scope.already_defined(node.identifier.text):
+            raise AnalyzingError(f'SemanticError: function with name "{node.identifier.text}" does not exists')

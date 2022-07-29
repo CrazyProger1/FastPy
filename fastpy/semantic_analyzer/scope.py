@@ -1,4 +1,5 @@
 from ..parser.nodes import *
+from .config import *
 
 
 class Scope:
@@ -23,6 +24,9 @@ class Scope:
         return self._node == node
 
     def already_defined(self, name: str):
+        if name in BUILTIN_FUNCTIONS.values() or name in BUILTIN_TYPES.values():
+            return True
+
         return self._scope.get(name) is not None
 
     def __repr__(self):

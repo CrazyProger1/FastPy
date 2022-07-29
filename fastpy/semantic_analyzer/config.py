@@ -1,4 +1,5 @@
 from ..config import JsonConfig, CONFIG_FOLDER
+from ..filesystem import FileSystem as Fs
 import os
 
 analyzer_config = JsonConfig(
@@ -8,3 +9,11 @@ analyzer_config = JsonConfig(
 
 ANALYZER_CLASS_PATH: str = analyzer_config['semantic_analyzer_class']  # analyzer class path to import
 NODE_ANALYZING: dict = analyzer_config['node_analyzing']
+
+builtin_config = JsonConfig(
+    filepath=Fs.join(CONFIG_FOLDER, 'builtin.json'),
+    authoload=True
+)
+
+BUILTIN_TYPES = builtin_config['builtin_types']
+BUILTIN_FUNCTIONS = builtin_config['builtin_functions']

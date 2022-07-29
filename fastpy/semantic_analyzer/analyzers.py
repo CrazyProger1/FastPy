@@ -46,6 +46,7 @@ class Analyzer(BaseAnalyzer):
         if isinstance(node, FuncNode):
             global_vars = self._current_scope.get_global()
             self._current_scope = Scope(node)
+
             self._current_scope.push_several(global_vars)
             self._scopes.append(self._current_scope)
 
@@ -61,14 +62,19 @@ class Analyzer(BaseAnalyzer):
 
         analyzer: BaseNodeAnalyzer = self._analyzers.get(node.__class__)
 
-        if analyzer:
-            analyzer.analyze(
-                node=node,
-                module=self._current_module,
-                ast=self._ast,
-                analyze_node_clb=self._analyze_node,
-                scope=self._current_scope
-            )
+        try:
+            if analyzer:
+                analyzer.analyze(
+                    node=node,
+                    module=self._current_module,
+                    ast=self._ast,
+                    analyze_node_clb=self._analyze_node,
+                    scope=self._current_scope
+                )
+        except AnalyzingError as e:
+            Logger.log_critical(f'{self._current_module.filepath}: {node.line}: {e}')
+            os.system('pause')
+            exit(-1)
 
         self._detect_scope_end(node)
 

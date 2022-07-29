@@ -11,5 +11,4 @@ fun for_loop(i: int):
         for_loop(i)
 
 
-
 for_loop(10)

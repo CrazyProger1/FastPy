@@ -5,23 +5,27 @@
 #include"include/builtin.hpp"
 
 
-void body() {
-    log("hello!", true);
+
+
+
+
+void body (){
+log("hello!", true);
+
+};void for_loop (int i){
+if (i > 0) {
+i = i - 1;
+body();
+for_loop(i);
+
+}
+;
 
 };
 
-void for_loop(int i) {
-    if (i > 0) {
-        i = i - 1;
-        body();
-        for_loop(i);
-
-    };
-
-};
 
 
-int main() {
+int main(){
     for_loop(10);
 
 
