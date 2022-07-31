@@ -99,8 +99,8 @@
 #
 
 
-fun f() -> bool:
-    return true
-#    log('g')
+fun sm(a: int, b: int) -> int:
+    return a + b
 
-log(f())
+
+sm(20, sm(10, sm(10, 20)))

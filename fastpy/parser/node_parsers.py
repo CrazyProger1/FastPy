@@ -137,6 +137,7 @@ class OperationNodeParser(BaseNodeParser):
             for token in tokens:
                 if token.type == TokenTypes.operator and token.name in ['and', 'or', 'not']:
                     return True
+
         elif supposed_node_type is BinOpNode:
             left_operand = None
 
@@ -144,7 +145,7 @@ class OperationNodeParser(BaseNodeParser):
                 if not left_operand and token.type in [TokenTypes.identifier, TokenTypes.number]:
                     left_operand = token
                 elif token.type == TokenTypes.operator \
-                        and token.name in BIN_OP_NAMES:
+                        and token.name in BIN_OP_NAMES + ['and', 'or', 'not']:
                     if left_operand:
                         return True
                     return False
@@ -311,29 +312,25 @@ class ArgumentsParser(BaseNodeParser):
 
         arguments = []
         expr_tokens = []
+        opened_parenthesis_counter = 1
         for token in tokens:
-            if token.type == TokenTypes.comma:
-                node = parse_node_clb(expr_tokens)
-                arguments.append(node)
-                expr_tokens.clear()
-                continue
-            elif token.type == TokenTypes.end_parenthesis:
-                if OperationNodeParser().validate(expr_tokens, BinOpNode):
-                    try:
+            match token.type:
+                case TokenTypes.start_parenthesis:
+                    opened_parenthesis_counter += 1
+                case TokenTypes.end_parenthesis:
+                    opened_parenthesis_counter -= 1
+
+                    if opened_parenthesis_counter == 0:
                         node = parse_node_clb(expr_tokens)
-                    except ParsingError:
-                        expr_tokens.append(token)
+                        arguments.append(node)
+                        return arguments
+                case TokenTypes.comma:
+                    if opened_parenthesis_counter == 1:
+                        node = parse_node_clb(expr_tokens)
+                        arguments.append(node)
+                        expr_tokens.clear()
                         continue
 
-                else:
-                    try:
-                        node = parse_node_clb(expr_tokens)
-                    except ParsingError:
-                        expr_tokens.append(token)
-                        continue
-
-                arguments.append(node)
-                return arguments
             expr_tokens.append(token)
 
 

@@ -5,15 +5,15 @@
 #include"include/builtin.hpp"
 
 
-bool f() {
-    return true;
+int sm(int a, int b) {
+    return a + b;
 
 
 };
 
 
 int main() {
-    log(f());
+    sm(20, sm(10, sm(10, 20)));
 
 
 }
