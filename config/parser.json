@@ -80,7 +80,8 @@
               "possible_node_classes": [
                 "fastpy.parser.nodes.ValueNode",
                 "fastpy.parser.nodes.VariableNode",
-                "fastpy.parser.nodes.BinOpNode"
+                "fastpy.parser.nodes.BinOpNode",
+                "fastpy.parser.nodes.CallNode"
               ],
               "tokens_slice": {
                 "start_index": 2

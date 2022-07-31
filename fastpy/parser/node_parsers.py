@@ -323,7 +323,7 @@ class ArgumentsParser(BaseNodeParser):
 
         if tokens[0].type == TokenTypes.end_parenthesis:
             return []
-
+        print(tokens)
         arguments = []
         expr_tokens = []
         opened_parenthesis_counter = 1
