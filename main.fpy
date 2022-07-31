@@ -1,98 +1,106 @@
-a = ' '
-b = ' '
-c = ' '
-d = ' '
-e = ' '
-f = ' '
-g = ' '
-h = ' '
-i = ' '
+#a = ' '
+#b = ' '
+#c = ' '
+#d = ' '
+#e = ' '
+#f = ' '
+#g = ' '
+#h = ' '
+#i = ' '
+#
+#move = 'X'
+#x = 'X'
+#o = 'O'
+#
+#fun draw_vert_border(endl: bool = false):
+#    log('|', endl)
+#
+#fun draw_horz_border():
+#    log('+-+-+-+', true)
+#
+#fun draw_row(a: str, b: str, c: str):
+#    draw_vert_border()
+#    log(a)
+#    draw_vert_border()
+#    log(b)
+#    draw_vert_border()
+#    log(c)
+#    draw_vert_border(true)
+#
+#fun draw(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str):
+#    draw_horz_border()
+#    draw_row(a, b, c)
+#    draw_horz_border()
+#    draw_row(d, e, f)
+#    draw_horz_border()
+#    draw_row(g, h, i)
+#    draw_horz_border()
+#
+#fun draw_game_over(winner: str):
+#    log_info('Game over! ')
+#    x = 'X'
+#    o = 'O'
+#    if winner != x and winner != o:
+#        log_info('Draw!')
+#    else:
+#        log_info('Won: ')
+#        log_info(winner, true)
+#
+#fun check_three(a: str, b: str, c: str):
+#    empty = ' '
+#    if a == b and b == c and c != empty:
+#        draw_game_over(a)
+#
+#fun check_game_over(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str):
+#    check_three(a, b, c)
+#    check_three(a, d, g)
+#    check_three(a, e, i)
+#    check_three(b, e, h)
+#    check_three(c, f, i)
+#    check_three(c, e, g)
+#    check_three(d, e, f)
+#
+#    empty = ' '
+#
+#    if a != empty and b != empty and c != empty and d != empty and e != empty and f != empty and g != empty and h != empty and i != empty:
+#        draw_game_over('draw')
+#
+#while true:
+#    draw(a, b, c, d, e, f, g, h, i)
+#    log(move)
+#    cell: int = input(' enter cell number (1 - 9) >>')
+#    if cell == 1:
+#
+#        a = move
+#    elif cell == 2:
+#        b = move
+#    elif cell == 3:
+#        c = move
+#    elif cell == 4:
+#        d = move
+#    elif cell == 5:
+#        e = move
+#    elif cell == 6:
+#        f = move
+#    elif cell == 7:
+#        g = move
+#    elif cell == 8:
+#        h = move
+#    elif cell == 9:
+#        i = move
+#    check_game_over(a, b, c, d, e, f, g, h, i)
+#
+#    if move == x:
+#        move = o
+#    else:
+#        move = x
+#
+#
+#
 
-move = 'X'
-x = 'X'
-o = 'O'
 
-fun draw_vert_border(endl: bool = false):
-    log('|', endl)
+fun f() -> bool:
+#    return true
+    log('g')
 
-fun draw_horz_border():
-    log('+-+-+-+', true)
-
-fun draw_row(a: str, b: str, c: str):
-    draw_vert_border()
-    log(a)
-    draw_vert_border()
-    log(b)
-    draw_vert_border()
-    log(c)
-    draw_vert_border(true)
-
-fun draw(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str):
-    draw_horz_border()
-    draw_row(a, b, c)
-    draw_horz_border()
-    draw_row(d, e, f)
-    draw_horz_border()
-    draw_row(g, h, i)
-    draw_horz_border()
-
-fun draw_game_over(winner: str):
-    log_info('Game over! ')
-    x = 'X'
-    o = 'O'
-    if winner != x and winner != o:
-        log_info('Draw!')
-    else:
-        log_info('Won: ')
-        log_info(winner, true)
-
-fun check_three(a: str, b: str, c: str):
-    empty = ' '
-    if a == b and b == c and c != empty:
-        draw_game_over(a)
-
-fun check_game_over(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str):
-    check_three(a, b, c)
-    check_three(a, d, g)
-    check_three(a, e, i)
-    check_three(b, e, h)
-    check_three(c, f, i)
-    check_three(c, e, g)
-    check_three(d, e, f)
-
-    empty = ' '
-
-    if a != empty and b != empty and c != empty and d != empty and e != empty and f != empty and g != empty and h != empty and i != empty:
-        draw_game_over('draw')
-
-while true:
-    draw(a, b, c, d, e, f, g, h, i)
-    log(move)
-    cell: int = input(' enter cell number (1 - 9) >>')
-    if cell == 1:
-        a = move
-    elif cell == 2:
-        b = move
-    elif cell == 3:
-        c = move
-    elif cell == 4:
-        d = move
-    elif cell == 5:
-        e = move
-    elif cell == 6:
-        f = move
-    elif cell == 7:
-        g = move
-    elif cell == 8:
-        h = move
-    elif cell == 9:
-        i = move
-    check_game_over(a, b, c, d, e, f, g, h, i)
-
-    if move == x:
-        move = o
-    else:
-        move = x
-
-
-
+log(f())

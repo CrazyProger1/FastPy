@@ -181,6 +181,73 @@
           "validate_data": {
             "methods": {
               "check_min_tokens_length": {
+                "min_length": 7
+              },
+              "check_token_types": {
+                "types": [
+                  "operator",
+                  "identifier",
+                  "start_parenthesis"
+                ]
+              },
+              "check_token_names": {
+                "names": [
+                  "function"
+                ]
+              },
+              "check_token_name_presence": {
+                "required_names": [
+                  "return_type"
+                ]
+              },
+              "check_token_name": {
+                "exception": {
+                  "message": "SyntaxError: body start operator expected"
+                },
+                "token_index": -1,
+                "possible_names": [
+                  "body_start"
+                ]
+              },
+              "check_token_type_presence": {
+                "exception": {
+                  "message": "SyntaxError: close bracket expected"
+                },
+                "required_types": [
+                  "end_parenthesis"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "identifier": {
+              "index": 1
+            },
+            "arguments": {
+              "parser_class": "fastpy.parser.node_parsers.ArgumentsParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.AssignNode"
+              ],
+              "tokens_slice": {
+                "start_index": 3
+              }
+            },
+            "return_type": {
+              "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.VariableNode"
+              ],
+              "tokens_slice": {
+                "start_index": -2,
+                "end_index": -1
+              }
+            }
+          }
+        },
+        {
+          "validate_data": {
+            "methods": {
+              "check_min_tokens_length": {
                 "min_length": 5
               },
               "check_token_types": {

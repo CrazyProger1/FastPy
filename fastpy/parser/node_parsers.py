@@ -89,10 +89,11 @@ class UniversalNodeParser(BaseNodeParser):
             )
             tokens_slice_data = value_data.get('tokens_slice')
             slice_start = tokens_slice_data.get('start_index')
+            slice_end = tokens_slice_data.get('end_index')
 
             if slice_start:
                 value = parse_node(
-                    tokens=tokens[slice_start::],
+                    tokens=tokens[slice_start::] if slice_end is None else tokens[slice_start:slice_end],
                     possible_node_types=possible_node_types,
                     parser=parser
                 )
@@ -322,8 +323,13 @@ class ArgumentsParser(BaseNodeParser):
                     except ParsingError:
                         expr_tokens.append(token)
                         continue
+
                 else:
-                    node = parse_node_clb(expr_tokens)
+                    try:
+                        node = parse_node_clb(expr_tokens)
+                    except ParsingError:
+                        expr_tokens.append(token)
+                        continue
 
                 arguments.append(node)
                 return arguments

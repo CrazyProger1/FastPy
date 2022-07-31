@@ -107,7 +107,7 @@ class FuncNodeTranspiler(BaseNodeTranspiler):
         arguments = self._transpile_arguments(node.arguments, transpile_node_clb)
         body = self._transpile_body(node.body, transpile_node_clb)
 
-        return_type = node.return_type.text if node.return_type else 'void'
+        return_type = node.return_type.identifier.text if node.return_type else 'void'
         func_code = f'{return_type} {node.identifier.text} ({arguments}){{\n{body}\n}}'
         code.push_external(func_code)
         return code

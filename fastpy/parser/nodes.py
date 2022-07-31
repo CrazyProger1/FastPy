@@ -79,7 +79,7 @@ class FuncNode(NodeWithScope, PrintableNode, NamedNode):
                  identifier: BaseToken,
                  arguments: list[AssignNode] = None,
                  body: list[BaseNode] = None,
-                 return_type: BaseToken = None,
+                 return_type: VariableNode = None,
                  template: bool = False):
         self.identifier = identifier
         self.arguments = arguments or []
