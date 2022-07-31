@@ -1,5 +1,5 @@
 {
   "format": "%(levelname)s: %(message)s",
   "app_name": "FastPy",
-  "level": 10
+  "level": 60
 }

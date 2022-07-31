@@ -116,6 +116,8 @@ class LogicOpNode(BasicNode, PrintableNode):
 
     @property
     def line(self) -> int:
+        if not self.left_operand:
+            return -1
         return self.left_operand.line
 
 
@@ -207,7 +209,7 @@ class WhileNode(NodeWithBody, PrintableNode):
 
     @property
     def line(self) -> int:
-        if not self.condition or len(self.condition) == 0:
+        if not self.condition:
             return -1
         return self.condition.line
 

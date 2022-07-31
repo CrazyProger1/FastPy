@@ -5,7 +5,10 @@
 - [x] Variables
     - [x] scopes
     - [x] creation
-- [x] Functions
+- [ ] Functions
+    - [ ] return
+    - [x] body
+    - [x] arguments
 - [ ] Modules
     - [x] importing
     - [ ] namespaces
@@ -27,3 +30,11 @@
     - [ ] functions
         - [x] logging
         - [x] input
+- [ ] Binary operations
+    - [x] number
+    - [x] variable
+    - [ ] string
+- [ ] Logic operations
+    - [x] number
+    - [x] variable
+    - [ ] string

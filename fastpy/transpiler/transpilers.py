@@ -59,11 +59,14 @@ class Transpiler(BaseTranspiler):
             raise TranspilingError(f'You need to specify the node transpiler for "{node.__class__.__name__}"'
                                    f' in "transpiler.json" config file')
 
-        return transpiler.transpile(
+        code = transpiler.transpile(
             node=node,
             transpile_node_clb=self._transpile_node,
             **kwargs
         )
+
+
+        return code
 
     def _transpile_import(self, node: CallNode):
         for importing_file in node.arguments:

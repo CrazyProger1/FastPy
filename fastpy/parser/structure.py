@@ -11,3 +11,6 @@ class Structure:
 
     def within_struct(self, level: int):
         return level == self._level
+
+    def __repr__(self):
+        return str(self._node)

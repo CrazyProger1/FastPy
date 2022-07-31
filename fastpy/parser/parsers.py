@@ -34,6 +34,7 @@ class Parser(BaseParser):
         self._current_module = module
         self._current_struct: Structure | None = None
         self._structs: list[Structure] = []
+        self._structs: list[Structure] = []
         self._tokens = tokens
         self._node_parsers = {}
         self._load_parsers()
@@ -104,24 +105,32 @@ class Parser(BaseParser):
     def _within_struct(self, level: int):
         return self._current_struct and self._current_struct.within_struct(level=level)
 
+    def _get_struct(self, level: int) -> Structure:
+        for struct in reversed(self._structs):
+            if struct.within_struct(level=level):
+                return struct
+
+    @staticmethod
+    def _check_expr_level(level: int):
+        if level % 4 != 0:
+            raise ParsingError('SyntaxError: invalid number of spaces, number of spaces must be a multiple of four')
+
     @Logger.info(pattern='Parsing: {expr_tokens[0].line}: {expr_tokens}: level: {expr_level}')
     def _parse_expression(self, expr_tokens: list[BaseToken], expr_level: int):
         """Parses each line of code split into tokens"""
 
+        self._check_expr_level(level=expr_level)
+
         node = self._parse_node(expr_tokens)
 
-        if self._within_struct(level=expr_level):
-            self._current_struct.push_node(node=node)
+        struct = self._get_struct(expr_level)
+        if struct:
+            struct.push_node(node)
         else:
             self._ast.push_node(
                 module=self._current_module,
                 node=node
             )
-            if len(self._structs) >= 2:
-                self._structs.pop(-1)
-                self._current_struct = self._structs[-1]
-            else:
-                self._current_struct = None
 
         self._detect_struct_start(node, expr_level)
 

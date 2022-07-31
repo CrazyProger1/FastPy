@@ -205,6 +205,7 @@ class IfNodeTranspiler(BaseNodeTranspiler):
             auto_semicolon=False,
             endl=True
         )
+
         return code
 
 
@@ -243,7 +244,9 @@ class WhileNodeTranspiler(BaseNodeTranspiler):
 
         for i, node in enumerate(body):
             code.push_internal(
-                transpile_node_clb(node=node, endl=False, auto_semicolon=False).internal,
+                transpile_node_clb(node=node).internal,
+                auto_semicolon=False,
+                endl=True
             )
 
         return code.internal
