@@ -14,8 +14,10 @@
 
 
 int main(){
-    bool a = "123" == "123";
+    if ("abc" == "abc") {
+log("hello!");
 
+}
 
 
 }

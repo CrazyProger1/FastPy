@@ -35,6 +35,32 @@ class UniversalDetector(BaseDetector):
             return create_token(supposed_token_type, result_string, line_number)
 
 
+class LiteralDetector(BaseDetector):
+    detects = (TokenTypes.literal,)
+
+    def detect(self,
+               code_line: str,
+               line_number: int,
+               column_number: int,
+               regex_pattern: str,
+               supposed_token_type: TokenTypes) -> BaseToken:
+        cut_string = code_line[column_number::]
+        result = re.match(regex_pattern, cut_string)
+        if result:
+            result_string = result.group().strip()
+            if result_string.count('"') > 2 or result_string.count("'") > 2:
+                start = result_string[0]
+                literal = ''
+                for char in result_string[1::]:
+                    if char == start:
+                        return create_token(supposed_token_type,
+                                            text='"' + literal + '"',
+                                            line=line_number)
+
+                    literal += char
+            return create_token(supposed_token_type, result_string, line_number)
+
+
 class OperatorDetector(BaseDetector):
     detects = (TokenTypes.operator,)
 

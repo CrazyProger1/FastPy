@@ -10,7 +10,7 @@
       ]
     },
     "literal": {
-      "detector": "fastpy.lexer.detectors.UniversalDetector",
+      "detector": "fastpy.lexer.detectors.LiteralDetector",
       "regexes": [
         "\"[\\s\\S]+\"",
         "'[\\s\\S]+'"
@@ -25,7 +25,7 @@
     "identifier": {
       "detector": "fastpy.lexer.detectors.UniversalDetector",
       "regexes": [
-        "[a-zA-Z_]+"
+        "[a-zA-Z_][a-zA-Z0-9_]*"
       ]
     }
   }

@@ -11,7 +11,7 @@
 #who_move = 'X'
 #
 #fun next_player(who_move: str) -> str:
-#    pass
+#
 #
 #
 #
@@ -41,7 +41,6 @@
 #
 #
 #
-#if "123" == "123":
-#    log('Hello')
-
-a: bool = "123" == "123"
+#
+if "abc" == "abc":
+    log('hello!')
