@@ -100,7 +100,7 @@
 
 
 fun f() -> bool:
-#    return true
-    log('g')
+    return true
+#    log('g')
 
 log(f())

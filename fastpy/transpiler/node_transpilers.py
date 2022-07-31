@@ -264,3 +264,14 @@ class WhileNodeTranspiler(BaseNodeTranspiler):
         code.push_internal(f'while ({self._transpile_condition(node.condition, transpile_node_clb)})'
                            f'\n{{\n{self._transpile_body(node.body, transpile_node_clb)}\n}}\n')
         return code
+
+
+class ReturnNodeTranspiler(BaseNodeTranspiler):
+    def transpile(self,
+                  node: ReturnNode,
+                  transpile_node_clb: callable,
+                  **kwargs) -> BaseCode:
+        code = Code()
+
+        code.push_internal(f'return {transpile_node_clb(node.node).internal if node.node else ""}')
+        return code

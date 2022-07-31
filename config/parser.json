@@ -519,6 +519,38 @@
           }
         }
       ]
+    },
+    "ReturnNode": {
+      "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+      "node_class": "fastpy.parser.nodes.ReturnNode",
+      "cases": [
+        {
+          "validate_data": {
+            "methods": {
+              "check_token_names": {
+                "names": [
+                  "return"
+                ]
+              }
+            }
+          },
+          "parse_data": {
+            "node": {
+              "parser_class": "fastpy.parser.node_parsers.UniversalNodeParser",
+              "possible_node_classes": [
+                "fastpy.parser.nodes.LogicOpNode",
+                "fastpy.parser.nodes.BinOpNode",
+                "fastpy.parser.nodes.VariableNode",
+                "fastpy.parser.nodes.ValueNode",
+                "fastpy.parser.nodes.CallNode"
+              ],
+              "tokens_slice": {
+                "start_index": 1
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

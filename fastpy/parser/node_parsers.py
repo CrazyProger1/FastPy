@@ -33,7 +33,8 @@ class UniversalNodeParser(BaseNodeParser):
         VariableNode,
         IfNode,
         ElseNode,
-        WhileNode
+        WhileNode,
+        ReturnNode
     )
 
     @staticmethod

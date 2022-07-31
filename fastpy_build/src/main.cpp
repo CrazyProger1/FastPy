@@ -5,18 +5,14 @@
 #include"include/builtin.hpp"
 
 
+bool f() {
+    return true;
 
-
-
-
-void f (){
-log("g");
 
 };
 
 
-
-int main(){
+int main() {
     log(f());
 
 
