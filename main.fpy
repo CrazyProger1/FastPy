@@ -98,16 +98,18 @@ while continue_game:
     game_over = check_game_over(a, b, c, d, e, f, g, h, i)
     drw = check_draw(a, b, c, d, e, f, g, h, i)
 
-    if game_over:
+    if drw:
+        draw(a, b, c, d, e, f, g, h, i)
+        log_info('Draw!')
+        continue_game = false
+    elif game_over:
         draw(a, b, c, d, e, f, g, h, i)
         log_info('Game Over! ')
         log_info('Won: ')
         log_info(who_move)
         continue_game = false
-    elif drw:
-        draw(a, b, c, d, e, f, g, h, i)
-        log_info('Draw!')
-        continue_game = false
+
+
 
     who_move = next_player(who_move)
 

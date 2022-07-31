@@ -184,18 +184,18 @@ auto game_over = check_game_over(a, b, c, d, e, f, g, h, i);
 auto drw = check_draw(a, b, c, d, e, f, g, h, i);
 
 
-if (game_over) {
+if (drw) {
 draw(a, b, c, d, e, f, g, h, i);
-log_info("Game Over! ");
-log_info("Won: ");
-log_info(who_move);
+log_info("Draw!");
 continue_game = false;
 
 }
 
-else if (drw) {
+else if (game_over) {
 draw(a, b, c, d, e, f, g, h, i);
-log_info("Draw!");
+log_info("Game Over! ");
+log_info("Won: ");
+log_info(who_move);
 continue_game = false;
 
 }
