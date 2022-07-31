@@ -142,10 +142,10 @@ class OperationNodeParser(BaseNodeParser):
             left_operand = None
 
             for token in tokens:
-                if not left_operand and token.type in [TokenTypes.identifier, TokenTypes.number]:
+                if not left_operand and token.type in [TokenTypes.identifier, TokenTypes.number, TokenTypes.literal]:
                     left_operand = token
                 elif token.type == TokenTypes.operator \
-                        and token.name in BIN_OP_NAMES + ['and', 'or', 'not']:
+                        and token.name in BIN_OP_NAMES:
                     if left_operand:
                         return True
                     return False
@@ -199,7 +199,7 @@ class OperationNodeParser(BaseNodeParser):
                 continue
 
             match token.type:
-                case TokenTypes.number:
+                case TokenTypes.number | TokenTypes.literal:
                     if not left_operand:
                         left_operand = ValueNode(token)
                     elif not right_operand:
@@ -212,6 +212,20 @@ class OperationNodeParser(BaseNodeParser):
                         )
                         right_operand = ValueNode(token)
                         operator = None
+
+                # case TokenTypes.literal: # to
+                #     if not left_operand:
+                #         left_operand = ValueNode(token)
+                #     elif not right_operand:
+                #         right_operand = ValueNode(token)
+                #     else:
+                #         left_operand = self._create_op_node(
+                #             left_operand=left_operand,
+                #             operator=operator,
+                #             right_operand=right_operand
+                #         )
+                #         right_operand = ValueNode(token)
+                #         operator = None
 
                 case TokenTypes.identifier:
                     if not left_operand:

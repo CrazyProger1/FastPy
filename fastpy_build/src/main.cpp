@@ -5,15 +5,17 @@
 #include"include/builtin.hpp"
 
 
-int sm(int a, int b) {
-    return a + b;
 
 
-};
 
 
-int main() {
-    sm(20, sm(10, sm(10, 20)));
+
+
+
+
+int main(){
+    bool a = "123" == "123";
+
 
 
 }
