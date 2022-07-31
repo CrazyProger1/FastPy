@@ -93,7 +93,8 @@ class FuncNodeTranspiler(BaseNodeTranspiler):
 
         for i, node in enumerate(body):
             code.push_internal(
-                transpile_node_clb(node=node, endl=False, auto_semicolon=False).internal,
+                transpile_node_clb(node=node, ).internal,
+                endl=False, auto_semicolon=False
             )
 
         return code.internal

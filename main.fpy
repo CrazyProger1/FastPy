@@ -37,9 +37,14 @@ fun draw(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str)
     draw_horz_border()
 
 fun draw_game_over(winner: str):
-    log('Game over! ')
-    log('Won: ')
-    log(winner, true)
+    log_info('Game over! ')
+    x = 'X'
+    o = 'O'
+    if winner != x and winner != o:
+        log_info('Draw!')
+    else:
+        log_info('Won: ')
+        log_info(winner, true)
 
 fun check_three(a: str, b: str, c: str):
     empty = ' '
@@ -54,6 +59,11 @@ fun check_game_over(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: s
     check_three(c, f, i)
     check_three(c, e, g)
     check_three(d, e, f)
+
+    empty = ' '
+
+    if a != empty and b != empty and c != empty and d != empty and e != empty and f != empty and g != empty and h != empty and i != empty:
+        draw_game_over('draw')
 
 while true:
     draw(a, b, c, d, e, f, g, h, i)

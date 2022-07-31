@@ -96,6 +96,21 @@ class CallNodeAnalyzer(BaseNodeAnalyzer):
             raise AnalyzingError(f'SemanticError: function with name "{node.identifier.text}" does not exists')
 
 
+class ElseNodeAnalyzer(BaseNodeAnalyzer):
+    @staticmethod
+    def _analyze_body(body: list[BaseNode], analyze_node_clb: callable):
+        for body_node in body:
+            analyze_node_clb(body_node)
+
+    def analyze(self,
+                node: ElseNode,
+                module: Module,
+                ast: BaseAST,
+                analyze_node_clb: callable,
+                scope: Scope):
+        self._analyze_body(node.body, analyze_node_clb)
+
+
 class WhileNodeAnalyzer(BaseNodeAnalyzer):
     def _analyze_condition(self):
         pass

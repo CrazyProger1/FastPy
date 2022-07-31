@@ -5,6 +5,7 @@
     "fastpy.parser.nodes.FuncNode": "fastpy.semantic_analyzer.node_analyzers.FuncNodeAnalyzer",
     "fastpy.parser.nodes.IfNode": "fastpy.semantic_analyzer.node_analyzers.IfNodeAnalyzer",
     "fastpy.parser.nodes.CallNode": "fastpy.semantic_analyzer.node_analyzers.CallNodeAnalyzer",
-    "fastpy.parser.nodes.WhileNode": "fastpy.semantic_analyzer.node_analyzers.WhileNodeAnalyzer"
+    "fastpy.parser.nodes.WhileNode": "fastpy.semantic_analyzer.node_analyzers.WhileNodeAnalyzer",
+    "fastpy.parser.nodes.ElseNode": "fastpy.semantic_analyzer.node_analyzers.ElseNodeAnalyzer"
   }
 }

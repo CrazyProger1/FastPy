@@ -65,7 +65,6 @@ class Transpiler(BaseTranspiler):
             **kwargs
         )
 
-
         return code
 
     def _transpile_import(self, node: CallNode):

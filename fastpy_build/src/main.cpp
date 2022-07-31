@@ -34,17 +34,28 @@ draw_row(g, h, i);
 draw_horz_border();
 
 };void draw_game_over (str winner){
-log("Game over! ");
-log("Won: ");
-log(winner, true);
+log_info("Game over! ");
+auto x = "X";
+
+auto o = "O";
+
+if (winner != x && winner != o) {
+log_info("Draw!");
+
+}
+else {
+log_info("Won: ");
+log_info(winner, true);
+
+}
 
 };void check_three (str a, str b, str c){
 auto empty = " ";
+
 if (a == b && b == c && c != empty) {
 draw_game_over(a);
 
 }
-;
 
 };void check_game_over (str a, str b, str c, str d, str e, str f, str g, str h, str i){
 check_three(a, b, c);
@@ -54,6 +65,12 @@ check_three(b, e, h);
 check_three(c, f, i);
 check_three(c, e, g);
 check_three(d, e, f);
+auto empty = " ";
+
+if (a != empty && b != empty && c != empty && d != empty && e != empty && f != empty && g != empty && h != empty && i != empty) {
+draw_game_over("draw");
+
+}
 
 };
 
@@ -158,7 +175,7 @@ move = o;
 }
 
 else {
-auto move = x;
+move = x;
 
 }
 
