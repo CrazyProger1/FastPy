@@ -1,3 +1,7 @@
+"""
+This module is responsible for splitting the source code into tokens.
+"""
+
 from .lexers import *
 from .tokens import *
 from .config import *

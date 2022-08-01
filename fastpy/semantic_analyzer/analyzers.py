@@ -16,7 +16,12 @@ class BaseAnalyzer(ABC):
     @abstractmethod
     def __init__(self,
                  module: Module,
-                 ast: BaseAST): ...
+                 ast: BaseAST):
+        """
+
+        :param module: module: the module parameter contains information about the currently processed file
+        :param ast: Abstract Syntax Tree - output of previous parsing stage
+        """
 
     @abstractmethod
     def analyze(self) -> None:
@@ -24,7 +29,7 @@ class BaseAnalyzer(ABC):
 
 
 class Analyzer(BaseAnalyzer):
-    """Basic Analyzer of FastPy"""
+    """Basic Analyzer implementation of FastPy"""
 
     def __init__(self,
                  module: Module,

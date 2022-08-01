@@ -1,3 +1,4 @@
+
 def singleton(cls):
     instances = {}
 

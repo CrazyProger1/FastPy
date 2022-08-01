@@ -2,6 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class BaseCode(ABC):
+    """
+    Code interface.
+    This class is used by transpiler for separation convenience of internal and external code.
+    Internal code - code in main function, external - outside of main func
+    """
+
     @abstractmethod
     def push_internal(self, code: str, **kwargs): ...
 

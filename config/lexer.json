@@ -12,8 +12,8 @@
     "literal": {
       "detector": "fastpy.lexer.detectors.LiteralDetector",
       "regexes": [
-        "\"[\\s\\S]+\"",
-        "'[\\s\\S]+'"
+        "'[\\S\\s ]+'",
+        "\"[\\S\\s ]+\""
       ]
     },
     "number": {

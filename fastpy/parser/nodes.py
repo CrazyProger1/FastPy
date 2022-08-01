@@ -5,12 +5,18 @@ from ..filesystem import FileSystem as Fs
 
 
 class BaseNode(ABC):
+    """Node interface"""
+
     @abstractmethod
     def __init__(self, *args, **kwargs): ...
 
     @property
     @abstractmethod
-    def line(self) -> int: ...
+    def line(self) -> int:
+        """
+
+        :return: line number from which the node was extracted
+        """
 
 
 class NodeWithBody(BaseNode, ABC):
@@ -213,17 +219,6 @@ class WhileNode(NodeWithBody, PrintableNode):
             return -1
         return self.condition.line
 
-
-# class ImportNode(BasicNode, PrintableNode):
-#     def __init__(self, filepath: BaseToken = None, parts: list[BaseToken] = None):
-#         self.filepath = filepath
-#         self.parts = parts
-#
-#     @property
-#     def line(self) -> int:
-#         if not self.filepath:
-#             return -1
-#         return self.filepath.line
 
 class ReturnNode(BasicNode, PrintableNode):
     def __init__(self, node: BaseNode):

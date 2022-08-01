@@ -16,7 +16,12 @@ class BaseParser(ABC):
     @abstractmethod
     def __init__(self,
                  module: Module,
-                 tokens: list[BaseToken]): ...
+                 tokens: list[BaseToken]):
+        """
+
+        :param module: the module parameter contains information about the currently processed file
+        :param tokens: list of tokens - output of previous stage
+        """
 
     @abstractmethod
     def parse(self) -> BaseAST:
@@ -24,7 +29,7 @@ class BaseParser(ABC):
 
 
 class Parser(BaseParser):
-    """Basic parser of FastPy"""
+    """Basic parser implementation of FastPy"""
 
     @Logger.info(pattern='Parser created ({module})')
     def __init__(self,

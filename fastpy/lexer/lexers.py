@@ -10,6 +10,7 @@ from ..exceptions import *
 
 
 class BaseLexer(ABC):
+    """Lexer interface"""
 
     @abstractmethod
     def __init__(self, module: Module):
@@ -24,7 +25,7 @@ class BaseLexer(ABC):
 
 
 class Lexer(BaseLexer):
-    """Basic lexer of FastPy"""
+    """Basic lexer implementation of FastPy"""
 
     @Logger.info(pattern='Lexer created ({module})')
     def __init__(self, module: Module):
@@ -61,7 +62,7 @@ class Lexer(BaseLexer):
 
             for regex in regexes:
                 token = detector.detect(
-                    code_line=code_line,
+                    code=code_line,
                     line_number=line_number,
                     column_number=column_number,
                     regex_pattern=regex,

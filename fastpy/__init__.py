@@ -1,3 +1,5 @@
+"""This module provides a set of tools for development on FastPy lang."""
+
 import fastpy.config
 import fastpy.exceptions
 import fastpy.log
@@ -10,6 +12,5 @@ __all__ = [
     'config',
     'log',
     'exceptions',
-    'lexer',
     'TranspileAPI',
 ]

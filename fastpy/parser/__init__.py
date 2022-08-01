@@ -1,3 +1,7 @@
+"""
+This module is responsible for building an Abstract Syntax Tree from the tokens obtained using the lexer.
+"""
+
 from .parsers import *
 from .ast import *
 from .config import *
@@ -12,7 +16,6 @@ __all__ = [
     'create_parser',
     'create_ast',
     'BaseNode',
-    'nodes',
-    'ImportNode'
+    'nodes'
 
 ]

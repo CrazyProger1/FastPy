@@ -5,6 +5,8 @@ from ..exceptions import ConfigNotLoadedError
 
 
 class JsonConfig(BaseConfig):
+    """Json config loader"""
+
     def __init__(self, filepath: str, authoload: bool = True):
         self._filepath = None
         self._config = None

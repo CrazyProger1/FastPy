@@ -14,7 +14,14 @@ class BaseTranspiler(ABC):
     """Transpailer interface"""
 
     @abstractmethod
-    def __init__(self, module: Module, ast: BaseAST): ...
+    def __init__(self,
+                 module: Module,
+                 ast: BaseAST):
+        """
+
+        :param module: module: the module parameter contains information about the currently processed file
+        :param ast: Abstract Syntax Tree - output of previous parsing stage
+        """
 
     @abstractmethod
     def transpile(self) -> str:
@@ -22,7 +29,7 @@ class BaseTranspiler(ABC):
 
 
 class Transpiler(BaseTranspiler):
-    """Basic transpailer of FastPy"""
+    """Basic Transpailer implementation of FastPy"""
 
     @Logger.info(pattern='Transpiler created ({module})')
     def __init__(self, module: Module, ast: BaseAST):

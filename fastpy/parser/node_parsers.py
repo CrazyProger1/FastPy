@@ -7,20 +7,42 @@ from .config import *
 
 
 class BaseNodeParser(ABC):
+    """Node Parser interface"""
+
     parses: tuple[type[BaseNode]]
 
     @abstractmethod
     def validate(self,
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],
-                 **extra_data) -> bool: ...
+                 **extra_data) -> bool:
+        """
+        Validates tokens and returns whether the parser is ready to parse the provided tokens
+
+        :param tokens: tokens to parse
+        :param supposed_node_type: supposed type of node
+        :param extra_data: data that helps to validate and parse tokens,
+         can be loaded from config or transmitted from another node parser
+        :return: parser readiness
+        """
 
     @abstractmethod
     def parse(self,
               tokens: list[BaseToken],
               parse_node_clb: callable,
               supposed_node_type: type[BaseNode],
-              **extra_data) -> BaseNode | list[BaseNode]: ...
+              **extra_data) -> BaseNode | list[BaseNode]:
+        """
+        Parses tokens and returns one or more obtained nodes.
+        Should only run when the validate method returns True
+
+        :param tokens: tokens to parse
+        :param parse_node_clb: callback that can be useful to the parser to parse subnodes
+        :param supposed_node_type: supposed type of node
+        :param extra_data: data that helps to validate and parse tokens,
+         can be loaded from config or transmitted from another node parser
+        :return:
+        """
 
 
 @singleton
@@ -213,20 +235,6 @@ class OperationNodeParser(BaseNodeParser):
                         right_operand = ValueNode(token)
                         operator = None
 
-                # case TokenTypes.literal: # to
-                #     if not left_operand:
-                #         left_operand = ValueNode(token)
-                #     elif not right_operand:
-                #         right_operand = ValueNode(token)
-                #     else:
-                #         left_operand = self._create_op_node(
-                #             left_operand=left_operand,
-                #             operator=operator,
-                #             right_operand=right_operand
-                #         )
-                #         right_operand = ValueNode(token)
-                #         operator = None
-
                 case TokenTypes.identifier:
                     if not left_operand:
                         left_operand = VariableNode(token)
@@ -323,7 +331,7 @@ class ArgumentsParser(BaseNodeParser):
 
         if tokens[0].type == TokenTypes.end_parenthesis:
             return []
-        print(tokens)
+
         arguments = []
         expr_tokens = []
         opened_parenthesis_counter = 1

@@ -4,12 +4,13 @@ from config import *
 
 
 def make_action(args: argparse.Namespace):
+    """Performs actions such as transpiling or compiling depending on the input"""
     if args.translate:
         fastpy.TranspileAPI(**vars(args)).transpile()
 
 
 def setup_argparse() -> argparse.ArgumentParser:
-    """Configuring the console argument parser"""
+    """Configures the console argument parser"""
     argparser = argparse.ArgumentParser(**ARGPARSE_CONFIG['parser'])
 
     for argument_config in ARGPARSE_CONFIG['arguments']:

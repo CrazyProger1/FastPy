@@ -5,6 +5,8 @@ from .config import *
 
 
 class BaseToken(ABC):
+    """Token interface"""
+
     @property
     @abstractmethod
     def type(self) -> TokenTypes: ...
@@ -23,11 +25,21 @@ class BaseToken(ABC):
 
 
 class Token(BaseToken):
+    """Basic token implementation of FastPy"""
+
     def __init__(self,
                  token_type: TokenTypes,
                  text: str,
                  line: int,
                  name: str = None):
+        """
+
+        :param token_type:
+        :param text: code part from which this token is extracted
+        :param line: line number of code part
+        :param name: operator name, used only for operators customization, for non-op tokens is None
+        """
+
         self._type = token_type
         self._text = text
         self._line = line
@@ -63,8 +75,15 @@ def code_from_tokens(tokens: list[BaseToken] | tuple[BaseToken]):
 _token_class: BaseToken | None = None
 
 
-def create_token(token_type: TokenTypes, text: str, line: int, name: str = None, **kwargs) -> BaseToken:
+def create_token(
+        token_type: TokenTypes,
+        text: str,
+        line: int,
+        name: str = None,
+        **kwargs) -> BaseToken:
+
     """Token factory"""
+
     global _token_class
 
     if not _token_class:

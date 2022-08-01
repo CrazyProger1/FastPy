@@ -7,23 +7,52 @@ from ..module import Module
 
 
 class BaseAST(ABC):
-    @abstractmethod
-    def add_module(self, module: Module) -> None: ...
+    """Abstract Syntax Tree interface"""
 
     @abstractmethod
-    def push_node(self, module: Module, node: BaseNode) -> None: ...
+    def add_module(self, module: Module) -> None:
+        """
+
+        :param module: module for which a branch should be created
+        """
 
     @abstractmethod
-    def pop_node(self, module: Module, index: int) -> BaseNode: ...
+    def push_node(self, module: Module, node: BaseNode) -> None:
+        """
+
+        :param module: module to which the node should be added to the branch
+        :param node: node to be added
+        """
 
     @abstractmethod
-    def remove_node(self, module: Module, node: BaseNode) -> None: ...
+    def pop_node(self, module: Module, index: int) -> BaseNode:
+        """
+
+        :param module: module that branch contains node to be removed
+        :param index: index of node to be removed
+        :return: node that was removed
+        """
 
     @abstractmethod
-    def nodes(self, module_name: str) -> Iterable[BaseNode]: ...
+    def remove_node(self, module: Module, node: BaseNode) -> None:
+        """
+
+        :param module: module that branch contains node to be removed
+        :param node: node to be removed
+        """
+
+    @abstractmethod
+    def nodes(self, module_name: str) -> Iterable[BaseNode]:
+        """
+
+        :param module_name: name of the module branch
+        :return: iterator of all nodes in module branch
+        """
 
 
 class AST(BaseAST):
+    """Basic AST implementation of FastPy"""
+
     def __init__(self):
         self._tree = {
             '__main__': []

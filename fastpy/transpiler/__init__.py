@@ -1,3 +1,7 @@
+"""
+This module is responsible for converting the Abstract Syntax Tree into C++ source code.
+"""
+
 from .transpilers import *
 from .config import *
 

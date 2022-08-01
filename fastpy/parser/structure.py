@@ -2,6 +2,10 @@ from .nodes import *
 
 
 class Structure:
+    """
+    Contains information about currently detected structure, such as if condition or function
+    """
+
     def __init__(self, node, level: int = 0):
         self._level = level
         self._node: NodeWithBody = node

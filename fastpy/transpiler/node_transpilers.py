@@ -6,23 +6,34 @@ from .config import *
 
 
 class BaseNodeTranspiler(ABC):
+    """
+    Node Transpiler interface
+    """
+
     @abstractmethod
     def transpile(self,
                   node: BaseNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode: ...
+                  **extra_data) -> BaseCode:
+        """
+
+        :param node: node to transpile
+        :param transpile_node_clb: callback to transpile node body or arguments or condition
+        :param extra_data: extra data, transmitted by another node transpiler
+        :return:
+        """
 
 
 @singleton
 class AssignNodeTranspiler(BaseNodeTranspiler):
-    def transpile(self, node: AssignNode, transpile_node_clb: callable, **kwargs) -> BaseCode:
+    def transpile(self, node: AssignNode, transpile_node_clb: callable, **extra_data) -> BaseCode:
         code = Code()
         value_node = node.value
         value = ''
         if value_node:
             value = transpile_node_clb(
                 node=value_node,
-                **kwargs,
+                **extra_data,
                 type=node.value_type.text if node.value_type else None
             ).internal
 
@@ -34,7 +45,7 @@ class AssignNodeTranspiler(BaseNodeTranspiler):
             f'{var_type}'
             f'{node.identifier.text}{" = " if value else ""}'
             f'{value}',
-            **kwargs
+            **extra_data
         )
 
         return code
@@ -45,16 +56,17 @@ class ValueNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: ValueNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
 
         value = node.value.text
         if isinstance(value, str):
-            value = value.replace('"', '\"').replace("'", '"')
+            if value[0] == "'":
+                value = '"' + value[1:-1] + '"'
 
         code.push_internal(
             f'{value}',
-            **kwargs
+            **extra_data
         )
         return code
 
@@ -64,11 +76,11 @@ class VariableNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: VariableNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
         code.push_internal(
             f'{node.identifier.text}',
-            **kwargs
+            **extra_data
         )
         return code
 
@@ -102,7 +114,7 @@ class FuncNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: FuncNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
         arguments = self._transpile_arguments(node.arguments, transpile_node_clb)
         body = self._transpile_body(node.body, transpile_node_clb)
@@ -129,10 +141,10 @@ class CallNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: CallNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
 
-        cast_type = kwargs.get('type')
+        cast_type = extra_data.get('type')
         specify_type = False
 
         if node.identifier.text == BUILTIN_FUNCTIONS['input']:
@@ -142,7 +154,7 @@ class CallNodeTranspiler(BaseNodeTranspiler):
             f'{node.identifier.text}'
             f'{("<" + cast_type + ">") if specify_type else ""}'
             f'({self._transpile_arguments(node.arguments, transpile_node_clb)})',
-            **kwargs
+            **extra_data
         )
         return code
 
@@ -160,7 +172,7 @@ class OperationsNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: LogicOpNode | BinOpNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
         left_operand = transpile_node_clb(node.left_operand, auto_semicolon=False, endl=False)
         if not node.right_operand:
@@ -172,7 +184,7 @@ class OperationsNodeTranspiler(BaseNodeTranspiler):
         if node.in_brackets:
             match_expr = '(' + match_expr + ')'
 
-        code.push_internal(match_expr, **kwargs)
+        code.push_internal(match_expr, **extra_data)
         return code
 
 
@@ -196,7 +208,7 @@ class IfNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: IfNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
         condition = self._transpile_condition(node.condition, transpile_node_clb)
         body = self._transpile_body(node.body, transpile_node_clb)
@@ -226,7 +238,7 @@ class ElseNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: ElseNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
         body = self._transpile_body(node.body, transpile_node_clb)
 
@@ -259,7 +271,7 @@ class WhileNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: WhileNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
         code.push_internal(f'while ({self._transpile_condition(node.condition, transpile_node_clb)})'
                            f'\n{{\n{self._transpile_body(node.body, transpile_node_clb)}\n}}\n')
@@ -270,7 +282,7 @@ class ReturnNodeTranspiler(BaseNodeTranspiler):
     def transpile(self,
                   node: ReturnNode,
                   transpile_node_clb: callable,
-                  **kwargs) -> BaseCode:
+                  **extra_data) -> BaseCode:
         code = Code()
 
         code.push_internal(f'return {transpile_node_clb(node.node).internal if node.node else ""}')
