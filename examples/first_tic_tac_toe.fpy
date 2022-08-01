@@ -1,0 +1,116 @@
+a: str = ' '
+b: str = ' '
+c: str = ' '
+d: str = ' '
+e: str = ' '
+f: str = ' '
+g: str = ' '
+h: str = ' '
+i: str = ' '
+
+who_move: str = 'X'
+continue_game: bool = true
+
+
+fun next_player(who_move: str) -> str:
+    if who_move == 'X':
+        return 'O'
+    else:
+        return 'X'
+
+
+
+
+fun draw_vert_border(endl: bool = false):
+    log('|', endl)
+
+fun draw_horz_border():
+    log('+-+-+-+', true)
+
+fun draw_row(a: str, b: str, c: str):
+    draw_vert_border()
+    log(a)
+    draw_vert_border()
+    log(b)
+    draw_vert_border()
+    log(c)
+    draw_vert_border(true)
+
+fun draw(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str):
+    draw_horz_border()
+    draw_row(a, b, c)
+    draw_horz_border()
+    draw_row(d, e, f)
+    draw_horz_border()
+    draw_row(g, h, i)
+    draw_horz_border()
+
+
+
+fun ask_cell(who_move: str) -> int:
+    log(who_move)
+    cell: int = input(' choose cell >>')
+    return cell
+
+fun check_three(a: str, b: str, c: str) -> bool:
+    return a == b and b == c and c != ' '
+
+fun check_game_over(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str) -> bool:
+    r1 = check_three(a, b, c)
+    r2 = check_three(a, d, g)
+    r3 = check_three(a, e, i)
+    r4 = check_three(b, e, h)
+    r5 = check_three(d, e, f)
+    r6 = check_three(g, e, c)
+    r7 = check_three(c, f, i)
+    r8 = check_three(g, h , i)
+    return r1 or r2 or r3 or r4 or r5 or r6 or r7 or r8
+
+fun check_draw(a: str, b: str, c: str, d: str, e: str, f: str, g: str, h: str, i: str) -> bool:
+    return a != ' ' and b != ' ' and c != ' ' and d != ' ' and e != ' ' and f != ' ' and g != ' ' and h != ' ' and i != ' '
+
+while continue_game:
+    draw(a, b, c, d, e, f, g, h, i)
+    cell = ask_cell(who_move)
+
+    if cell == 1:
+        a = who_move
+    elif cell == 2:
+        b = who_move
+    elif cell == 3:
+        c = who_move
+    elif cell == 4:
+        d = who_move
+    elif cell == 5:
+        e = who_move
+    elif cell == 6:
+        f = who_move
+    elif cell == 7:
+        g = who_move
+    elif cell == 8:
+        h = who_move
+    elif cell == 9:
+        i = who_move
+    else:
+        log_error('Enter number in range: 1 - 9!', true)
+        who_move = next_player(who_move)
+
+    game_over = check_game_over(a, b, c, d, e, f, g, h, i)
+    drw = check_draw(a, b, c, d, e, f, g, h, i)
+
+    if drw:
+        draw(a, b, c, d, e, f, g, h, i)
+        log_info('Draw!')
+        continue_game = false
+    elif game_over:
+        draw(a, b, c, d, e, f, g, h, i)
+        log_info('Game Over! ')
+        log_info('Won: ')
+        log_info(who_move)
+        continue_game = false
+
+
+
+    who_move = next_player(who_move)
+
+

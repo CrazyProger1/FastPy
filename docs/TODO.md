@@ -5,8 +5,8 @@
 - [x] Variables
     - [x] scopes
     - [x] creation
-- [ ] Functions
-    - [ ] return
+- [x] Functions
+    - [x] return
     - [x] body
     - [x] arguments
 - [ ] Modules
