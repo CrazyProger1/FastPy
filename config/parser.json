@@ -140,6 +140,11 @@
               "check_min_tokens_length": {
                 "min_length": 5
               },
+              "check_token_name_presence": {
+                "required_names": [
+                  "assign"
+                ]
+              },
               "check_token_types": {
                 "types": [
                   "identifier",
