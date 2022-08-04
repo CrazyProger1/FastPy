@@ -34,15 +34,19 @@ class AssignNodeTranspiler(BaseNodeTranspiler):
             value = transpile_node_clb(
                 node=value_node,
                 **extra_data,
-                type=node.value_type.text if node.value_type else None
+                type=node.value_type if node.value_type else None
             ).internal
 
         var_type = ''
         if node.definition:
-            var_type = f'{node.value_type.text if node.value_type is not None else "auto"} '
+            # var_type = f'{node.value_type.text if node.value_type is not None else "auto"} '
+            if node.value_type:
+                var_type = transpile_node_clb(node.value_type, endl=False, auto_semicolon=False)
+            else:
+                var_type = 'auto'
 
         code.push_internal(
-            f'{var_type}'
+            f'{var_type} '
             f'{node.identifier.text}{" = " if value else ""}'
             f'{value}',
             **extra_data
@@ -144,7 +148,7 @@ class CallNodeTranspiler(BaseNodeTranspiler):
                   **extra_data) -> BaseCode:
         code = Code()
 
-        cast_type = extra_data.get('type')
+        cast_type: VariableNode = extra_data.get('type')
         specify_type = False
 
         if node.identifier.text == BUILTIN_FUNCTIONS['input']:
@@ -152,7 +156,7 @@ class CallNodeTranspiler(BaseNodeTranspiler):
 
         code.push_internal(
             f'{node.identifier.text}'
-            f'{("<" + cast_type + ">") if specify_type else ""}'
+            f'{("<" + cast_type.identifier.text + ">") if specify_type else ""}'
             f'({self._transpile_arguments(node.arguments, transpile_node_clb)})',
             **extra_data
         )

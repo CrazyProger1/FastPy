@@ -374,3 +374,19 @@ class ConditionParser(BaseNodeParser):
             (LogicOpNode, BinOpNode),
             OperationNodeParser()
         )
+
+
+@singleton
+class ComplexTypeNodeParser(BaseNodeParser):
+    def validate(self,
+                 tokens: list[BaseToken],
+                 supposed_node_type: type[BaseNode],
+                 **extra_data) -> bool:
+        pass
+
+    def parse(self,
+              tokens: list[BaseToken],
+              parse_node_clb: callable,
+              supposed_node_type: type[BaseNode],
+              **extra_data) -> BaseNode | list[BaseNode]:
+        pass

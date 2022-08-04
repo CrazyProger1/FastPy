@@ -10,6 +10,8 @@
   "builtin_types": {
     "string": "str",
     "integer": "int",
-    "boolean": "bool"
+    "boolean": "bool",
+    "list": "list",
+    "vector": "vector"
   }
 }

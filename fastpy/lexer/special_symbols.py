@@ -7,6 +7,8 @@ SPECIAL_SYMBOLS = {
     ']': TokenTypes.end_square,
     '{': TokenTypes.start_braces,
     '}': TokenTypes.end_braces,
+    '<': TokenTypes.start_chevrons,
+    '>': TokenTypes.end_chevrons,
     ' ': TokenTypes.gap,
     '\t': TokenTypes.tab,
     ',': TokenTypes.comma

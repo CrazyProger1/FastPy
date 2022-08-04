@@ -68,7 +68,7 @@ class ValueNode(BasicNode, PrintableNode):
 class AssignNode(BasicNode, PrintableNode, NamedNode):
     def __init__(self,
                  identifier: BaseToken,
-                 value_type: BaseToken = None,
+                 value_type: BaseNode = None,
                  value: BaseNode = None):
         self.identifier = identifier
         self.value_type = value_type

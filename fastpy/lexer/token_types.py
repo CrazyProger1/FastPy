@@ -16,6 +16,8 @@ class TokenTypes(Enum):
     tab = 12
     number = 13
     endline = 14
+    start_chevrons = 15
+    end_chevrons = 16
 
     def __eq__(self, other):
         if isinstance(other, int):

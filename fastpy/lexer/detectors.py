@@ -61,8 +61,11 @@ class LiteralDetector(BaseDetector):
     @staticmethod
     def _escape_double_quote(literal: str) -> str:
         out_literal = ''
+
         for char in literal[1:-1]:
             match char:
+                case '\\':
+                    pass
                 case '"':
                     out_literal += '\\"'
                 case _:
@@ -77,15 +80,20 @@ class LiteralDetector(BaseDetector):
         literal = None
         if result:
             literal = result.group()
-        else:
-            raise LexingError(f'SyntaxError: expected closing quote')
 
-        if literal.count(start) > 2:
-            for i, char in enumerate(literal[1::]):
-                if char == start:
-                    return '"' + literal[1:i + 1] + '"'
+            if literal.count(start) > 2:
+                ignore_next = False
+                for i, char in enumerate(literal[1::]):
+                    if ignore_next:
+                        ignore_next = False
+                        continue
 
-        return '"' + literal[1:-1] + '"'
+                    if char == '\\':
+                        ignore_next = True
+                    if char == start:
+                        return '"' + literal[1:i + 1] + '"'
+
+        return ('"' + literal[1:-1] + '"') if literal else None
 
     def detect(self,
                code: str,
