@@ -151,6 +151,9 @@ The entire list of completed and scheduled tasks is available in the [TODO file]
 		</td>
 </tr>
 
+## Status
+
+Project frozen until studying end :(
 
 ## Licence
 
