@@ -14,7 +14,7 @@
 
 
 int main(){
-    int ab;
+    auto abc;
 
 
 }

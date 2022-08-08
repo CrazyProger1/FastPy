@@ -39,7 +39,10 @@ class Validators:
         return token_name in possible_names
 
     @staticmethod
-    def check_token_type_presence(tokens: list[BaseToken], required_types: list[str | int | TokenTypes]):
+    def check_token_type_presence(
+            tokens: list[BaseToken],
+            required_types: list[str | int | TokenTypes]
+    ):
         """
 
         :param tokens: list of tokens for check

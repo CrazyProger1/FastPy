@@ -114,6 +114,11 @@
 #    who_move = next_player(who_move)
 #
 #
-##a: str =
 
 abc: list<int> = [1, 2, 3, 4, 5, 6, 7, 8]
+
+
+
+#fun templated_func(arg: auto<T>) -> T:
+#    arg_copy: T = arg
+#    return arg_copy

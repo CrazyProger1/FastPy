@@ -50,6 +50,7 @@ class Lexer(BaseLexer):
                 line=line_number,
             )
             self._tokens.append(token)
+            return len(token.text) + column_number - 1
 
         for token_type, detection_info in TOKEN_DETECTION.items():
             supposed_token_type = TokenTypes.__getattr__(token_type)

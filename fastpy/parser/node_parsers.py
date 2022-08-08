@@ -329,7 +329,7 @@ class ArgumentsParser(BaseNodeParser):
               supposed_node_type: type[BaseNode],
               **extra_data) -> BaseNode | list[BaseNode]:
 
-        if tokens[0].type == TokenTypes.end_parenthesis:
+        if tokens[0].type == TokenTypes.end_parenthesis or tokens[0].type == TokenTypes.end_chevrons:
             return []
 
         arguments = []
@@ -339,7 +339,7 @@ class ArgumentsParser(BaseNodeParser):
             match token.type:
                 case TokenTypes.start_parenthesis:
                     opened_parenthesis_counter += 1
-                case TokenTypes.end_parenthesis:
+                case TokenTypes.end_parenthesis | TokenTypes.end_chevrons:
                     opened_parenthesis_counter -= 1
 
                     if opened_parenthesis_counter == 0:
@@ -382,11 +382,22 @@ class ComplexTypeNodeParser(BaseNodeParser):
                  tokens: list[BaseToken],
                  supposed_node_type: type[BaseNode],
                  **extra_data) -> bool:
-        pass
+        return \
+            Validators.check_token_type_presence(
+                tokens,
+                (TokenTypes.start_chevrons, TokenTypes.end_chevrons)
+            ) and Validators.check_token_types(tokens, (TokenTypes.identifier, TokenTypes.start_chevrons))
 
     def parse(self,
               tokens: list[BaseToken],
               parse_node_clb: callable,
               supposed_node_type: type[BaseNode],
               **extra_data) -> BaseNode | list[BaseNode]:
-        pass
+        type_token = tokens[0]
+
+        arguments = parse_node_clb(
+            tokens[2::],
+            (VariableNode,),
+            ArgumentsParser()
+        )
+        print(type_token, arguments)
